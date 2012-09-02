@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
+    <c:Tables>
+        <o:Table Id="o9">
+            <a:ObjectID>AF7A0662-1FCE-4861-96A0-7B30B233E771</a:ObjectID>
+            <a:Name>Table_1</a:Name>
+            <a:Code>Table_1</a:Code>
+            <a:CreationDate>1346545349</a:CreationDate>
+            <a:Creator>huanwuji</a:Creator>
+            <a:ModificationDate>1346545686</a:ModificationDate>
+            <a:Modifier>huanwuji</a:Modifier>
+            <a:TotalSavingCurrency/>
+            <c:ExtendedCollections>
+                <o:ExtendedCollection Id="o11">
+                    <a:ObjectID>D116A85B-7BC4-4D3F-A81D-2F532B5AA02B</a:ObjectID>
+                    <a:Name>Related Clusters</a:Name>
+                    <a:ExtendedBaseCollection.CollectionName>Related Clusters
+                    </a:ExtendedBaseCollection.CollectionName>
+                    <a:CreationDate>1346545457</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545457</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                </o:ExtendedCollection>
+                <o:ExtendedCollection Id="o12">
+                    <a:ObjectID>2CEC052D-8162-41B9-97A5-AF78CBFD0368</a:ObjectID>
+                    <a:Name>Related Columns</a:Name>
+                    <a:ExtendedBaseCollection.CollectionName>Related Columns
+                    </a:ExtendedBaseCollection.CollectionName>
+                    <a:CreationDate>1346545457</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545457</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                </o:ExtendedCollection>
+            </c:ExtendedCollections>
+            <c:Columns>
+                <o:Column Id="o13">
+                    <a:ObjectID>0A5CD5CD-484E-43A9-9363-A3060DC2D657</a:ObjectID>
+                    <a:Name>Column_1</a:Name>
+                    <a:Code>Column_1</a:Code>
+                    <a:CreationDate>1346545353</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545387</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <a:DataType>CLOB</a:DataType>
+                    <a:Column.Mandatory>1</a:Column.Mandatory>
+                </o:Column>
+                <o:Column Id="o14">
+                    <a:ObjectID>F8EB9AEA-0FE6-437A-B0C1-A21965542B84</a:ObjectID>
+                    <a:Name>Column_3</a:Name>
+                    <a:Code>Column_3</a:Code>
+                    <a:CreationDate>1346545353</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545387</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <a:DataType>NUMBER(33)</a:DataType>
+                    <a:Length>33</a:Length>
+                </o:Column>
+            </c:Columns>
+            <c:Keys>
+                <o:Key Id="o15">
+                    <a:ObjectID>EC9B2249-4C0C-48AA-9657-5E0EAF770A6D</a:ObjectID>
+                    <a:Name>Key_1</a:Name>
+                    <a:Code>Key_1</a:Code>
+                    <a:CreationDate>1346545353</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545387</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <c:Key.Columns>
+                        <o:Column Ref="o13"/>
+                    </c:Key.Columns>
+                </o:Key>
+            </c:Keys>
+            <c:PrimaryKey>
+                <o:Key Ref="o15"/>
+            </c:PrimaryKey>
+        </o:Table>
+        <o:Table Id="o10">
+            <a:ObjectID>3CFA2A96-9137-4121-9114-7C19DE7FE09C</a:ObjectID>
+            <a:Name>Table_2</a:Name>
+            <a:Code>Table_2</a:Code>
+            <a:CreationDate>1346545405</a:CreationDate>
+            <a:Creator>huanwuji</a:Creator>
+            <a:ModificationDate>1346545719</a:ModificationDate>
+            <a:Modifier>huanwuji</a:Modifier>
+            <a:TotalSavingCurrency/>
+            <c:ExtendedCollections>
+                <o:ExtendedCollection Id="o16">
+                    <a:ObjectID>E788EF49-1F29-4FA9-81B5-A08F50521E0B</a:ObjectID>
+                    <a:Name>Related Clusters</a:Name>
+                    <a:ExtendedBaseCollection.CollectionName>Related Clusters
+                    </a:ExtendedBaseCollection.CollectionName>
+                    <a:CreationDate>1346545473</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545473</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                </o:ExtendedCollection>
+                <o:ExtendedCollection Id="o17">
+                    <a:ObjectID>8540A106-4100-446B-9F34-388946E72789</a:ObjectID>
+                    <a:Name>Related Columns</a:Name>
+                    <a:ExtendedBaseCollection.CollectionName>Related Columns
+                    </a:ExtendedBaseCollection.CollectionName>
+                    <a:CreationDate>1346545473</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545473</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                </o:ExtendedCollection>
+            </c:ExtendedCollections>
+            <c:Columns>
+                <o:Column Id="o18">
+                    <a:ObjectID>DB1DAEE9-C785-4453-BE6E-041CF8562211</a:ObjectID>
+                    <a:Name>Column_1</a:Name>
+                    <a:Code>Column_1</a:Code>
+                    <a:CreationDate>1346545410</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545445</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <a:DataType>SMALLINT</a:DataType>
+                    <a:Column.Mandatory>1</a:Column.Mandatory>
+                </o:Column>
+                <o:Column Id="o19">
+                    <a:ObjectID>D599D058-AF94-4305-AF48-3D991708FE3B</a:ObjectID>
+                    <a:Name>Tab_Column_1</a:Name>
+                    <a:Code>Tab_Column_1</a:Code>
+                    <a:CreationDate>1346545719</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545719</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <a:DataType>CLOB</a:DataType>
+                </o:Column>
+                <o:Column Id="o20">
+                    <a:ObjectID>5A8E3099-94E3-4C26-95D2-44D002A01AD6</a:ObjectID>
+                    <a:Name>Column_2</a:Name>
+                    <a:Code>Column_2</a:Code>
+                    <a:CreationDate>1346545410</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545438</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <a:DataType>FLOAT</a:DataType>
+                </o:Column>
+                <o:Column Id="o21">
+                    <a:ObjectID>CFD5C530-6609-4129-B58D-9D4DC3BB9D3E</a:ObjectID>
+                    <a:Name>Column_3</a:Name>
+                    <a:Code>Column_3</a:Code>
+                    <a:CreationDate>1346545410</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545438</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <a:DataType>SMALLINT</a:DataType>
+                </o:Column>
+            </c:Columns>
+            <c:Keys>
+                <o:Key Id="o22">
+                    <a:ObjectID>7238001A-1984-459C-8BDE-CF2A394DBA52</a:ObjectID>
+                    <a:Name>Key_1</a:Name>
+                    <a:Code>Key_1</a:Code>
+                    <a:CreationDate>1346545439</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545445</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <c:Key.Columns>
+                        <o:Column Ref="o18"/>
+                    </c:Key.Columns>
+                </o:Key>
+            </c:Keys>
+            <c:PrimaryKey>
+                <o:Key Ref="o22"/>
+            </c:PrimaryKey>
+        </o:Table>
+    </c:Tables>
+    <c:References>
+        <o:Reference Id="o8">
+            <a:ObjectID>A4C3CEBC-3FB9-4FA2-934F-2DAB94C89CC0</a:ObjectID>
+            <a:Name>Reference_1</a:Name>
+            <a:Code>Reference_1</a:Code>
+            <a:CreationDate>1346545719</a:CreationDate>
+            <a:Creator>huanwuji</a:Creator>
+            <a:ModificationDate>1346545719</a:ModificationDate>
+            <a:Modifier>huanwuji</a:Modifier>
+            <a:Cardinality>0..*</a:Cardinality>
+            <a:UpdateConstraint>1</a:UpdateConstraint>
+            <a:DeleteConstraint>1</a:DeleteConstraint>
+            <c:ParentTable>
+                <o:Table Ref="o9"/>
+            </c:ParentTable>
+            <c:ChildTable>
+                <o:Table Ref="o10"/>
+            </c:ChildTable>
+            <c:ParentKey>
+                <o:Key Ref="o15"/>
+            </c:ParentKey>
+            <c:Joins>
+                <o:ReferenceJoin Id="o23">
+                    <a:ObjectID>6D37E075-5D2C-4EAD-B96C-AE7139C5938B</a:ObjectID>
+                    <a:CreationDate>1346545719</a:CreationDate>
+                    <a:Creator>huanwuji</a:Creator>
+                    <a:ModificationDate>1346545719</a:ModificationDate>
+                    <a:Modifier>huanwuji</a:Modifier>
+                    <c:Object1>
+                        <o:Column Ref="o13"/>
+                    </c:Object1>
+                    <c:Object2>
+                        <o:Column Ref="o19"/>
+                    </c:Object2>
+                </o:ReferenceJoin>
+            </c:Joins>
+        </o:Reference>
+    </c:References>
+</Model>

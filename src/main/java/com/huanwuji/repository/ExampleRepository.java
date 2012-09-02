@@ -1,6 +1,6 @@
 package com.huanwuji.repository;
 
-import org.hibernate.criterion.Example;
+import com.huanwuji.entity.bean.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
