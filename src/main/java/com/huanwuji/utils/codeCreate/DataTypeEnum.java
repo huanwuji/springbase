@@ -1,4 +1,4 @@
-package com.huanwuji.tools.codeBatchCreate;
+package com.huanwuji.utils.codeCreate;
 
 import org.apache.commons.lang3.StringUtils;
 
