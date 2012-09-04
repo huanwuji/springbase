@@ -1,4 +1,4 @@
-package com.huanwuji.tools.codeBatchCreate;
+package com.huanwuji.utils.codeCreate.pdm;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
  * Time: 上午9:35
  * To change this template use File | Settings | File Templates.
  */
-public class Tables {
+public class PdmModel {
 
     private List<Table> tables;
 
@@ -22,7 +22,7 @@ public class Tables {
     //columnId,reference
     private Map<String, List<Reference>> referenceMap;
 
-    public Tables() {
+    public PdmModel() {
 
     }
 

@@ -1,4 +1,4 @@
-package com.huanwuji.tools.codeBatchCreate;
+package com.huanwuji.utils.codeCreate.pdm;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import java.util.List;
  * <p/>
  * User: huanwuji
  * Date: 12-9-2
- * Time: 上午9:46
+ * Time: 上午9:35       St
  * To change this template use File | Settings | File Templates.
  */
-public class Reference {
+public class Table {
 
     private String id;
     private String objectID;
@@ -20,19 +20,16 @@ public class Reference {
     private String creator;
     private String modificationDate;
     private String modifier;
-    private String cardinality;
-    private String updateConstraint;
-    private String deleteConstraint;
+    private String totalSavingCurrency;
 
-    private Table parentTable;
+    private List<Column> columns;
 
-    private Table childTable;
+    private List<Column> keys;
 
-    private List<Column> parentKey;
+    private List<Column> primaryKeys;
 
-    private List<Column> joinColumns;
+    public Table() {
 
-    public Reference() {
     }
 
     public String getId() {
@@ -99,59 +96,35 @@ public class Reference {
         this.modifier = modifier;
     }
 
-    public String getCardinality() {
-        return cardinality;
+    public String getTotalSavingCurrency() {
+        return totalSavingCurrency;
     }
 
-    public void setCardinality(String cardinality) {
-        this.cardinality = cardinality;
+    public void setTotalSavingCurrency(String totalSavingCurrency) {
+        this.totalSavingCurrency = totalSavingCurrency;
     }
 
-    public String getUpdateConstraint() {
-        return updateConstraint;
+    public List<Column> getColumns() {
+        return columns;
     }
 
-    public void setUpdateConstraint(String updateConstraint) {
-        this.updateConstraint = updateConstraint;
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
     }
 
-    public String getDeleteConstraint() {
-        return deleteConstraint;
+    public List<Column> getKeys() {
+        return keys;
     }
 
-    public void setDeleteConstraint(String deleteConstraint) {
-        this.deleteConstraint = deleteConstraint;
+    public void setKeys(List<Column> keys) {
+        this.keys = keys;
     }
 
-    public Table getParentTable() {
-        return parentTable;
+    public List<Column> getPrimaryKeys() {
+        return primaryKeys;
     }
 
-    public void setParentTable(Table parentTable) {
-        this.parentTable = parentTable;
-    }
-
-    public Table getChildTable() {
-        return childTable;
-    }
-
-    public void setChildTable(Table childTable) {
-        this.childTable = childTable;
-    }
-
-    public List<Column> getParentKey() {
-        return parentKey;
-    }
-
-    public void setParentKey(List<Column> parentKey) {
-        this.parentKey = parentKey;
-    }
-
-    public List<Column> getJoinColumns() {
-        return joinColumns;
-    }
-
-    public void setJoinColumns(List<Column> joinColumns) {
-        this.joinColumns = joinColumns;
+    public void setPrimaryKeys(List<Column> primaryKeys) {
+        this.primaryKeys = primaryKeys;
     }
 }

@@ -1,4 +1,4 @@
-package com.huanwuji.utils.codeCreate;
+package com.huanwuji.utils.codeCreate.pdm;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -45,7 +45,8 @@ public enum DataTypeEnum {
     TIMESTAMP("TIMESTAMP", "java.sql.TimeStamp"),
     DATETIME("DATETIME", "java.sql.Timestamp"),
     VBIN("VBIN", null),
-    VBIN33("VBIN33", null);
+    VBIN33("VBIN33", null),
+    UNDEFINED("UNDEFINED", "Object");
 
     private String code;
 
@@ -138,21 +139,14 @@ public enum DataTypeEnum {
             case CLOB:
                 return null;
             case RAW:
-                break;
             case BLOB:
-                break;
             case LONGBLOB:
-                break;
             case DATE:
-                break;
             case TIME:
-                break;
             case TIMESTAMP:
-                break;
             case DATETIME:
-                break;
             case VBIN:
-                break;
+            case UNDEFINED:
         }
         return null;
     }
@@ -164,7 +158,7 @@ public enum DataTypeEnum {
         if (dataType.contains("(")) {
             dataType = StringUtils.substringBefore(dataType, "(").trim();
         }
-        return getDataTypeEnumByCode(dataType.toUpperCase());
+        return getDataTypeEnumByCode(dataType.toUpperCase().replaceAll("\\W", ""));
     }
 
 
@@ -178,4 +172,3 @@ public enum DataTypeEnum {
         return null;
     }
 }
-

@@ -1,4 +1,4 @@
-package com.huanwuji.utils.codeCreate;
+package com.huanwuji.utils.codeCreate.pdm;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -7,6 +7,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class PdmParse {
+
+    Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     public String processPropertyName(String name) {
         return StringUtils.substringBefore(name, "(").trim().replaceAll("\\.", "_");
@@ -45,18 +49,18 @@ public class PdmParse {
         }
     }
 
-    public Tables parsePdm(String filePath) throws DocumentException {
+    public PdmModel parsePdm(String filePath) throws DocumentException {
         SAXReader saxReader = new SAXReader();
         Document document = saxReader.read(filePath);
         return parsePdm(document);
     }
 
-    public Tables parsePdm(Document document) {
+    public PdmModel parsePdm(Document document) {
         Map<String, Table> tableMap = new HashMap<String, Table>();
         Map<String, Column> columnMap = new HashMap<String, Column>();
         Map<String, List<Reference>> referenceMap = new HashMap<String, List<Reference>>();
 
-        Tables tables = new Tables();
+        PdmModel tables = new PdmModel();
 
         parseReference(document, tableMap, columnMap, referenceMap);
 
@@ -135,7 +139,11 @@ public class PdmParse {
 
             Element referenceJoinEle = referenceEle.element("Joins").element("ReferenceJoin");
             String column1Id = referenceJoinEle.element("Object1").element("Column").attributeValue("Ref");
-            String column2Id = referenceJoinEle.element("Object2").element("Column").attributeValue("Ref");
+            String column2Id = null;
+            if (referenceJoinEle.element("Object2") != null) {
+                log.error("主外键不全, referenceId=" + referenceId);
+                column2Id = referenceJoinEle.element("Object2").element("Column").attributeValue("Ref");
+            }
             List<Column> refColumnList = new ArrayList<Column>();
             refColumnList.add(columnMap.get(column1Id));
             refColumnList.add(columnMap.get(column2Id));
@@ -152,14 +160,6 @@ public class PdmParse {
             referenceMap.put(columnId, referenceList);
         }
         referenceList.add(reference);
-    }
-
-
-    public static void main(String[] args) throws DocumentException {
-
-        PdmParse parse = new PdmParse();
-//        parse.parsePdm("D:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\PhysicalDataModel_1.xml");
-        parse.parsePdm("E:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\PhysicalDataModel_1.xml");
     }
 
 }
