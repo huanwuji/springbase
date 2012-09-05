@@ -74,6 +74,7 @@ public class SimpleObjectTransformer extends AbstractTransformer {
                     String name = prop.getName();
                     path.enqueue(name);
 
+                    //添加了属性过滤
                     String currPropPath = pathStr + name;
                     PropertyFilter propertyFilter = propertyFilterMap.get(currPropPath);
                     if (propertyFilter == null && propertyProcesserMap.get(currPropPath) == null) {
@@ -88,6 +89,7 @@ public class SimpleObjectTransformer extends AbstractTransformer {
                     if (context.isIncluded(prop)) {
                         Object value = prop.getValue(object);
 
+                        //添加了属性值的处理
                         PropertyProcesser propertyProcesser = propertyProcesserMap.get(currPropPath);
                         if (propertyProcesser != null) {
                             value = propertyProcesser.propertyProcesser(prop, value, path, object, context, typeContext);
@@ -109,7 +111,7 @@ public class SimpleObjectTransformer extends AbstractTransformer {
                     }
                     path.pop();
                 }
-
+                //添加了对于当前对象的处理
                 if (!objectProcesserMap.isEmpty()) {
                     ObjectProcesser objectProcesser = objectProcesserMap.get(pathStr);
                     if (objectProcesser != null) {

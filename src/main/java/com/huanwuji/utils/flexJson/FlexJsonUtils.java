@@ -16,10 +16,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
  */
 public class FlexJsonUtils {
 
-    public static JSONSerializer getJSONSerializer() {
-        return getJSONSerializer(null);
-    }
-
     public static JSONSerializer getJSONSerializer(SimpleObjectTransformer simpleObjectTransformer) {
         JSONSerializer jsonSerializer = new JSONSerializer();
         TypeTransformerMap defaultTransformers = TransformerUtil.getDefaultTypeTransformers();
