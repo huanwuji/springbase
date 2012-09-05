@@ -18,65 +18,51 @@ package com.huanwuji.utils.flexJson;
 import flexjson.*;
 import flexjson.transformer.AbstractTransformer;
 import flexjson.transformer.TransformerWrapper;
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class SimpleObjectTransformer extends AbstractTransformer {
 
-    private boolean excludeParentObj = true;
+    private Map<String, ObjectProcesser> objectProcesserMap = new HashMap<String, ObjectProcesser>();
 
-    private Pattern excludeClassNameReg = null;
+    private Map<String, PropertyFilter> propertyFilterMap = new HashMap<String, PropertyFilter>();
 
-    private Map<String, String[][]> propertyMap = null;
+    private Map<String, PropertyProcesser> propertyProcesserMap = new HashMap<String, PropertyProcesser>();
 
-    public void excludeParentObj(boolean excludeParentObj) {
-        this.excludeParentObj = excludeParentObj;
-    }
-
-    public SimpleObjectTransformer exclude(String reg) {
-        excludeClassNameReg = Pattern.compile(reg);
+    public SimpleObjectTransformer addObjectProcesser(String path, String... propPaths) {
+        objectProcesserMap.put(path, new BasicObjectProcesser(propPaths));
         return this;
     }
 
-    public SimpleObjectTransformer include(String... propertyPaths) {
-        if (propertyPaths != null) {
-            propertyMap = getPropertyMap();
-            if (propertyPaths.length > 0) {
-                for (String path : propertyPaths) {
-                    int len = propertyPaths.length;
-                    String[][] pathArray = new String[len][2];
-                    for (int i = 0; i < len; i++) {
-                        pathArray[i] = new String[]{path.replaceAll("\\.", ""), path};
-                    }
-                    //第一层
-                    propertyMap.put("[  ]", pathArray);
-                }
-            }
-        }
+    public SimpleObjectTransformer addPropertyFilter(String path, String reg) {
+        propertyFilterMap.put(path, new BasicPropertyFilter(reg));
         return this;
     }
 
-
-    public SimpleObjectTransformer include(Map<String, String[][]> propertyPathMap) {
-        this.propertyMap = getPropertyMap();
-        this.propertyMap.putAll(propertyPathMap);
+    public SimpleObjectTransformer addPropertyFilter(String path, boolean filterNotBasicObj) {
+        propertyFilterMap.put(path, new BasicPropertyFilter(filterNotBasicObj));
         return this;
     }
 
-    public Map<String, String[][]> getPropertyMap() {
-        if (propertyMap == null) {
-            propertyMap = new HashMap<String, String[][]>();
-        }
-        return this.propertyMap;
+    public SimpleObjectTransformer addPropertyProcesser(String path, String propPath) {
+        propertyProcesserMap.put(path, new BasicPropertyProcesser(propPath));
+        return this;
     }
 
     public void transform(Object object) {
         JSONContext context = getContext();
         Path path = context.getPath();
         ChainedSet visits = context.getVisits();
+
+        String pathStr = "";
+        List<String> pathList = path.getPath();
+        if (!pathList.isEmpty()) {
+            pathStr = StringUtils.join(pathList, ".");
+        }
+
         try {
             if (!visits.contains(object)) {
                 context.setVisits(new ChainedSet(visits));
@@ -87,20 +73,24 @@ public class SimpleObjectTransformer extends AbstractTransformer {
                 for (BeanProperty prop : analyzer.getProperties()) {
                     String name = prop.getName();
                     path.enqueue(name);
+
+                    String currPropPath = pathStr + name;
+                    PropertyFilter propertyFilter = propertyFilterMap.get(currPropPath);
+                    if (propertyFilter == null && propertyProcesserMap.get(currPropPath) == null) {
+                        propertyFilter = propertyFilterMap.get("*");
+                    }
+                    if (propertyFilter != null && propertyFilter.isFilter(prop, path, object, context, typeContext)) {
+                        path.pop();
+                        continue;
+                    }
+
+
                     if (context.isIncluded(prop)) {
                         Object value = prop.getValue(object);
 
-                        String propertyType = prop.getPropertyType().getName();
-                        if (this.excludeParentObj) {
-                            if (!propertyType.startsWith("java")) {
-                                path.pop();
-                                continue;
-                            }
-                        }
-                        if (this.excludeClassNameReg != null) {
-                            if (excludeClassNameReg.matcher(propertyType).find()) {
-                                continue;
-                            }
+                        PropertyProcesser propertyProcesser = propertyProcesserMap.get(currPropPath);
+                        if (propertyProcesser != null) {
+                            value = propertyProcesser.propertyProcesser(prop, value, path, object, context, typeContext);
                         }
 
                         if (!context.getVisits().contains(value)) {
@@ -120,29 +110,13 @@ public class SimpleObjectTransformer extends AbstractTransformer {
                     path.pop();
                 }
 
-                if (propertyMap != null) {
-                    String[][] currentPaths = this.propertyMap.get(path.toString());
-                    if (currentPaths != null) {
-                        for (String[] propertyPath : currentPaths) {
-                            String value = null;
-                            try {
-                                value = BeanUtils.getProperty(object, propertyPath[1]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            TransformerWrapper transformer = (TransformerWrapper) context.getTransformer(value);
-
-                            if (!transformer.isInline()) {
-                                if (!typeContext.isFirst()) context.writeComma();
-                                typeContext.setFirst(false);
-                                context.writeName(propertyPath[0]);
-                            }
-                            typeContext.setPropertyName(propertyPath[0]);
-
-                            transformer.transform(value);
-                        }
+                if (!objectProcesserMap.isEmpty()) {
+                    ObjectProcesser objectProcesser = objectProcesserMap.get(pathStr);
+                    if (objectProcesser != null) {
+                        objectProcesser.objectProcesser(object, path, context, typeContext);
                     }
                 }
+
                 context.writeCloseObject();
                 context.setVisits((ChainedSet) context.getVisits().getParent());
 
