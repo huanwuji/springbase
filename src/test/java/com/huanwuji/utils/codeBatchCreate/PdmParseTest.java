@@ -1,4 +1,4 @@
-package com.huanwuji.tools.codeBatchCreate;
+package java.com.huanwuji.utils.codeBatchCreate;
 
 import com.huanwuji.utils.codeCreate.pdm.PdmModel;
 import com.huanwuji.utils.codeCreate.pdm.PdmParse;
@@ -19,8 +19,8 @@ public class PdmParseTest {
 
         PdmParse parse = new PdmParse();
 //      Tables tables =   parse.parsePdm("D:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\PhysicalDataModel_1.xml");
-//Tables tables =         parse.parsePdm("E:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\PhysicalDataModel_1.xml");
-        PdmModel tables = parse.parsePdm("E:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\pagd_share.pdm");
+        PdmModel tables = parse.parsePdm("E:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\PhysicalDataModel_1.xml");
+//        PdmModel tables = parse.parsePdm("E:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\pagd_share.pdm");
 //        Tables tables = parse.parsePdm("E:\\git\\springbase\\src\\test\\com\\huanwuji\\tools\\codeBatchCreate\\sjjjw.pdm");
         for (Table table : tables.getTables()) {
             System.out.println("table.getName() = " + table.getName());
