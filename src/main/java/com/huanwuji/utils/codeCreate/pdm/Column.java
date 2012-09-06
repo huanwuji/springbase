@@ -1,5 +1,7 @@
 package com.huanwuji.utils.codeCreate.pdm;
 
+import com.huanwuji.utils.StringUtils;
+
 /**
  * Created with IntelliJ IDEA.
  * <p/>
@@ -61,6 +63,10 @@ public class Column {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getPropName() {
+        return StringUtils.toJavaName(this.code, false);
     }
 
     public String getCreationDate() {

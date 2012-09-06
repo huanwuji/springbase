@@ -158,7 +158,7 @@ public enum DataTypeEnum {
         if (dataType.contains("(")) {
             dataType = StringUtils.substringBefore(dataType, "(").trim();
         }
-        return getDataTypeEnumByCode(dataType.toUpperCase().replaceAll("\\W", ""));
+        return getDataTypeEnumByCode(dataType.toUpperCase().replaceAll("[^\\w ]", ""));
     }
 
 

@@ -1,5 +1,7 @@
 package com.huanwuji.utils.codeCreate.pdm;
 
+import com.huanwuji.utils.StringUtils;
+
 import java.util.List;
 
 /**
@@ -58,6 +60,10 @@ public class Table {
 
     public String getCode() {
         return code;
+    }
+
+    public String getClassName() {
+        return StringUtils.toJavaName(this.code, true);
     }
 
     public void setCode(String code) {

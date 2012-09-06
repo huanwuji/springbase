@@ -30,6 +30,15 @@ public class PdmModel {
         return tables;
     }
 
+    public Table getTableByName(String tableName) {
+        for (Table table : this.getTables()) {
+            if (tableName.equalsIgnoreCase(table.getCode())) {
+                return table;
+            }
+        }
+        return null;
+    }
+
     public void setTables(List<Table> tables) {
         this.tables = tables;
     }

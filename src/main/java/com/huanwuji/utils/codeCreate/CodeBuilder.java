@@ -1,6 +1,7 @@
 package com.huanwuji.utils.codeCreate;
 
 import com.huanwuji.utils.codeCreate.pdm.PdmModel;
+import com.huanwuji.utils.codeCreate.pdm.Table;
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 
@@ -22,6 +23,20 @@ public class CodeBuilder {
 
     private PdmModel pdmModel;
 
+    private Table table;
+
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    public void setTable(String tableName) {
+        this.table = this.pdmModel.getTableByName(tableName);
+    }
+
     public CodeBuilder(String basePath, PdmModel pdmModel) {
         this.groupTemplate = initGroupTemplate(basePath);
         this.pdmModel = pdmModel;
@@ -34,11 +49,11 @@ public class CodeBuilder {
         return group;
     }
 
-    public void createService(String tempPath, String path) {
+    public void createService(String tempPath, String outPath) {
         try {
             Template template = this.groupTemplate.getFileTemplate(tempPath);
-            CommonTemp commonTemp = new CommonTemp(this.pdmModel, template);
-            commonTemp.process(new FileWriter(path));
+            CommonTemp commonTemp = new CommonTemp(this.pdmModel, template, this.table);
+            commonTemp.outWriter(new FileWriter(outPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

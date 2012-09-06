@@ -28,11 +28,11 @@ public class PdmParse {
 
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    public String processPropertyName(String name) {
+    private String processPropertyName(String name) {
         return StringUtils.substringBefore(name, "(").trim().replaceAll("\\.", "_");
     }
 
-    public void setValuesByEle(List<Element> elements, Object bean, String... ignoreProperties) {
+    protected void setValuesByEle(List<Element> elements, Object bean, String... ignoreProperties) {
         for (Element element : elements) {
             try {
                 String name = processPropertyName(element.getName());
@@ -71,7 +71,7 @@ public class PdmParse {
         return tables;
     }
 
-    public List<Table> parseTable(Document document, Map<String, Table> tableMap, Map<String, Column> columnMap) {
+    protected List<Table> parseTable(Document document, Map<String, Table> tableMap, Map<String, Column> columnMap) {
         List<Table> tableList = new ArrayList<Table>();
         List<Element> tableEles = document.selectNodes("//c:Tables//o:Table");
         for (Element tableEle : tableEles) {
@@ -102,7 +102,7 @@ public class PdmParse {
         return tableList;
     }
 
-    public void parseColumn(Element tableEle, Table table, Map<String, Column> columnMap) {
+    protected void parseColumn(Element tableEle, Table table, Map<String, Column> columnMap) {
         List<Element> columnEles = tableEle.selectNodes("//c:Columns//o:Column");
         List<Column> columnList = new ArrayList<Column>();
         for (Element columnEle : columnEles) {
@@ -122,7 +122,7 @@ public class PdmParse {
         table.setColumns(columnList);
     }
 
-    public void parseReference(Document document, Map<String, Table> tableMap, Map<String, Column> columnMap, Map<String, List<Reference>> referenceMap) {
+    protected void parseReference(Document document, Map<String, Table> tableMap, Map<String, Column> columnMap, Map<String, List<Reference>> referenceMap) {
         List<Element> referenceEles = document.selectNodes("//c:References//o:Reference");
         for (Element referenceEle : referenceEles) {
             Reference reference = new Reference();
@@ -153,7 +153,7 @@ public class PdmParse {
         }
     }
 
-    public void putToReferenceMap(Map<String, List<Reference>> referenceMap, String columnId, Reference reference) {
+    private void putToReferenceMap(Map<String, List<Reference>> referenceMap, String columnId, Reference reference) {
         List<Reference> referenceList = referenceMap.get(columnId);
         if (referenceList == null) {
             referenceList = new ArrayList<Reference>();

@@ -1,6 +1,7 @@
 package com.huanwuji.utils.codeCreate;
 
 import com.huanwuji.utils.codeCreate.pdm.PdmModel;
+import com.huanwuji.utils.codeCreate.pdm.Table;
 import org.bee.tl.core.BeeException;
 import org.bee.tl.core.Template;
 
@@ -21,19 +22,26 @@ public class CommonTemp {
 
     private Template template;
 
-    public CommonTemp(PdmModel pdmModel, Template template) {
+    private Table table;
+
+    public CommonTemp(PdmModel pdmModel, Template template, Table table) {
         this.pdmModel = pdmModel;
-        this.template.set("pdmModell", pdmModel);
+        this.template = template;
+        this.table = table;
     }
 
-    public void process(Writer writer) {
-        this.template.set("pdmModel", pdmModel);
+    public void outWriter(Writer writer) {
+        dataProcess(pdmModel, template);
         try {
             this.template.getText(writer);
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (BeeException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
+    }
+
+    protected void dataProcess(PdmModel pdmModel, Template template) {
+        template.set("table", this.table);
     }
 }
