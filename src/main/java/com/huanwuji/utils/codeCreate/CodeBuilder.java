@@ -42,10 +42,11 @@ public class CodeBuilder {
         this.pdmModel = pdmModel;
     }
 
-    public GroupTemplate initGroupTemplate(String basePath) {
+    private GroupTemplate initGroupTemplate(String basePath) {
         GroupTemplate group = new GroupTemplate(new File(basePath));
         group.setCharset("UTF-8");
-        group.config("<!--:", "-->", "${", "}");
+        group.config("<%", "%>", "${", "}");
+        group.enableNativeCall();
         return group;
     }
 
@@ -54,6 +55,16 @@ public class CodeBuilder {
             Template template = this.groupTemplate.getFileTemplate(tempPath);
             CommonTemp commonTemp = new CommonTemp(this.pdmModel, template, this.table);
             commonTemp.outWriter(new FileWriter(outPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createEntity(String tempPath, String outPath) {
+        try {
+            Template template = this.groupTemplate.getFileTemplate(tempPath);
+            JpaEntityTemp jpaEntityTemp = new JpaEntityTemp(this.pdmModel, template, this.table);
+            jpaEntityTemp.outWriter(new FileWriter(outPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -62,8 +62,12 @@ public class Table {
         return code;
     }
 
-    public String getClassName() {
+    public String getUClassName() {
         return StringUtils.toJavaName(this.code, true);
+    }
+
+    public String getLClassName() {
+        return StringUtils.toJavaName(this.code, false);
     }
 
     public void setCode(String code) {

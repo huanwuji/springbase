@@ -3,9 +3,9 @@ package com.huanwuji.entity.bean;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 /**
  * 统一定义id的entity基类.
@@ -21,6 +21,7 @@ public abstract class IdEntity implements Persistable<Long> {
 
     protected Long id;
 
+    @NotNull
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE)

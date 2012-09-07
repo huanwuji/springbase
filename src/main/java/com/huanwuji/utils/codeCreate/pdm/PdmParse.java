@@ -62,11 +62,11 @@ public class PdmParse {
 
         PdmModel tables = new PdmModel();
 
-        parseReference(document, tableMap, columnMap, referenceMap);
-
         tables.setTables(parseTable(document, tableMap, columnMap));
         tables.setTableMap(tableMap);
         tables.setColumnMap(columnMap);
+
+        parseReference(document, tableMap, columnMap, referenceMap);
         tables.setReferenceMap(referenceMap);
         return tables;
     }
@@ -76,7 +76,6 @@ public class PdmParse {
         List<Element> tableEles = document.selectNodes("//c:Tables//o:Table");
         for (Element tableEle : tableEles) {
             Table table = new Table();
-            tableList.add(table);
 
             String tableId = tableEle.attributeValue("Id");
             tableMap.put(tableId, table);
@@ -85,7 +84,7 @@ public class PdmParse {
 
             parseColumn(tableEle, table, columnMap);
 
-            List<Element> keyColumns = tableEle.selectNodes("//c:Keys//o:Key//c:Key.Columns//o:Column");
+            List<Element> keyColumns = tableEle.selectNodes("c:Keys/o:Key/c:Key.Columns/o:Column");
             List<Column> keyColumnList = new ArrayList<Column>();
             for (Element keyColumn : keyColumns) {
                 keyColumnList.add(columnMap.get(keyColumn.attributeValue("Ref")));
@@ -93,17 +92,18 @@ public class PdmParse {
             table.setKeys(keyColumnList);
 
             List<Column> primaryKeys = new ArrayList<Column>();
-            List<String> primaryKeyColumnIds = tableEle.selectNodes("//c:PrimaryKey//o:Key//Ref");
-            for (String primaryKeyColumnId : primaryKeyColumnIds) {
-                primaryKeys.add(columnMap.get(primaryKeyColumnId));
+            List<Element> primaryKeyEles = tableEle.selectNodes("c:PrimaryKey/o:Key");
+            for (Element primaryKeyEle : primaryKeyEles) {
+                primaryKeys.add(columnMap.get(primaryKeyEle.attributeValue("Ref")));
             }
             table.setPrimaryKeys(primaryKeys);
+            tableList.add(table);
         }
         return tableList;
     }
 
     protected void parseColumn(Element tableEle, Table table, Map<String, Column> columnMap) {
-        List<Element> columnEles = tableEle.selectNodes("//c:Columns//o:Column");
+        List<Element> columnEles = tableEle.selectNodes("c:Columns/o:Column");
         List<Column> columnList = new ArrayList<Column>();
         for (Element columnEle : columnEles) {
             Column column = new Column();
@@ -139,11 +139,8 @@ public class PdmParse {
 
             Element referenceJoinEle = referenceEle.element("Joins").element("ReferenceJoin");
             String column1Id = referenceJoinEle.element("Object1").element("Column").attributeValue("Ref");
-            String column2Id = null;
-            if (referenceJoinEle.element("Object2") != null) {
-                log.error("主外键不全, referenceId=" + referenceId);
-                column2Id = referenceJoinEle.element("Object2").element("Column").attributeValue("Ref");
-            }
+            String column2Id = referenceJoinEle.element("Object2").element("Column").attributeValue("Ref");
+
             List<Column> refColumnList = new ArrayList<Column>();
             refColumnList.add(columnMap.get(column1Id));
             refColumnList.add(columnMap.get(column2Id));

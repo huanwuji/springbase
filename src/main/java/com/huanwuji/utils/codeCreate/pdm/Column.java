@@ -65,8 +65,12 @@ public class Column {
         this.code = code;
     }
 
-    public String getPropName() {
+    public String getLPropName() {
         return StringUtils.toJavaName(this.code, false);
+    }
+
+    public String getUPropName() {
+        return StringUtils.toJavaName(this.code, true);
     }
 
     public String getCreationDate() {

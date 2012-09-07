@@ -1,6 +1,6 @@
 package com.huanwuji.repository;
 
-import com.huanwuji.entity.bean.${table.className};
+import com.huanwuji.entity.bean.${table.uClassName};
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Time: 下午2:36
  * To change this template use File | Settings | File Templates.
  */
-public interface ${table.className}Repository extends JpaRepository<${table.className}, Long> {
+public interface ${table.uClassName}Repository extends JpaRepository<${table.uClassName}, Long> {
 
 }

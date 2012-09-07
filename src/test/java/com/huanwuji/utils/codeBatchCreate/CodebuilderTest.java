@@ -18,10 +18,12 @@ public class CodebuilderTest {
     public static void main(String[] args) throws DocumentException {
         String basePath = "E:\\git\\springbase\\src\\test\\java\\com\\huanwuji\\utils\\codeBatchCreate";
         PdmParse pdmParse = new PdmParse();
-        PdmModel pdmModel = pdmParse.parsePdm(basePath + "\\PhysicalDataModel_1.xml");
+        PdmModel pdmModel = pdmParse.parsePdm(basePath + "\\PhysicalDataModel_1.pdm");
         CodeBuilder codeBuilder = new CodeBuilder(basePath, pdmModel);
         codeBuilder.setTable("Table_1");
-        codeBuilder.createService("\\temp\\ExampleRepository.html"
-                , basePath + "\\outPut\\" + codeBuilder.getTable().getClassName() + "Repository.java");
+        codeBuilder.createService("\\temp\\RepositoryTemp.jsp"
+                , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + "Repository.java");
+        codeBuilder.createEntity("\\temp\\EntityTemp.jsp"
+                , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + ".java");
     }
 }

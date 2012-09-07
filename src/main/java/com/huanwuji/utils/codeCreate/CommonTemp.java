@@ -22,7 +22,7 @@ public class CommonTemp {
 
     private Template template;
 
-    private Table table;
+    protected Table table;
 
     public CommonTemp(PdmModel pdmModel, Template template, Table table) {
         this.pdmModel = pdmModel;

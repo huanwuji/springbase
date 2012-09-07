@@ -1,6 +1,7 @@
 package com.huanwuji.rest;
 
 import com.huanwuji.entity.bean.Example;
+import com.huanwuji.repository.ExampleRepository;
 import com.huanwuji.service.ExampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,21 @@ public class ExampleRestController {
     @Autowired
     ExampleService exampleService;
 
+    @Autowired
+    private ExampleRepository exampleRepository;
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> getAll(Model model) {
         List<Example> examples = exampleService.getExamples();
+        return new ResponseEntity(examples, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> findAll(Model model) {
+//        List<Example> examples = exampleRepository.findAll();
+        List<Example> examples = exampleService.getAllExamples();
         return new ResponseEntity(examples, HttpStatus.OK);
     }
 }

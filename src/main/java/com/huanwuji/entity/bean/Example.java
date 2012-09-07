@@ -1,11 +1,6 @@
 package com.huanwuji.entity.bean;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,22 +11,20 @@ import javax.validation.constraints.NotNull;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class Example extends IdEntity {
-
-    @NotNull
-    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-//    @GeneratedValue(strategy= GenerationType.IDENTITY)
-//    @GeneratedValue(generator = "longIdGenerator")
-//    @GenericGenerator(name = "longIdGenerator", strategy = "com.justonetech.core.orm.hibernate.LongIdGenerator")
+@Table(name = "example")
+public class Example extends BasicMethod {
 
     private String text;
+
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "CUST_ID", nullable = false, updatable = false)
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
 
     public Example() {
     }
 
+//    @Column(name = "text", nullable = true, scale = 1, precision = 1, length = 10)
     public String getText() {
         return text;
     }

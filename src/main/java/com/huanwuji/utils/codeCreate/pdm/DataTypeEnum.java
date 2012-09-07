@@ -37,15 +37,15 @@ public enum DataTypeEnum {
     TEXT("TEXT", "String"),
     LONGTEXT("LONGTEXT", "String"),
     CLOB("CLOB", "String"),
-    RAW("RAW", null),
+    RAW("RAW", "String"),
     BLOB("BLOB", "byte[]"),
     LONGBLOB("LONGBLOB", "byte[]"),
     DATE("DATE", "java.sql.Date"),
     TIME("TIME", "java.sql.Time"),
     TIMESTAMP("TIMESTAMP", "java.sql.TimeStamp"),
     DATETIME("DATETIME", "java.sql.Timestamp"),
-    VBIN("VBIN", null),
-    VBIN33("VBIN33", null),
+    VBIN("VBIN", "String"),
+    VBIN33("VBIN33", "String"),
     UNDEFINED("UNDEFINED", "Object");
 
     private String code;
