@@ -1,10 +1,12 @@
 package com.huanwuji.entity.bean;
 
+import flexjson.JSON;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -38,6 +40,8 @@ public abstract class IdEntity implements Persistable<Long> {
         this.id = id;
     }
 
+    @Transient
+    @JSON(include = false)
     public boolean isNew() {
         return null == this.id;
     }

@@ -3,7 +3,10 @@ package com.huanwuji.utils.codeBatchCreate;
 import com.huanwuji.utils.codeCreate.CodeBuilder;
 import com.huanwuji.utils.codeCreate.pdm.PdmModel;
 import com.huanwuji.utils.codeCreate.pdm.PdmParse;
+import com.huanwuji.utils.codeCreate.pdm.Table;
 import org.dom4j.DocumentException;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,14 +19,18 @@ import org.dom4j.DocumentException;
 public class CodebuilderTest {
 
     public static void main(String[] args) throws DocumentException {
-        String basePath = "E:\\git\\springbase\\src\\test\\java\\com\\huanwuji\\utils\\codeBatchCreate";
+//        String basePath = "E:\\git\\springbase\\src\\test\\/java\\com\\huanwuji\\utils\\codeBatchCreate";
+        String basePath = "D:\\git\\springbase\\src\\test\\java\\com\\huanwuji\\utils\\codeBatchCreate";
         PdmParse pdmParse = new PdmParse();
         PdmModel pdmModel = pdmParse.parsePdm(basePath + "\\PhysicalDataModel_1.pdm");
         CodeBuilder codeBuilder = new CodeBuilder(basePath, pdmModel);
-        codeBuilder.setTable("Table_1");
-        codeBuilder.createService("\\temp\\RepositoryTemp.jsp"
-                , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + "Repository.java");
-        codeBuilder.createEntity("\\temp\\EntityTemp.jsp"
-                , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + ".java");
+        List<Table> tables = pdmModel.getTables();
+//        for (Table table : tables) {
+            codeBuilder.setTable("table_6");
+            codeBuilder.createService("\\temp\\RepositoryTemp.jsp"
+                    , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + "Repository.java");
+            codeBuilder.createEntity("\\temp\\EntityTemp.jsp"
+                    , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + ".java");
+//        }
     }
 }

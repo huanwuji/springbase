@@ -2,6 +2,8 @@ package com.huanwuji.utils.codeCreate.pdm;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
+
 /**
  * Created with IntelliJ IDEA.
  * <p/>
@@ -25,8 +27,8 @@ public enum DataTypeEnum {
     BINARY_DOUBLE("BINARY_DOUBLE", "Double"),
     DECIMAL("DECIMAL", "Double"),
     REAL("REAL", "Double"),
-    NUMERIC("NUMERIC", null),
-    NUMBER("NUMBER", null),
+    NUMERIC("NUMERIC", "Long"),
+    NUMBER("NUMBER", "Long"),
     CHAR("CHAR", "String"),
     NCHAR("NCHAR", "String"),
     VARCHAR("VARCHAR", "String"),

@@ -3,6 +3,7 @@ package com.huanwuji.rest;
 import com.huanwuji.entity.bean.Example;
 import com.huanwuji.repository.ExampleRepository;
 import com.huanwuji.service.ExampleService;
+import flexjson.JSONSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,12 +36,12 @@ public class ExampleRestController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> getAll(Model model) {
+    public ResponseEntity<?> getAll(Model model, String callback) {
         List<Example> examples = exampleService.getExamples();
-        return new ResponseEntity(examples, HttpStatus.OK);
+        return new ResponseEntity(callback + "(" + new JSONSerializer().exclude("*.class").serialize(examples) + ")", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<?> findAll(Model model) {
 //        List<Example> examples = exampleRepository.findAll();

@@ -1,6 +1,8 @@
 package com.huanwuji.entity.bean;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,17 +16,13 @@ import javax.persistence.*;
 @Table(name = "example")
 public class Example extends BasicMethod {
 
+    @Column(name = "text")
     private String text;
 
-//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "CUST_ID", nullable = false, updatable = false)
-//
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-
     public Example() {
+
     }
 
-//    @Column(name = "text", nullable = true, scale = 1, precision = 1, length = 10)
     public String getText() {
         return text;
     }

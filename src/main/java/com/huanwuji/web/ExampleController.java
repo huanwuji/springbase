@@ -17,6 +17,7 @@ import java.util.List;
  * Time: 下午4:49
  * To change this template use File | Settings | File Templates.
  */
+@RequestMapping(value = "example")
 @Controller
 public class ExampleController {
 

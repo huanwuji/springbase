@@ -37,8 +37,18 @@ public class SimpleObjectTransformer extends AbstractTransformer {
         return this;
     }
 
+    public SimpleObjectTransformer addObjectProcesser(String path, ObjectProcesser objectProcesser) {
+        objectProcesserMap.put(path, objectProcesser);
+        return this;
+    }
+
     public SimpleObjectTransformer addPropertyFilter(String path, String reg) {
         propertyFilterMap.put(path, new BasicPropertyFilter(reg));
+        return this;
+    }
+
+    public SimpleObjectTransformer addPropertyFilter(String path, PropertyFilter propertyFilter) {
+        propertyFilterMap.put(path, propertyFilter);
         return this;
     }
 
@@ -49,6 +59,11 @@ public class SimpleObjectTransformer extends AbstractTransformer {
 
     public SimpleObjectTransformer addPropertyProcesser(String path, String propPath) {
         propertyProcesserMap.put(path, new BasicPropertyProcesser(propPath));
+        return this;
+    }
+
+    public SimpleObjectTransformer addPropertyProcesser(String path, PropertyProcesser propertyProcesser) {
+        propertyProcesserMap.put(path, propertyProcesser);
         return this;
     }
 

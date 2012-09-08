@@ -1,7 +1,12 @@
 package com.huanwuji.entity.bean;
 
 import com.huanwuji.utils.flexJson.FlexJsonUtils;
+import com.huanwuji.utils.flexJson.PropertyProcesser;
 import com.huanwuji.utils.flexJson.SimpleObjectTransformer;
+import flexjson.BeanProperty;
+import flexjson.JSONContext;
+import flexjson.Path;
+import flexjson.TypeContext;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,8 +41,16 @@ public class BasicMethod extends IdEntity {
     }
 
     public String toString() {
-        SimpleObjectTransformer simpleObjectTransformer = new SimpleObjectTransformer();
-        simpleObjectTransformer.addPropertyFilter("*", true);
+        SimpleObjectTransformer simpleObjectTransformer = new SimpleObjectTransformer()
+                .addPropertyProcesser("", new PropertyProcesser() {
+                    @Override
+                    public Object propertyProcesser(BeanProperty prop, Object value, Path path, Object object, JSONContext context, TypeContext typeContext) {
+                        if (value == null || prop.getPropertyType().getName().startsWith("java")) {
+                            return value;
+                        }
+                        return ((IdEntity) value).getId();
+                    }
+                });
         return FlexJsonUtils.getJSONSerializer(simpleObjectTransformer).serialize(this);
     }
 }

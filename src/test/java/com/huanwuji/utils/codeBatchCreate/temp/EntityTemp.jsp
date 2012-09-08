@@ -20,6 +20,7 @@ public class ${table.uClassName} extends BasicMethod {
     if(ordinaryCol.precision!=null){%>,precision = ${ordinaryCol.precision}<%}%><%
     if(ordinaryCol.length!=null){%>,length = ${ordinaryCol.length}<%}%>)
     private ${ordinaryCol.clazz} ${ordinaryCol.lPropName};
+
 <%}%>
 
 <% for(reference in references!) {%>
@@ -50,12 +51,12 @@ public class ${table.uClassName} extends BasicMethod {
 
 <% for(reference in references!) {%>
     <%if(reference.childTable.code==table.code){%>
-    public ${references.parentTable.uClassName} get${references.parentTable.uClassName}() {
-        return ${references.parentTable.lClassName};
+    public ${reference.parentTable.uClassName} get${reference.parentTable.uClassName}() {
+        return ${reference.parentTable.lClassName};
     }
 
-    public void set${references.parentTable.uClassName}(${references.parentTable.uClassName} ${references.parentTable.lClassName}) {
-        this.${references.parentTable.lClassName} = ${references.parentTable.lClassName};
+    public void set${reference.parentTable.uClassName}(${reference.parentTable.uClassName} ${reference.parentTable.lClassName}) {
+        this.${reference.parentTable.lClassName} = ${reference.parentTable.lClassName};
     }
     <%} else {%>
     public Set<${reference.childTable.uClassName}> get${reference.childTable.uClassName}s () {

@@ -1,4 +1,4 @@
-package com.huanwuji.utils;
+package java.com.huanwuji.utils;
 
 import com.huanwuji.entity.bean.Example;
 
