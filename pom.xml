@@ -11,10 +11,10 @@
     <properties>
         <!-- 主要依赖库的版本定义 -->
         <springside.version>4.0.0.RC4</springside.version>
-        <spring.version>3.1.2.RELEASE</spring.version>
+        <spring.version>3.1.3.RELEASE</spring.version>
         <aspectj.version>1.7.0</aspectj.version>
-        <hibernate.version>4.1.6.Final</hibernate.version>
-        <spring-data-jpa.version>1.1.0.RELEASE</spring-data-jpa.version>
+        <hibernate.version>4.1.8.Final</hibernate.version>
+        <spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <sitemesh.version>2.4.2</sitemesh.version>
         <shiro.version>1.2.1</shiro.version>
@@ -43,6 +43,12 @@
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>
+
+    <scm>
+        <connection>scm:svn:http://svn.yunat.com/basedev/order-sync/trunk/</connection>
+        <developerConnection>scm:svn:http://svn.yunat.com/basedev/order-sync/trunk/</developerConnection>
+        <url>http://svn.yunat.com/basedev/order-sync/trunk/</url>
+    </scm>
 
     <repositories>
         <repository>
@@ -341,10 +347,57 @@
             <artifactId>flexjson</artifactId>
             <version>2.1</version>
         </dependency>
+
+        <!-- test begin -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.jmockit</groupId>
+            <artifactId>jmockit</artifactId>
+            <version>0.999.19</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -376,9 +429,6 @@
                 <configuration>
                     <printSummary>false</printSummary>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                    <excludes>
-                        <exclude>**/*_Roo_*</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -393,6 +443,21 @@
                 <configuration>
                     <downloadSources>true</downloadSources>
                     <dependenciesAsLibraries>true</dependenciesAsLibraries>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <webappDirectory>${project.basedir}/target/webapp</webappDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <configuration>
+                    <webApp>${basedir}/target/webapp</webApp>
                 </configuration>
             </plugin>
         </plugins>

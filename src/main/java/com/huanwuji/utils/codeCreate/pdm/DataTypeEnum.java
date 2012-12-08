@@ -2,8 +2,6 @@ package com.huanwuji.utils.codeCreate.pdm;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
-
 /**
  * Created with IntelliJ IDEA.
  * <p/>
@@ -16,7 +14,7 @@ import java.util.Arrays;
 public enum DataTypeEnum {
 
     BOOL("BOOL", "Boolean"),
-    TINYINT("TINYINT", "Short"),
+    TINYINT("TINYINT", "Boolean"),
     SMALLINT("SMALLINT", "Integer"),
     INT("INT", "Integer"),
     INTEGER("INTEGER", "Integer"),
@@ -36,7 +34,9 @@ public enum DataTypeEnum {
     VARCHAR2("VARCHAR2", "String"),
     NVARCHAR2("NVARCHAR2", "String"),
     NATIONAL_VARCHAR("NATIONAL VARCHAR", "String"),
+    TINYTEXT("TINYTEXT", "String"),
     TEXT("TEXT", "String"),
+    MEDIUMTEXT("MEDIUMTEXT", "String"),
     LONGTEXT("LONGTEXT", "String"),
     CLOB("CLOB", "String"),
     RAW("RAW", "String"),
@@ -96,38 +96,38 @@ public enum DataTypeEnum {
         return code;
     }
 
-    public Integer getLength() {
+    public Long getLength() {
         return getLength("");
     }
 
-    public Integer getLength(String dataType) {
+    public Long getLength(String dataType) {
         String paramsStr = StringUtils.substringBetween(dataType, "(", ")");
         if (StringUtils.isNotEmpty(paramsStr)) {
             String[] params = paramsStr.split(",");
             if (StringUtils.isNotEmpty(params[0])) {
-                return Integer.valueOf(params[0]);
+                return Long.valueOf(params[0]);
             }
         }
         switch (this) {
             case BOOL:
-                return 1;
+                return 1L;
             case TINYINT:
-                return String.valueOf(Short.MAX_VALUE).length() - 1;
+                return Long.valueOf(String.valueOf(Byte.MAX_VALUE).length() - 1);
             case SMALLINT:
             case INT:
             case INTEGER:
-                return String.valueOf(Integer.MAX_VALUE).length() - 1;
+                return Long.valueOf(String.valueOf(Integer.MAX_VALUE).length() - 1);
             case BIGINT:
-                return String.valueOf(Long.MAX_VALUE).length() - 1;
+                return Long.valueOf(String.valueOf(Long.MAX_VALUE).length() - 1);
             case FLOAT:
             case DOUBLE:
             case BINARY_DOUBLE:
             case DECIMAL:
             case REAL:
-                return 19;
+                return 19L;
             case NUMERIC:
             case NUMBER:
-                return 19;
+                return 19L;
             case CHAR:
             case NCHAR:
             case VARCHAR:
@@ -135,9 +135,14 @@ public enum DataTypeEnum {
             case VARCHAR2:
             case NVARCHAR2:
             case NATIONAL_VARCHAR:
+            case TINYTEXT:
+                return 255L;
             case TEXT:
-                return 5000;
+                return 65535L;
+            case MEDIUMTEXT:
+                return 16777215L;
             case LONGTEXT:
+                return 4294967295L;
             case CLOB:
                 return null;
             case RAW:

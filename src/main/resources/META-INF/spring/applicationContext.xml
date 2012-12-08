@@ -43,6 +43,7 @@
                       entity-manager-factory-ref="entityManagerFactory"/>
 
     <!-- Jpa 事务配置 -->
+
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
