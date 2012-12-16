@@ -1,0 +1,137 @@
+<html lang="cn">
+<head>
+    <meta charset="utf-8" content="text/html">
+    <title>菜单编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link href="../../js/kendoui/styles/kendo.common.min.css" rel="stylesheet">-->
+    <!--<link href="../../js/kendoui/styles/kendo.bootstrap.min.css" rel="stylesheet">-->
+    <link href="../../js/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <script src="../../js/kendoui/js/jquery.min.js"></script>
+    <!--<script src="../../js/kendoui/js/kendo.web.min.js"></script>-->
+    <script src="../../js/bootstrap/js/bootstrap.js"></script>
+
+    <script src="../../js/xeno-common/xeno-common-2.1.0.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .input-form {
+            max-width: 800px;
+            /*padding: 19px 29px 29px;*/
+            margin: 0 20px 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+            -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+        }
+
+        .input-form .form-actions {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            font-size: 16px;
+            font-family: "微软雅黑", "黑体";
+        }
+
+        .input-form input {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 5px;
+            padding: 5px 9px;
+            font-family: "宋体";
+        }
+
+            /*.input-form .control-group {*/
+            /*margin-bottom: 0px;*/
+            /*}*/
+    </style>
+</head>
+<body>
+<div>
+    <fieldset>
+        <form class="input-form form-horizontal" action="/menu/save.do" method="post">
+            <input type="hidden" name="id" value=""/>
+            <input type="hidden" name="parentId" value=""/>
+
+            <h3>菜单编辑</h3>
+
+            <div class="control-group"></div>
+            <div class="control-group">
+                <label class="control-label" for="input-code">编码</label>
+
+                <div class="controls">
+                    <input type="text" id="input-code" name="code" placeholder="编码">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input-name">名称</label>
+
+                <div class="controls">
+                    <input type="text" id="input-name" name="name" placeholder="名称">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input-url">链接</label>
+
+                <div class="controls">
+                    <input type="text" id="input-url" class="input-xxlarge" name="url" placeholder="链接">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input-icon">图标</label>
+
+                <div class="controls">
+                    <input type="text" id="input-icon" class="input-xxlarge" name="icon" placeholder="图标">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input-type">类型</label>
+
+                <div class="controls">
+                    <select id="input-type" name="type" placeholder="类型">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input-isValid">图标</label>
+
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" name="isValid" id="input-isValid" value="1"
+                               checked>是</label>
+                    <label class="radio inline">
+                        <input type="radio" name="isValid" id="input-isValid1" value="0">否
+                    </label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="input-descr">描述</label>
+
+                <div class="controls">
+                    <textarea rows="3" cols="5" id="input-descr" name="descr"></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">保存</button>
+                <button type="button" class="btn">重置</button>
+            </div>
+        </form>
+    </fieldset>
+</div>
+</body>
+</html>

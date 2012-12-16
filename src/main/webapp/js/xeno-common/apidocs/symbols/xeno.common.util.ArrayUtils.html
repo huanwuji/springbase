@@ -1,0 +1,1257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - xeno.common.util.ArrayUtils</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/xeno.common.lang.Data.html">xeno.common.lang.Data</a></li>
+	
+	<li><a href="../symbols/xeno.common.lang.EventType.html">xeno.common.lang.EventType</a></li>
+	
+	<li><a href="../symbols/xeno.common.lang.GUID.html">xeno.common.lang.GUID</a></li>
+	
+	<li><a href="../symbols/xeno.common.lang.Pagination.html">xeno.common.lang.Pagination</a></li>
+	
+	<li><a href="../symbols/xeno.common.office.ExcelCellCalculator.html">xeno.common.office.ExcelCellCalculator</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.ArrayUtils.html">xeno.common.util.ArrayUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.BooleanUtils.html">xeno.common.util.BooleanUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.CryptoUtils.html">xeno.common.util.CryptoUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.DateUtils.html">xeno.common.util.DateUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.FileUtils.html">xeno.common.util.FileUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.NumberUtils.html">xeno.common.util.NumberUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.ObjectUtils.html">xeno.common.util.ObjectUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.RandomUtils.html">xeno.common.util.RandomUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.StringUtils.html">xeno.common.util.StringUtils</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class xeno.common.util.ArrayUtils
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				<p>This class contains some utilities designed to provide a convenience for handling the Array related operations.</p><p>When you use this class for some certain functions which have return values, a new Array instance will be created and returns, so the original Array passes in will not be edited.</p><p>However, if data in the Array has a deep reference, this relationship will also bring to the copied Array.</p><p>This class tries to handle null input gracefully, and each function documents its behaviour.</p>
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/src__xeno_common_util_ArrayUtils.js.html">ArrayUtils.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class xeno.common.util.ArrayUtils.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/xeno.common.util.ArrayUtils.html#constructor">xeno.common.util.ArrayUtils</a></b>()
+							</div>
+							<div class="description"><p>The class constructor.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class xeno.common.util.ArrayUtils.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.add">add</a></b>(arr, data, index)
+								</div>
+								<div class="description"><p>Adds a certain "data" into the "arr" and returns it with a new Array instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.clone">clone</a></b>(arr)
+								</div>
+								<div class="description"><p>Copies all data in the "arr" and return it with a new Array instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.contains">contains</a></b>(arr, search)
+								</div>
+								<div class="description"><p>Checks whether the "arr" contains a "search" data or not.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.firstIndexOf">firstIndexOf</a></b>(arr, search)
+								</div>
+								<div class="description"><p>Finds the first index within the "arr" and returns the index.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.get">get</a></b>(arr, index)
+								</div>
+								<div class="description"><p>Returns the certain data in the "arr" by its index.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.isEmpty">isEmpty</a></b>(arr)
+								</div>
+								<div class="description"><p>Checks whether the "arr" is null or with zero length.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.isNotEmpty">isNotEmpty</a></b>(arr)
+								</div>
+								<div class="description"><p>Checks whether the "arr" is not null and not with zero length.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.lastIndexOf">lastIndexOf</a></b>(arr, search)
+								</div>
+								<div class="description"><p>Finds the last index within the "arr" and returns the index.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.length">length</a></b>(arr)
+								</div>
+								<div class="description"><p>Returns the length of the "arr".</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.remove">remove</a></b>(arr, index)
+								</div>
+								<div class="description"><p>Removes a certain data from the "arr" by its index in it and returns a new Array instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.reverse">reverse</a></b>(arr)
+								</div>
+								<div class="description"><p>Reverses all data in the "arr" and returns a new Array instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ArrayUtils.<b><a href="../symbols/xeno.common.util.ArrayUtils.html#.subarray">subarray</a></b>(arr, begin, end)
+								</div>
+								<div class="description"><p>Returns a new sub Array from the "arr", the returned sub Array starts with the data in the begin position and ends before the end position, and all position counting is zero-based.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>xeno.common.util.ArrayUtils</b>()
+				</div>
+				
+				<div class="description">
+					<p>The class constructor.</p>
+					
+				</div>
+				
+				
+				
+				
+					
+					
+					
+						<dl class="detailList">
+						<dt class="heading">Since:</dt>
+							<dd>1.0.0</dd>
+						</dl>
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name=".add"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>add</b>(arr, data, index)
+					
+					</div>
+					<div class="description">
+						<p>Adds a certain "data" into the "arr" and returns it with a new Array instance.</p><p>The "index" maybe a float value, the "Math.floor(n)" action will be processed first to convert it into an integer Number.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: "eric" }Assume the "arr" is: ["1", "2", "3", "4", "5"]xeno.common.util.ArrayUtils.add(null, *) = nullxeno.common.util.ArrayUtils.add(arr, "6") = ["1", "2", "3", "4", "5", "6"]xeno.common.util.ArrayUtils.add(arr, "6", 0) = ["6", "1", "2", "3", "4", "5"]xeno.common.util.ArrayUtils.add(arr, obj, 3) = ["1", "2", "3", obj, "4", "5"]xeno.common.util.ArrayUtils.add(arr, "6", 5) = ["1", "2", "3", "4", "5", "6"]xeno.common.util.ArrayUtils.add(arr, "6", 6) = ["1", "2", "3", "4", "5", "6"]</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+								<dt>
+									<b>data</b>
+									
+								</dt>
+								<dd>The data to be added into.</dd>
+							
+								<dt>
+									<b>index</b>
+									
+								</dt>
+								<dd>The position to be added at.<br/>			If this value is out of the Array's range, the "data" will be added at the last position.<br/>			The default value is according to Number.MAX_VALUE.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "data" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.<br/>			Or it will be thrown when the "index" is not a Number.<br/>			Or it will be thrown when the "index" is negative.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Array.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".clone"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>clone</b>(arr)
+					
+					</div>
+					<div class="description">
+						<p>Copies all data in the "arr" and return it with a new Array instance.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: "eric" }Assume the "arr" is: ["1", null, undefined, obj, 6, true]xeno.common.util.ArrayUtils.clone(null) = nullxeno.common.util.ArrayUtils.clone(arr) = ["1", null, undefined, obj, 6, true], the "obj" is the same in the "arr"</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Array.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".contains"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>contains</b>(arr, search)
+					
+					</div>
+					<div class="description">
+						<p>Checks whether the "arr" contains a "search" data or not.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: "eric" }Assume the "newObj" is: { id: 1, name: "eric" }Assume the "arr" is: ["1", null, undefined, obj, "5", undefined, 6, true, obj]xeno.common.util.ArrayUtils.contains(null, "11") = falsexeno.common.util.ArrayUtils.contains(arr, "11") = falsexeno.common.util.ArrayUtils.contains(arr, "1") = truexeno.common.util.ArrayUtils.contains(arr, null) = truexeno.common.util.ArrayUtils.contains(arr, undefined) = truexeno.common.util.ArrayUtils.contains(arr, obj) = truexeno.common.util.ArrayUtils.contains(arr, newObj) = false</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be checked.</dd>
+							
+								<dt>
+									<b>search</b>
+									
+								</dt>
+								<dd>The data of the Array to be found.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "search" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Boolean.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".firstIndexOf"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>firstIndexOf</b>(arr, search)
+					
+					</div>
+					<div class="description">
+						<p>Finds the first index within the "arr" and returns the index.</p><p>The rule of compare data's equal in the Array is the same to JavaScript.Complex Objects will compare their references, while others like Number or String and so on, will just compare their values.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: "eric" }Assume the "newObj" is: { id: 1, name: "eric" }Assume the "arr" is: ["1", "2", "2", null, undefined, null, obj, undefined, obj]xeno.common.util.ArrayUtils.firstIndexOf(null, *) = -1xeno.common.util.ArrayUtils.firstIndexOf(arr, "11") = -1xeno.common.util.ArrayUtils.firstIndexOf(arr, "2") = 1xeno.common.util.ArrayUtils.firstIndexOf(arr, null) = 3xeno.common.util.ArrayUtils.firstIndexOf(arr, undefined) = 4xeno.common.util.ArrayUtils.firstIndexOf(arr, obj) = 6xeno.common.util.ArrayUtils.firstIndexOf(arr, newObj) = -1</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+								<dt>
+									<b>search</b>
+									
+								</dt>
+								<dd>The data of the Array to be found.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "search" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Number, integer.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".get"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>get</b>(arr, index)
+					
+					</div>
+					<div class="description">
+						<p>Returns the certain data in the "arr" by its index.</p><p>The "index" maybe a float value, the "Math.floor(n)" action will be processed first to convert it into an integer Number.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: "eric" }Assume the "arr" is: ["1", "2", "3", "4", null, undefined, obj, "5", 6, true]xeno.common.util.ArrayUtils.get(arr, 0) = "1"xeno.common.util.ArrayUtils.get(arr, 4) = nullxeno.common.util.ArrayUtils.get(arr, 6) = objxeno.common.util.ArrayUtils.get(arr, 8) = 6xeno.common.util.ArrayUtils.get(arr, 9) = true</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+								<dt>
+									<b>index</b>
+									
+								</dt>
+								<dd>The position to be gotten.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "index" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.<br/>			Or it will be thrown when the "index" is not a Number.<br/>			Or it will be thrown when the "index" is negative.<br/>			Or it will be thrown when the "index" is out of the Array's range.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>Depends on what data to get.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".isEmpty"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>isEmpty</b>(arr)
+					
+					</div>
+					<div class="description">
+						<p>Checks whether the "arr" is null or with zero length.</p>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Boolean.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".isNotEmpty"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>isNotEmpty</b>(arr)
+					
+					</div>
+					<div class="description">
+						<p>Checks whether the "arr" is not null and not with zero length.</p>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.2.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Boolean.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".lastIndexOf"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>lastIndexOf</b>(arr, search)
+					
+					</div>
+					<div class="description">
+						<p>Finds the last index within the "arr" and returns the index.</p><p>The rule of compare data's equal in the Array is the same to JavaScript.Complex Objects will compare their references, while others like Number or String and so on, will just compare their values.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: "eric" }Assume the "newObj" is: { id: 1, name: "eric" }Assume the "arr" is: ["1", "2", "2", null, undefined, null, obj, undefined, obj]xeno.common.util.ArrayUtils.lastIndexOf(null, *) = -1xeno.common.util.ArrayUtils.lastIndexOf(arr, "11") = -1xeno.common.util.ArrayUtils.lastIndexOf(arr, "2") = 2xeno.common.util.ArrayUtils.lastIndexOf(arr, null) = 5xeno.common.util.ArrayUtils.lastIndexOf(arr, undefined) = 7xeno.common.util.ArrayUtils.lastIndexOf(arr, obj) = 8xeno.common.util.ArrayUtils.lastIndexOf(arr, newObj) = -1</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+								<dt>
+									<b>search</b>
+									
+								</dt>
+								<dd>The data of the Array to be found.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "search" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Number, integer.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".length"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>length</b>(arr)
+					
+					</div>
+					<div class="description">
+						<p>Returns the length of the "arr".</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>xeno.common.util.ArrayUtils.length(null) = 0xeno.common.util.ArrayUtils.length([]) = 0xeno.common.util.ArrayUtils.length([undefined]) = 1xeno.common.util.ArrayUtils.length([undefined, undefined]) = 2xeno.common.util.ArrayUtils.length([null]) = 1xeno.common.util.ArrayUtils.length([1]) = 1xeno.common.util.ArrayUtils.length([1, 2]) = 2</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Number, integer.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".remove"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>remove</b>(arr, index)
+					
+					</div>
+					<div class="description">
+						<p>Removes a certain data from the "arr" by its index in it and returns a new Array instance.</p><p>For the null "arr", this function will return the null.</p><p>This function also handles the "index" passes in which is out of range, it will take no effect and return the same Array with different reference according to the "arr".</p><p>The "index" maybe a float value, the "Math.floor(n)" action will be processed first to convert it into an integer Number.</p>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+								<dt>
+									<b>index</b>
+									
+								</dt>
+								<dd>The position to be removed at.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "index" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.<br/>			Or it will be thrown when the "index" is not a Number.<br/>			Or it will be thrown when the "index" is negative.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Array.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".reverse"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>reverse</b>(arr)
+					
+					</div>
+					<div class="description">
+						<p>Reverses all data in the "arr" and returns a new Array instance.</p><p>If the "arr" is null, the null returns.</p>
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to be handled.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Array.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".subarray"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ArrayUtils.</span><b>subarray</b>(arr, begin, end)
+					
+					</div>
+					<div class="description">
+						<p>Returns a new sub Array from the "arr", the returned sub Array starts with the data in the begin position and ends before the end position, and all position counting is zero-based.</p><p>The "begin" or the "end" maybe a float value, the "Math.floor(n)" action will be processed first to convert it into an integer Number.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "arr" is: [1, 2, 3, 4]xeno.common.util.ArrayUtils.subarray(null, *) = nullxeno.common.util.ArrayUtils.subarray([], 0) = nullxeno.common.util.ArrayUtils.subarray([], 1) = nullxeno.common.util.ArrayUtils.subarray(arr, 0) = [1, 2, 3, 4]xeno.common.util.ArrayUtils.subarray(arr, 2) = [3, 4]xeno.common.util.ArrayUtils.subarray(arr, 3) = [4]xeno.common.util.ArrayUtils.subarray(arr, 4) = nullxeno.common.util.ArrayUtils.subarray(arr, 1, 3) = [2, 3]xeno.common.util.ArrayUtils.subarray(arr, 1, 4) = [2, 3, 4]xeno.common.util.ArrayUtils.subarray(arr, 1, 5) = [2, 3, 4]</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>arr</b>
+									
+								</dt>
+								<dd>The Array to get the sub Array from.</dd>
+							
+								<dt>
+									<b>begin</b>
+									
+								</dt>
+								<dd>The position to start from.</dd>
+							
+								<dt>
+									<b>end</b>
+									
+								</dt>
+								<dd>The position to end at (exclusive).<br/>			The default value is according to Number.MAX_VALUE.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.0.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "arr" or the "begin" is missing.<br/>			Or it will be thrown when the "arr" is not null or not an Array.<br/>			Or it will be thrown when the "begin" or the "end" is not a Number.<br/>			Or it will be thrown when the "arr" is a valid value and the "begin" or the "end" is negative.<br/>			Or it will be thrown when the "begin" is greater than the "end".</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Array.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Oct 08 2012 20:06:06 GMT+0800 (CST)
+		</div>
+	</body>
+</html>

@@ -1,0 +1,73 @@
+<html lang="cn">
+<head>
+    <meta charset="utf-8" content="text/html">
+    <title>菜单列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="../../js/kendoui/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../js/kendoui/styles/kendo.bootstrap.min.css" rel="stylesheet">
+    <link href="../../js/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <script src="../../js/jquery/jquery.js"></script>
+    <script src="../../js/kendoui/js/kendo.web.min.js"></script>
+    <script src="../../js/bootstrap/js/bootstrap.js"></script>
+
+    <script src="../../js/xeno-common/xeno-common-2.1.0.js"></script>
+</head>
+<body>
+<div id="example" class="k-content">
+    <div id="grid"></div>
+    <script>
+        $(document).ready(function () {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    type: "odata",
+                    transport: {
+                        read: "/menu/list"
+                    },
+                    schema: {
+                        model: {
+                            fields: {
+                                code: {type: "string"},
+                                descr: {type: "string"},
+                                icon: {type: "string"},
+                                id: {type: "number"},
+                                isLeaf: {type: "boolean"},
+                                isValid: {type: "boolean"},
+                                name: {type: "string"},
+                                treeId: {type: "string"},
+                                type: {type: "number"},
+                                url: {type: "string"}
+                            }
+                        }
+                    },
+                    pageSize: 10,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true
+                },
+                height: 250,
+                sortable: true,
+                filterable: true,
+                columnMenu: true,
+                pageable: true,
+                columns: [
+                    "code",
+                    "descr",
+                    "icon",
+                    "id",
+                    "isLeaf",
+                    "isValid",
+                    "name",
+                    "treeId",
+                    "type",
+                    "url"
+                ]
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

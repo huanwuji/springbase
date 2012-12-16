@@ -1,0 +1,511 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - xeno.common.util.ObjectUtils</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/xeno.common.lang.Data.html">xeno.common.lang.Data</a></li>
+	
+	<li><a href="../symbols/xeno.common.lang.EventType.html">xeno.common.lang.EventType</a></li>
+	
+	<li><a href="../symbols/xeno.common.lang.GUID.html">xeno.common.lang.GUID</a></li>
+	
+	<li><a href="../symbols/xeno.common.lang.Pagination.html">xeno.common.lang.Pagination</a></li>
+	
+	<li><a href="../symbols/xeno.common.office.ExcelCellCalculator.html">xeno.common.office.ExcelCellCalculator</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.ArrayUtils.html">xeno.common.util.ArrayUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.BooleanUtils.html">xeno.common.util.BooleanUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.CryptoUtils.html">xeno.common.util.CryptoUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.DateUtils.html">xeno.common.util.DateUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.FileUtils.html">xeno.common.util.FileUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.NumberUtils.html">xeno.common.util.NumberUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.ObjectUtils.html">xeno.common.util.ObjectUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.RandomUtils.html">xeno.common.util.RandomUtils</a></li>
+	
+	<li><a href="../symbols/xeno.common.util.StringUtils.html">xeno.common.util.StringUtils</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class xeno.common.util.ObjectUtils
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				<p>This class contains some utilities designed to provide a convenience for handling the Object related operations.</p>
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/src__xeno_common_util_ObjectUtils.js.html">ObjectUtils.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class xeno.common.util.ObjectUtils.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/xeno.common.util.ObjectUtils.html#constructor">xeno.common.util.ObjectUtils</a></b>()
+							</div>
+							<div class="description"><p>The class constructor.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class xeno.common.util.ObjectUtils.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ObjectUtils.<b><a href="../symbols/xeno.common.util.ObjectUtils.html#.hasFunction">hasFunction</a></b>(obj, name)
+								</div>
+								<div class="description"><p>Tests whether the "obj" has the named function or not.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">xeno.common.util.ObjectUtils.<b><a href="../symbols/xeno.common.util.ObjectUtils.html#.hasProperty">hasProperty</a></b>(obj, name)
+								</div>
+								<div class="description"><p>Tests whether the "obj" has the named property or not.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>xeno.common.util.ObjectUtils</b>()
+				</div>
+				
+				<div class="description">
+					<p>The class constructor.</p>
+					
+				</div>
+				
+				
+				
+				
+					
+					
+					
+						<dl class="detailList">
+						<dt class="heading">Since:</dt>
+							<dd>1.1.0</dd>
+						</dl>
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name=".hasFunction"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ObjectUtils.</span><b>hasFunction</b>(obj, name)
+					
+					</div>
+					<div class="description">
+						<p>Tests whether the "obj" has the named function or not.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: null, func: function(a, b) {} }xeno.common.util.ObjectUtils.hasFunction(obj, "id") = falsexeno.common.util.ObjectUtils.hasFunction(obj, "name") = falsexeno.common.util.ObjectUtils.hasFunction(obj, "age") = falsexeno.common.util.ObjectUtils.hasFunction(obj, "func") = true</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>obj</b>
+									
+								</dt>
+								<dd>The Object to be tested.</dd>
+							
+								<dt>
+									<b>name</b>
+									
+								</dt>
+								<dd>The function name.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.1.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "obj" or the "name" is missing.<br/>			Or it will be thrown when the "obj" is undefined or null.<br/>			Or it will be thrown when the "name" is not a String.<br/>			Or it will be thrown when the "name" is a blank String.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Boolean.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".hasProperty"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">xeno.common.util.ObjectUtils.</span><b>hasProperty</b>(obj, name)
+					
+					</div>
+					<div class="description">
+						<p>Tests whether the "obj" has the named property or not.</p>
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"><b>Examples</b>Assume the "obj" is: { id: 1, name: null, func: function(a, b) {} }xeno.common.util.ObjectUtils.hasProperty(obj, "id") = truexeno.common.util.ObjectUtils.hasProperty(obj, "name") = truexeno.common.util.ObjectUtils.hasProperty(obj, "age") = falsexeno.common.util.ObjectUtils.hasProperty(obj, "func") = false</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>obj</b>
+									
+								</dt>
+								<dd>The Object to be tested.</dd>
+							
+								<dt>
+									<b>name</b>
+									
+								</dt>
+								<dd>The property name.</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Since:</dt>
+								<dd>1.1.0</dd>
+							</dl>
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									 <b></b>
+								</dt>
+								<dd>The Error will be thrown when the "obj" or the "name" is missing.<br/>			Or it will be thrown when the "obj" is undefined or null.<br/>			Or it will be thrown when the "name" is not a String.<br/>			Or it will be thrown when the "name" is a blank String.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The Boolean.</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Oct 08 2012 20:06:06 GMT+0800 (CST)
+		</div>
+	</body>
+</html>

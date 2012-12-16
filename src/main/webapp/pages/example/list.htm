@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup editing</title>
+
+    <link href="../../../js/kendoui_web/examples/content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../js/kendoui_web/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../js/kendoui_web/styles/kendo.default.min.css" rel="stylesheet">
+
+    <script src="../../../js/kendoui_web/js/jquery.min.js"></script>
+    <script src="../../../js/kendoui_web/js/kendo.web.min.js"></script>
+    <script src="../../../js/kendoui_web/examples/content/shared/js/console.js"></script>
+</head>
+<body>
+<!--<a class="offline-button" href="../index.html">Back</a>-->
+
+<div id="example" class="k-content">
+    <div id="grid"></div>
+
+    <script>
+        $(document).ready(function () {
+            var crudServiceBaseUrl = "http://localhost:8082",
+                    dataSource = new kendo.data.DataSource({
+                        transport:{
+                            read:{
+                                url:crudServiceBaseUrl + "/exampleRest",
+                                dataType:"jsonp"
+                            },
+                            update:{
+                                url:crudServiceBaseUrl + "/Products/Update",
+                                dataType:"jsonp"
+                            },
+                            destroy:{
+                                url:crudServiceBaseUrl + "/Products/Destroy",
+                                dataType:"jsonp"
+                            },
+                            create:{
+                                url:crudServiceBaseUrl + "/Products/Create",
+                                dataType:"jsonp"
+                            },
+                            parameterMap:function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models:kendo.stringify(options.models)};
+                                }
+                            }
+                        },
+                        batch:true,
+                        pageSize:30,
+                        schema:{
+                            model:{
+                                id:"id",
+                                fields:{
+                                    id:{ editable:false, nullable:true },
+                                    text:{ validation:{ required:true } }
+//                                    UnitPrice:{ type:"number", validation:{ required:true, min:1} },
+//                                    Discontinued:{ type:"boolean" },
+//                                    UnitsInStock:{ type:"number", validation:{ min:0, required:true } }
+                                }
+                            }
+                        }
+                    });
+
+            $("#grid").kendoGrid({
+                dataSource:dataSource,
+                pageable:true,
+                height:400,
+                toolbar:["create"],
+                columns:[
+                    { field:"text", title:"text" },
+//                    { field:"UnitPrice", title:"Unit Price", format:"{0:c}", width:"150px" },
+//                    { field:"UnitsInStock", title:"Units In Stock", width:"150px" },
+//                    { field:"Discontinued", width:"100px" },
+                    { command:["edit", "destroy"], title:"&nbsp;", width:"210px" }
+                ],
+                editable:"popup"
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>
