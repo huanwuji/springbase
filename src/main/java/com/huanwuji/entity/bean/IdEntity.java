@@ -21,9 +21,8 @@ import javax.validation.constraints.NotNull;
 @MappedSuperclass
 public abstract class IdEntity implements Persistable<Long> {
 
-    protected Long id;
+    public static final String ID = "id";
 
-    @NotNull
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,6 +31,8 @@ public abstract class IdEntity implements Persistable<Long> {
     //@GenericGenerator(name = "system-uuid", strategy = "uuid")
 //    @GeneratedValue(generator = "longIdGenerator")
 //    @GenericGenerator(name = "longIdGenerator", strategy = "com.justonetech.core.orm.hibernate.LongIdGenerator")
+    protected Long id;
+
     public Long getId() {
         return id;
     }
@@ -40,7 +41,6 @@ public abstract class IdEntity implements Persistable<Long> {
         this.id = id;
     }
 
-    @Transient
     @JSON(include = false)
     public boolean isNew() {
         return null == this.id;

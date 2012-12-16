@@ -21,16 +21,17 @@ public class CodebuilderTest {
     public static void main(String[] args) throws DocumentException {
 //        String basePath = "E:\\git\\springbase\\src\\test\\/java\\com\\huanwuji\\utils\\codeBatchCreate";
         String basePath = "D:\\git\\springbase\\src\\test\\java\\com\\huanwuji\\utils\\codeBatchCreate";
+        String packagePath = "D:\\git\\springbase\\src\\main\\java\\com\\huanwuji\\";
         PdmParse pdmParse = new PdmParse();
-        PdmModel pdmModel = pdmParse.parsePdm(basePath + "\\PhysicalDataModel_1.pdm");
+        PdmModel pdmModel = pdmParse.parsePdm(basePath + "\\baseProject.pdm");
         CodeBuilder codeBuilder = new CodeBuilder(basePath, pdmModel);
         List<Table> tables = pdmModel.getTables();
 //        for (Table table : tables) {
-            codeBuilder.setTable("table_6");
-            codeBuilder.createService("\\temp\\RepositoryTemp.jsp"
-                    , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + "Repository.java");
-            codeBuilder.createEntity("\\temp\\EntityTemp.jsp"
-                    , basePath + "\\outPut\\" + codeBuilder.getTable().getUClassName() + ".java");
+        codeBuilder.setTable("MENU");
+        codeBuilder.createEntity("\\temp\\EntityTemp.jsp"
+                , packagePath + "entity\\bean\\" + codeBuilder.getTable().getUClassName() + ".java");
+        codeBuilder.createService("\\temp\\RepositoryTemp.jsp"
+                , packagePath + "repository\\" + codeBuilder.getTable().getUClassName() + "Repository.java");
 //        }
     }
 }

@@ -73,7 +73,7 @@ public enum DataTypeEnum {
                         return "Double";
                     }
                     if (StringUtils.isNotEmpty(params[0])) {
-                        if (String.valueOf(Integer.MAX_VALUE).length() - 1 > Integer.parseInt(params[0])) {
+                        if (String.valueOf(Integer.MAX_VALUE).length() >= Integer.parseInt(params[0])) {
                             return "Integer";
                         } else {
                             return "Long";

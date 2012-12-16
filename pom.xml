@@ -10,21 +10,21 @@
 
     <properties>
         <!-- 主要依赖库的版本定义 -->
-        <springside.version>4.0.0.RC4</springside.version>
-        <spring.version>3.1.3.RELEASE</spring.version>
+        <springside.version>4.0.1.GA-SNAPSHOT</springside.version>
+        <spring.version>3.2.0.RELEASE</spring.version>
         <aspectj.version>1.7.0</aspectj.version>
-        <hibernate.version>4.1.8.Final</hibernate.version>
+        <hibernate.version>4.1.9.Final</hibernate.version>
         <spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <sitemesh.version>2.4.2</sitemesh.version>
         <shiro.version>1.2.1</shiro.version>
-        <hibernate-validator.version>4.3.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
         <jackson.version>2.0.5</jackson.version>
         <slf4j.version>1.6.6</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <commons-lang3.version>3.1</commons-lang3.version>
         <guava.version>13.0</guava.version>
-        <junit.version>4.10</junit.version>
+        <junit.version>4.11</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <selenium.version>2.25.0</selenium.version>
         <jetty.version>7.6.5.v20120716</jetty.version>
@@ -32,7 +32,7 @@
 
         <!-- Plugin的属性定义 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.6</jdk.version>
+        <jdk.version>1.7.0_05</jdk.version>
 
         <!-- 项目属性 -->
         <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
@@ -66,6 +66,11 @@
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
         </repository>
+        <repository>
+            <id>jboss</id>
+            <name>jboss</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
     </repositories>
 
 
@@ -94,12 +99,17 @@
 
     <!-- 依赖项定义 -->
     <dependencies>
-        <!-- SPRINGSIDE -->
-        <!--<dependency>-->
-        <!--<groupId>org.springside</groupId>-->
-        <!--<artifactId>springside-core</artifactId>-->
-        <!--<version>${springside.version}</version>-->
-        <!--</dependency>-->
+        <!--SPRINGSIDE-->
+        <dependency>
+            <groupId>org.springside</groupId>
+            <artifactId>springside-core</artifactId>
+            <version>${springside.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.beetl</groupId>
+            <artifactId>beetl-core</artifactId>
+            <version>1.2M1</version>
+        </dependency>
 
         <!-- SPRING begin -->
         <dependency>
@@ -368,6 +378,17 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.22</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0-rc1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -409,8 +430,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <!--<source>${java.version}</source>-->
+                    <!--<target>${java.version}</target>-->
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>

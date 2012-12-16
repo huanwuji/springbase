@@ -19,7 +19,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!--<property name="persistenceUnitName" value="persistenceUnit"/>-->
-        <property name="persistenceUnitName" value="defaultPU"/>
+        <property name="persistenceUnitName" value="persistenceMySql"/>
         <!--<property name="persistenceUnitName" value="persistenceH2"/>-->
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <property name="jpaProperties">
@@ -72,71 +72,19 @@
     <!--<property name="validationQuery" value="SELECT 1 FROM DUAL"/>-->
     <!--</bean>-->
 
-    <!-- 约定优于配置，约定优于配置 -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="${database.driverClassName}"></property>
-        <property name="jdbcUrl" value="${database.url}"></property>
-        <property name="minPoolSize" value="1"></property>
-        <property name="maxPoolSize" value="50"></property>
-
-        <!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
-        <property name="initialPoolSize" value="3"></property>
-
-        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
-        <property name="acquireIncrement" value="1"></property>
-
-        <!--最大空闲时间,600秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 ;commend:1800-->
-        <property name="maxIdleTime" value="600"></property>
-        <!--每600秒检查所有连接池中的空闲连接。Default: 0 ;commend:1800 -->
-        <property name="idleConnectionTestPeriod" value="600"></property>
-
-        <!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
-        <property name="acquireRetryAttempts" value="30"></property>
-
-        <!--两次连接中间隔时间，单位毫秒。Default: 1000 -->
-        <property name="acquireRetryDelay" value="1000"></property>
-
-        <!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。
-       如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default: false-->
-        <property name="breakAfterAcquireFailure" value="true"></property>
-
-        <!--当连接池用完时客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException,如设为0则无限期等待。单位毫秒。Default: 0 -->
-        <property name="checkoutTimeout" value="0"></property>
-
-        <!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的时候都将校验其有效性。
-        建议使用idleConnectionTestPeriod或automaticTestTable等方法来提升连接测试的性能。Default: false -->
-        <property name="testConnectionOnCheckout" value="false"></property>
-
-        <!--如果设为true那么在取得连接的同时将校验连接的有效性。默认为false-->
-        <property name="testConnectionOnCheckin" value="true"></property>
-        <property name="preferredTestQuery" value="select 1 from dual"></property>
-
-        <!--<property name="connectionCustomizerClassName"-->
-        <!--value="com.justonetech.core.c3p0.OracleConnectionCustomizer"/>-->
-        <property name="properties">
-            <props>
-                <prop key="v$session.program">orcl</prop>
-                <prop key="user">${database.username}</prop>
-                <prop key="password">${database.password}</prop>
-            </props>
-        </property>
-    </bean>
-
     <!-- BoneCP configuration -->
-    <!--<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">-->
-    <!--<property name="driverClass" value="${database.driverClassName}"/>-->
-    <!--<property name="jdbcUrl" value="${database.url}"/>-->
-    <!--<property name="username" value="${database.username}"/>-->
-    <!--<property name="password" value="${database.password}"/>-->
-    <!--<property name="idleConnectionTestPeriod" value="60"/>-->
-    <!--<property name="idleMaxAge" value="240"/>-->
-    <!--<property name="maxConnectionsPerPartition" value="30"/>-->
-    <!--<property name="minConnectionsPerPartition" value="10"/>-->
-    <!--<property name="partitionCount" value="3"/>-->
-    <!--<property name="acquireIncrement" value="5"/>-->
-    <!--<property name="statementsCacheSize" value="100"/>-->
-    <!--<property name="releaseHelperThreads" value="3"/>-->
-    <!--</bean>-->
+    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="driverClass" value="${database.driverClassName}"/>
+        <property name="jdbcUrl" value="${database.url}"/>
+        <property name="username" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+        <property name="maxConnectionsPerPartition" value="30"/>
+        <property name="minConnectionsPerPartition" value="10"/>
+        <property name="partitionCount" value="3"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="statementsCacheSize" value="100"/>
+        <property name="releaseHelperThreads" value="3"/>
+    </bean>
 
     <!--<bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
     <!--<property name="databasePlatform">-->

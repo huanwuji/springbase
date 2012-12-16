@@ -32,6 +32,7 @@ public class SimpleObjectTransformer extends AbstractTransformer {
 
     private Map<String, PropertyProcesser> propertyProcesserMap = new HashMap<String, PropertyProcesser>();
 
+    //利用flexjson path的概念，对当前路径上的对象，用proputils.getvalue的值路径获取值，到当前路径上
     public SimpleObjectTransformer addObjectProcesser(String path, String... propPaths) {
         objectProcesserMap.put(path, new BasicObjectProcesser(propPaths));
         return this;
@@ -52,11 +53,13 @@ public class SimpleObjectTransformer extends AbstractTransformer {
         return this;
     }
 
+    //过滤非java包中的值
     public SimpleObjectTransformer addPropertyFilter(String path, boolean filterNotBasicObj) {
         propertyFilterMap.put(path, new BasicPropertyFilter(filterNotBasicObj));
         return this;
     }
 
+    //根据当前的属性全路径，自定义过滤匹配方式，
     public SimpleObjectTransformer addPropertyProcesser(String path, String propPath) {
         propertyProcesserMap.put(path, new BasicPropertyProcesser(propPath));
         return this;

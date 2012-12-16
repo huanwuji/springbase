@@ -8,8 +8,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 
-    <!--<mvc:resources mapping="/js/**" location="/js/"/>-->
-    <!--<mvc:resources mapping="/views/**" location="/views/"/>-->
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/views/**" location="/views/"/>
 
     <!-- 自动扫描且只扫描@Controller -->
     <context:component-scan base-package="com.huanwuji">
@@ -21,14 +21,29 @@
     <!-- 将无法mapping到Controller的path交给default servlet handler处理 -->
     <mvc:default-servlet-handler/>
 
-    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
-        <property name="caseSensitive" value="true"/>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">-->
+    <!--<property name="caseSensitive" value="true"/>-->
+    <!--</bean>-->
 
-    <!-- ControllerClassNameHandlerMapping用于匹配我们的Controller -->
-    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping">
-        <property name="caseSensitive" value="true"/>
-    </bean>
+    <!--因为在dispatcher-servlet中的BindingInitializer中applicationContext不能完全初始化，不能取到daoservice-->
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">-->
+    <!--<property name="cacheSeconds" value="0"/>-->
+    <!--<property name="webBindingInitializer">-->
+    <!--<bean class="com.justonetech.core.editor.BindingInitializer"/>-->
+    <!--</property>-->
+    <!-- 配置一下对json数据的转换 -->
+    <!--<property name="messageConverters">-->
+    <!--<list>-->
+    <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!-- 文件上传支持Bean -->
+    <!--<bean id="multipartResolver"-->
+    <!--class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--<property name="maxUploadSize" value="20480000"/>-->
+    <!--</bean>-->
 
     <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>-->
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->

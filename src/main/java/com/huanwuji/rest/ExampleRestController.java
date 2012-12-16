@@ -25,7 +25,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping(value = "exampleRest")
+@RequestMapping("/exampleRest")
 public class ExampleRestController {
 
     @Autowired

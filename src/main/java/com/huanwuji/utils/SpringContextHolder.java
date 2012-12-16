@@ -1,14 +1,12 @@
 package com.huanwuji.utils;
 
-import com.huanwuji.repository.BaseRepository;
+//import com.huanwuji.repository.BaseRepository;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityManager;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,9 +17,9 @@ import javax.persistence.EntityManager;
  * To change this template use File | Settings | File Templates.
  */
 @Component
-public class SpringContextUtils implements ApplicationContextAware {
+public class SpringContextHolder implements ApplicationContextAware {
 
-    private static final Logger logger = LoggerFactory.getLogger(SpringContextUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);
 
     private static ApplicationContext applicationContext = null;
 
@@ -64,12 +62,12 @@ public class SpringContextUtils implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) {
         logger.debug("注入ApplicationContext到SpringContextHolder:{}", applicationContext);
 
-        if (SpringContextUtils.applicationContext != null) {
+        if (SpringContextHolder.applicationContext != null) {
             logger.warn("SpringContextHolder中的ApplicationContext被覆盖, 原有ApplicationContext为:"
-                    + SpringContextUtils.applicationContext);
+                    + SpringContextHolder.applicationContext);
         }
 
-        SpringContextUtils.applicationContext = applicationContext; //NOSONAR
+        SpringContextHolder.applicationContext = applicationContext; //NOSONAR
     }
 
     /**
@@ -78,15 +76,15 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @throws Exception Exception
      */
     public void destroy() throws Exception {
-        SpringContextUtils.clearHolder();
+        SpringContextHolder.clearHolder();
     }
 
     /**
      * @return BaseRepository
      */
-    public static BaseRepository getBaseRepository() {
-        return SpringContextUtils.getBean(BaseRepository.class);
-    }
+//    public static BaseRepository getBaseRepository() {
+//        return SpringContextHolder.getBean(BaseRepository.class);
+//    }
 
     /**
      * 检查ApplicationContext不为空.

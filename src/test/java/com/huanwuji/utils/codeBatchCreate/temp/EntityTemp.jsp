@@ -10,9 +10,14 @@ import javax.persistence.*;
  * Time: 下午5:09
  * To change this template use File | Settings | File Templates.
  */
+//${table.name}
 @Entity
 @Table(name = "${table.code}")
 public class ${table.uClassName} extends BasicMethod {
+
+<% for(ordinaryCol in ordinaryCols!) {%>
+    public static final String ${ordinaryCol.code} = "${ordinaryCol.lPropName}";
+<%}%>
 
 <% for(ordinaryCol in ordinaryCols!) {%>
     //${ordinaryCol.name}
@@ -47,6 +52,7 @@ public class ${table.uClassName} extends BasicMethod {
     public void set${ordinaryCol.uPropName}(${ordinaryCol.clazz} ${ordinaryCol.lPropName}) {
         this.${ordinaryCol.lPropName} = ${ordinaryCol.lPropName};
     }
+
 <%}%>
 
 <% for(reference in references!) {%>
@@ -58,6 +64,7 @@ public class ${table.uClassName} extends BasicMethod {
     public void set${reference.parentTable.uClassName}(${reference.parentTable.uClassName} ${reference.parentTable.lClassName}) {
         this.${reference.parentTable.lClassName} = ${reference.parentTable.lClassName};
     }
+
     <%} else {%>
     public Set<${reference.childTable.uClassName}> get${reference.childTable.uClassName}s () {
         return ${reference.childTable.lClassName}s;

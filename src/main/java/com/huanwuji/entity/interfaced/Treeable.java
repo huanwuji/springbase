@@ -8,9 +8,9 @@ package com.huanwuji.entity.interfaced;
  * Time: 下午1:26
  * To change this template use File | Settings | File Templates.
  */
-public interface Treeable<T> {
+public interface Treeable<T, ID extends java.io.Serializable> extends org.springframework.data.domain.Persistable<ID> {
 
-    public Long getId();
+    public ID getId();
 
     public T getParent();
 

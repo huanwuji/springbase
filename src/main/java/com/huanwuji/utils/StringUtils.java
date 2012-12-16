@@ -32,4 +32,9 @@ public class StringUtils {
         }
         return sb.toString();
     }
+
+    public static String toJsonP(String callback, String json) {
+        StringBuilder sb = new StringBuilder();
+        return sb.append(callback).append("(").append(json).append(")").toString();
+    }
 }
