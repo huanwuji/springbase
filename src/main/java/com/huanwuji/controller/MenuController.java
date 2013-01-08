@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -37,14 +38,14 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuRepository menuRepository;
 
-    @RequestMapping("list")
+    @RequestMapping(value = "")
     public ResponseEntity<?> list(Model model, String $callback) {
         List<Menu> list = menuService.getMenus();
 
         StringBuilder jsonp = new StringBuilder();
-        jsonp.append($callback).append("({\"d\":{\"result\":");
+//        jsonp.append($callback).append("({\"d\":{\"results\":");
         FlexJsonUtils.getJSONSerializer(new SimpleObjectTransformer().addPropertyFilter("*", true)).exclude("*.class").serialize(list, jsonp);
-        jsonp.append(",\"__count\" : \"830\"}})");
+//        jsonp.append(",\"__count\" : \"830\"}})");
         return new ResponseEntity(jsonp.toString(), HttpStatus.OK);
     }
 
@@ -68,11 +69,11 @@ public class MenuController extends BaseController {
         return "menu/input";
     }
 
-    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String update(Model model, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> get(Model model, @PathVariable("id") Long id) {
         Menu menu = menuRepository.findOne(id);
-        model.addAttribute("bean", menu);
-        return "menu/input";
+        String json = FlexJsonUtils.getJSONSerializer(new SimpleObjectTransformer().addPropertyFilter("*", true).addPropertyFilter("parent", "parent.id")).exclude("*.class").serialize(menu);
+        return new ResponseEntity(json, HttpStatus.OK);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
@@ -82,14 +83,21 @@ public class MenuController extends BaseController {
         menuRepository.save(menu);
     }
 
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public void remove(@PathVariable("id") Long id, HttpServletResponse response) {
+        menuRepository.delete(id);
+        sendSuccess(response, id.toString());
+    }
+
     @RequestMapping(value = "save")
-    public void save(@Valid Menu menu) {
+    public ResponseEntity<?> save(@Valid Menu menu) {
         if (!menu.isNew()) {
             Menu dbMenu = menuRepository.findOne(menu.getId());
             BeanUtils.copyProperties(menu, dbMenu, new String[]{Menu.ID, Menu.IS_LEAF, Menu.PARENT, Menu.IS_LEAF});
             menu = dbMenu;
         }
         menuRepository.save(menu);
+        return new ResponseEntity(new Status(true, String.valueOf(menu.getId())), HttpStatus.OK);
     }
 
     @RequestMapping("grid")

@@ -9,65 +9,134 @@
     <link href="../../js/kendoui/styles/kendo.bootstrap.min.css" rel="stylesheet">
     <link href="../../js/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../../js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../../style/common.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../js/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 
     <script src="../../js/jquery/jquery.js"></script>
-    <script src="../../js/kendoui/js/kendo.web.min.js"></script>
+    <script src="../../js/kendoui/src/js/kendo.web.js"></script>
+    <script src="../../js/kendoui/js/cultures/kendo.culture.zh-CN.min.js"></script>
     <script src="../../js/bootstrap/js/bootstrap.js"></script>
-
     <script src="../../js/xeno-common/xeno-common-2.1.0.js"></script>
+    <script src="../../js/zTree/js/jquery.ztree.all-3.5.js"></script>
+    <script src="../../js/common.js"></script>
 </head>
-<body>
-<div id="example" class="k-content">
-    <div id="grid"></div>
-    <script>
-        $(document).ready(function () {
-            $("#grid").kendoGrid({
-                dataSource: {
+<body> '
+<div id="menu-container">
+    <div id="menu-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel"
+         aria-hidden="true"></div>
+    <div id="example" class="k-content">
+
+        <div id="grid">
+            <div class="k-toolbar k-grid-toolbar">
+                <div class="k-toolbar k-grid-toolbar">
+                    <a class="k-button k-button-icontext k-grid-add" href="#"><span class="k-icon k-add"></span>创建</a>
+                    <a class="k-button k-button-icontext k-grid-view" href="#"><span class=" "></span>查看</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                var container = $("#menu-container");
+                var modal = $("#menu-modal", container);
+                var beanName = "menu";
+                var pojo = [
+                    {field: "id", dsProps: {type: "string"}, colProps: {hidden: true}},
+                    {field: "code", dsProps: {type: "string", validation: {required: true, validationMessage: "请输入编号"}}, colProps: {title: "编码"}},
+                    {field: "name", dsProps: {type: "string"}, colProps: {title: "名称"}},
+                    {field: "type", dsProps: {type: "string"}, colProps: {title: "类型"}},
+                    {field: "url", dsProps: {type: "string"}, colProps: {title: "链接"}},
+                    {field: "icon", dsProps: {type: "string"}, colProps: {hidden: true, title: "图标"}},
+                    {field: "descr", dsProps: {type: "string"}, colProps: {title: "备注"}},
+                    {field: "isLeaf", dsProps: {type: "string", defaultValue: true}, colProps: {}},
+                    {field: "isValid", dsProps: {type: "string"}, colProps: {title: "是否有效"}},
+                    {field: "treeId", dsProps: {type: "string"}, colProps: {}}
+                ];
+                var dataSource = new kendo.data.DataSource({
                     type: "odata",
                     transport: {
-                        read: "/menu/list"
+                        read: {
+                            url: "/menu/list",
+                            data: "json"
+                        },
+                        parameterMap: function (data, type) {
+                            return {
+                                pageIndex: data.page,
+                                size: data.pageSize,
+//                        orderBy: data.sort[0].field,
+                                filter: JSON.stringify(data.filter)
+                            };
+                        }
                     },
                     schema: {
                         model: {
-                            fields: {
-                                code: {type: "string"},
-                                descr: {type: "string"},
-                                icon: {type: "string"},
-                                id: {type: "number"},
-                                isLeaf: {type: "boolean"},
-                                isValid: {type: "boolean"},
-                                name: {type: "string"},
-                                treeId: {type: "string"},
-                                type: {type: "number"},
-                                url: {type: "string"}
-                            }
+                            id: "id",
+                            fields: huanwuji.basePageHelp.toDataSourceFields(pojo)
                         }
                     },
+                    filter: {
+                        logic: "or",
+                        filters: [
+                            { field: "orderId", operator: "eq", value: 10248 },
+                            { field: "customerName", operator: "startswith", value: "Paul" }
+                        ]
+                    },
+                    sort: { field: "orderId", dir: "asc" },
                     pageSize: 10,
                     serverPaging: true,
                     serverFiltering: true,
                     serverSorting: true
-                },
-                height: 250,
-                sortable: true,
-                filterable: true,
-                columnMenu: true,
-                pageable: true,
-                columns: [
-                    "code",
-                    "descr",
-                    "icon",
-                    "id",
-                    "isLeaf",
-                    "isValid",
-                    "name",
-                    "treeId",
-                    "type",
-                    "url"
-                ]
-            });
-        });
-    </script>
+                });
+                var grid = $("#grid").kendoGrid({
+                    dataSource: dataSource,
+                    height: 250,
+//                filterable: true,
+                    sortable: true,
+                    pageable: true,
+                    columns: (function () {
+                        var command = { command: [
+                            {
+                                text: "编辑",
+                                click: function (e) {
+                                    e.preventDefault();
+                                    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                                    $.get("/views/" + beanName + "/form.htm").success(function (templ) {
+                                        $.getJSON("/" + beanName + "/update/" + dataItem.id).success(function (data) {
+                                            var temp = kendo.template(templ);
+                                            modal.html(temp(data));
+                                            huanwuji.basePageHelp.setValidation($("form", modal), pojo);
+                                            modal.modal();
+                                        })
+                                    });
+                                }
+                            },
+                            {
+                                text: "删除",
+                                click: function (e) {
+                                    e.preventDefault();
+                                    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+                                    $.get("/" + beanName + "/remove/" + dataItem.id).success(function (data) {
+                                        dataSource.remove(dataItem);
+                                    });
+                                }
+                            }
+                        ], title: "&nbsp;", width: "170px" };
+                        var columns = huanwuji.basePageHelp.toColumns(pojo);
+                        columns.push(command);
+                        return columns;
+                    })()
+                });
+                $(".k-grid-add", container).click(function () {
+                    $.get("/views/" + beanName + "/form.htm").success(function (templ) {
+                        var temp = kendo.template(templ);
+                        var data = huanwuji.basePageHelp.createEmptyPojo(pojo);
+                        modal.html(temp(data));
+                        huanwuji.basePageHelp.setValidation($("form", modal), pojo);
+                        modal.modal();
+                    });
+                });
+            })
+        </script>
+    </div>
 </div>
 </body>
 </html>

@@ -45,7 +45,7 @@ public class BaseController {
     class Status {
 
         private boolean success;
-        private String msg;
+        private Object msg;
 
         public Status() {
         }
@@ -65,13 +65,12 @@ public class BaseController {
             this.success = success;
         }
 
-        public String getMsg() {
+        public Object getMsg() {
             return msg;
         }
 
-        public void setMsg(String msg) {
+        public void setMsg(Object msg) {
             this.msg = msg;
         }
-
     }
 }
