@@ -23,7 +23,7 @@ public class Column {
     private String dataType;
     private DataTypeEnum dataTypeEnum;
     private String column_Mandatory;
-    private Integer length;
+    private Long length;
     private Integer precision;
     private String clazz;
 
@@ -129,11 +129,11 @@ public class Column {
         this.column_Mandatory = column_Mandatory;
     }
 
-    public Integer getLength() {
+    public Long getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
+    public void setLength(Long length) {
         this.length = length;
     }
 

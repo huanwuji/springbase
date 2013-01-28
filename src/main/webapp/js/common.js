@@ -1,4 +1,4 @@
-var huanwuji = {};
+var huanwuji = huanwuji || {};
 huanwuji.basePageHelp = {
     toDataSourceFields: function (pojo) {
         var dsFields = {};

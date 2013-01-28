@@ -14,15 +14,15 @@
                 <label class="control-label" for="input-code">编码</label>
 
                 <div class="controls">
-                    <input type="text" id="input-code" name="code" value="<%= code%>" placeholder="编码">
-                    <span class="alert k-invalid-msg" data-for="input-code"></span>
+                    <input type="text" id="input-code" name="code" value="<%= code%>" class="required" placeholder="编码"
+                           required/>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="input-name">名称</label>
 
                 <div class="controls">
-                    <input type="text" id="input-name" name="name" value="<%= name%>" placeholder="名称">
+                    <input type="text" id="input-name" name="name" value="<%= name%>" placeholder="名称" required>
                 </div>
             </div>
             <div class="control-group">
@@ -78,9 +78,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-            <a href="\#" rel="tooltip" data-placement="top" id="msg" data-original-title="Tooltip on top">
-                <button class="btn btn-primary save" type="button">保存</button>
-            </a>
+            <button class="btn btn-primary save" type="button">保存</button>
         </div>
     </form>
 </div>

@@ -14,6 +14,7 @@
     <script src="../../js/bootstrap/js/bootstrap.js"></script>
     <script src="../../js/backbone/underscore.js"></script>
     <script src="../../js/backbone/backbone.js"></script>
+    <script src="../../js/jquery/huanwuji.validate.js"></script>
     <script src="../../js/xeno-common/xeno-common-2.1.0.js"></script>
     <script src="../../js/zTree/js/jquery.ztree.all-3.5.js"></script>
     <script src="../../js/common.js"></script>
@@ -82,10 +83,11 @@
             $(document).ready(function () {
                 var menuContainer = $("#menu-container");
                 var Menu = Backbone.Model.extend({
+                    validateUtils: null,
                     defaults: {
                         id: "",
                         code: "",
-                        Nname: "",
+                        name: "",
                         isLeaf: "",
                         treeId: "",
                         url: "",
@@ -94,6 +96,13 @@
                         descr: "",
                         isValid: true,
                         parent: ""
+                    }, validate: function (attributes, options) {
+                        _.each(attributes, function (value, key) {
+                            if (this.validateUtils.validate(key, value)) {
+                                console.log(key, value);
+                                return false;
+                            }
+                        }, this);
                     }
                 });
                 var MenuList = Backbone.Collection.extend({
@@ -104,17 +113,28 @@
 
                 var MenuFormView = Backbone.View.extend({
                     id: "menuFormView",
-                    template: new huanwuji.LoadTemp("/views/menu/form.htm"),
+                    events: {
+                        "click button.save": "save"
+                    }, template: new huanwuji.LoadTemp("/views/menu/form.htm"),
                     initialize: function () {
-                    },
-                    render: function () {
+                    }, render: function () {
                         this.$el.html(this.template.tpl(this.model.toJSON()));
                         menuContainer.append(this.$el);
+                        this.initValidate(this.$el);
                         var that = this;
                         this.$el.children().eq(0).modal().on("hidden", function () {
                             that.remove();
                         });
                         return this;
+                    }, initValidate: function (form) {
+                        var validateUtils = new huanwuji.validateUtils(form);
+                        this.model.validateUtils = validateUtils;
+                    }, save: function () {
+                        var jsonArray = this.$el.find("form").serializeArray();
+                        var model = this.model;
+                        _.each(jsonArray, function (element) {
+                            model.set(element.name, element.value, {validate: true});
+                        });
                     }
                 });
                 var MenuView = Backbone.View.extend({
@@ -125,14 +145,12 @@
                         "click a.delete": "destroy"
 //                        "keypress .edit"  : "updateOnEnter",
 //                        "blur .edit"      : "close"
-                    },
-                    tagName: "tr",
+                    }, tagName: "tr",
                     template: _.template($('#menus-template').html()),
                     initialize: function () {
 //                        tdis.listenTo(this.model, 'change', this.render);
                         this.listenTo(this.model, 'destroy', this.remove);
-                    },
-                    render: function () {
+                    }, render: function () {
                         var bean = this.model.toJSON();
                         for (var name in bean) {
                             if (!bean[name]) {
@@ -141,13 +159,11 @@
                         }
                         this.$el.html(this.template(bean));
                         return this;
-                    },
-                    updateView: function (event) {
+                    }, updateView: function (event) {
                         this.model.fetch();
                         var menuFormView = new MenuFormView({model: this.model});
                         menuFormView.render();
-                    },
-                    destroy: function () {
+                    }, destroy: function () {
                         this.model.destroy();
                     }
                 });
@@ -155,23 +171,19 @@
                     el: menuContainer,
                     events: {
                         "click a.create": "createView"
-                    },
-                    initialize: function () {
+                    }, initialize: function () {
 //                        this.listenTo(menuList, 'add', this.addOne);
                         this.listenTo(menuList, 'reset', this.addAll);
 //                        this.listenTo(menuList, 'all', this.render);
 //                        menuList.fetch({update:true});
                         menuList.fetch();
-                    },
-                    createView: function (event, menu) {
+                    }, createView: function (event, menu) {
                         var menuFormView = new MenuFormView({model: new Menu()});
                         menuFormView.render();
-                    },
-                    addOne: function (menu) {
+                    }, addOne: function (menu) {
                         var menuView = new MenuView({model: menu});
                         this.$("#grid tbody").append(menuView.render().el);
-                    },
-                    addAll: function () {
+                    }, addAll: function () {
                         menuList.each(this.addOne, this);
                     }
                 });
