@@ -73,7 +73,6 @@
         </repository>
     </repositories>
 
-
     <!-- 设定仓库 如有Nexus私服, 取消注释并指向正确的服务器地址.
      <repositories>
          <repository>
