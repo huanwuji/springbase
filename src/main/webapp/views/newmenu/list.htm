@@ -97,12 +97,16 @@
                         isValid: true,
                         parent: ""
                     }, validate: function (attributes, options) {
-                        _.each(attributes, function (value, key) {
-                            if (this.validateUtils.validate(key, value)) {
-                                console.log(key, value);
-                                return false;
-                            }
-                        }, this);
+                        if (options.attrName) {
+                            var attrName = options.attrName;
+                            return this.validateUtils.validate(attrName, attributes[attrName]);
+                        } else {
+                            _.each(attributes, function (value, key) {
+                                if (this.validateUtils.validate(key, value)) {
+                                    return false;
+                                }
+                            }, this)
+                        }
                     }
                 });
                 var MenuList = Backbone.Collection.extend({
@@ -133,7 +137,8 @@
                         var jsonArray = this.$el.find("form").serializeArray();
                         var model = this.model;
                         _.each(jsonArray, function (element) {
-                            model.set(element.name, element.value, {validate: true});
+                            var attrName = element.name;
+                            model.set(element.name, element.value, {validate: true, attrName: attrName});
                         });
                     }
                 });
