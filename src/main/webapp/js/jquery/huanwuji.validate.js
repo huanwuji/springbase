@@ -98,15 +98,16 @@ huanwuji.validateUtils = function (form, options) {
             range: _.template("请输入一个介于 <%=ele.min%> 和 <%=ele.max%> 之间的值"),
             max: _.template("请输入一个最大为 <%=ele.max%> 的值"),
             min: _.template("请输入一个最小为 <%=ele.min%> 的值")
-        }, errorTemplate: '<div class="alert fade in"><button type="button" class="close" data-dismiss="alert">×</button><p class="errorMsg"></p></div>',
+        }, errorTemplate: '<div class="alert fade in"><button type="button" class="close" data-dismiss="alert">×</button><span class="errorMsg"></span></div>',
         prototype: {
             validate: function (field, value) {
                 field = options.element(field);
                 var result = this.check(field, value);
                 if (result) {
                     this.showError(field, result.ruleName);
-                    console.log(result);
                     return false;
+                } else {
+                    this.clearError(field);
                 }
                 return true;
             }, check: function (field, value) {
@@ -114,23 +115,23 @@ huanwuji.validateUtils = function (form, options) {
                 var REQUIRED = "required";
                 var result = {field: field};
                 if (field.attr(REQUIRED)) {
-                    if (options.rules[REQUIRED](value, field, field.attr(REQUIRED))) {
+                    if (!options.rules[REQUIRED](value, field, field.attr(REQUIRED))) {
                         result.ruleName = REQUIRED;
                         return result;
                     }
                 }
                 if (field.prop("type")) {
-                    var type = field.prop("type");
-                    var rule = options.rules[type];
-                    if (rule && rule(value, field, field.attr(ruleName))) {
-                        result.ruleName = type;
+                    var ruleName = field.prop("type");
+                    var rule = options.rules[ruleName];
+                    if (rule && !rule(value, field, field.attr(ruleName))) {
+                        result.ruleName = ruleName;
                         return result;
                     }
                 }
                 for (var ruleName in options.rules) {
                     if (field.attr(ruleName)) {
                         var rule = options.rules[ruleName];
-                        if (rule(value, field, field.attr(ruleName))) {
+                        if (!rule(value, field, field.attr(ruleName))) {
                             result.ruleName = ruleName;
                             return  result;
                         }
@@ -142,10 +143,14 @@ huanwuji.validateUtils = function (form, options) {
                 if (typeof errorMsg !== 'string') {
                     errorMsg = errorMsg({ele: element});
                 }
-                if (!element.parent().has(".errorMsg")) {
-                    $(options.errorTemplate).insertAfter(ele);
+                if (!element.parent().has(".errorMsg").length) {
+                    element.after(options.errorTemplate);
                 }
-                element.parent().find(".errorMsg").html(errorMsg).parent().addClass("error");
+                element.parent().parent().addClass("error").find(".alert").alert().find(".errorMsg").html(errorMsg);
+            }, clearError: function (element) {
+                if (element.parent().parent().hasClass("error")) {
+                    element.parent().parent().removeClass("error").find(".alert").alert("close");
+                }
             }
         }
     };
