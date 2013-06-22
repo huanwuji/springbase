@@ -1,0 +1,60 @@
+menu
+ID          LONG            Long        id
+CODE	    VARCHAR(30)     String      code
+NAME	    VARCHAR(50)     String      name
+TITLE	    VARCHAR(200)     String      title
+LEAF	    TINYINT         Boolean     leaf
+TREE_ID	    VARCHAR(100)    String      treeId
+DESCR	    VARCHAR(500)    String      descr
+URL         VARCHAR(250)    String      url
+ICON        VARCHAR(250)    String      icon
+TYPE	    VARCHAR(20)     String      type
+VALID   	TINYINT         Boolean     vaild
+PARENT	    LONG            Long        parent
+CREATE_DATE DATETIME        DateTime    createDate
+MODIFY_DATE DATETIME        DateTime    modifyDate
+
+entry
+ID          LONG            Long        id
+CODE	    VARCHAR(30)     String      code
+ICON        VARCHAR(255)    String      ICON
+NAME	    VARCHAR(50)     String      name
+TITLE	    VARCHAR(50)     String      title
+TYPE	    VARCHAR(20)     String      type
+CONTENT     MEDIUMINT       String      content
+CREATE_DATE DATETIME        DateTime    createDate
+MODIFY_DATE DATETIME        DateTime    modifyDate
+
+attachment
+ID          LONG            Long        id
+UUID        VARCHAR(64)     String      uuid
+ENTRY_ID    LONG            Long        entryId
+CODE	    VARCHAR(30)     String      code
+NAME	    VARCHAR(50)     String      name
+TITLE	    VARCHAR(50)     String      title
+TYPE	    VARCHAR(20)     String      type
+URL         VARCHAR(250)    String      url
+
+system_code
+ID          LONG            Long        id
+CODE	    VARCHAR(30)     String      code
+NAME	    VARCHAR(50)     String      name
+TITLE	    VARCHAR(50)     String      title
+LEAF	    TINYINT         Boolean     leaf
+TREE_ID	    VARCHAR(100)    String      treeId
+DESCR	    VARCHAR(500)    String      descr
+TYPE	    VARCHAR(20)     String      type
+VALID   	TINYINT         Boolean     vaild
+PARENT	    LONG            Long        parent
+
+item
+ID          LONG            Long        id
+ICON        VARCHAR(255)    String      ICON
+CATEGORY    LONG            Long        category
+ATTRIBUTE   LONG            Long        attribute
+CREATE_DATE DATETIME        DateTime    createDate
+MODIFY_DATE DATETIME        DateTime    modifyDate
+ENTRY_ID    LONG            Long        entryId
+
+
+

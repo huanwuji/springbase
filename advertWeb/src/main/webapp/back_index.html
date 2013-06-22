@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html ng-app="huanwuji">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style/zTree/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" type="text/css" href="style/bootstrap/js/bootstrap.js">
+    <script src="style/jquery/jquery-2.0.2.js"></script>
+    <script src="style/angular/angular.js"></script>
+    <script src="style/angular/ui-router/angular-ui-router.js"></script>
+    <script src="style/zTree/js/jquery.ztree.all-3.5.js"></script>
+</head>
+<body>
+<div>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    <li><a href="#/menu">菜单管理</a></li>
+                    <li><a href="#">条目管理</a></li>
+                    <li><a href="#">系统代码</a></li>
+                    <li><a href="#">礼品管理</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div ui-view="menu"></div>
+        </div>
+        <hr>
+        <footer>
+            <p>&copy; Company 2013</p>
+        </footer>
+    </div>
+</div>
+<script>
+    angular.module('huanwuji', ['ui.compat'])
+            .config(
+                    ['$stateProvider', '$routeProvider', '$urlRouterProvider',
+                        function ($stateProvider, $routeProvider, $urlRouterProvider) {
+                            $stateProvider
+                                    .state('menu', {
+                                        url: '/menu',
+                                        abstract: true,
+                                        templateUrl: 'views/menu.html',
+                                        controller: ['$scope', '$state',
+                                            function ($scope, $state) {
+                                                $scope.menu = [];
+                                                $scope.goToRandom = function () {
+//                                                    var contacts = $scope.contacts, id;
+//                                                     do {
+//                                                        id = contacts[Math.floor(contacts.length * Math.random())].id;
+//                                                    } while (id == $state.params.contactId);
+//                                                    $state.transitionTo('contacts.detail', { contactId: id });
+                                                };
+                                            }]
+                                    })
+                                    // .state('contacts.list', {
+                                    //     // parent: 'contacts',
+                                    //     url: '',
+                                    //     templateUrl: 'contacts.list.html'
+                                    // })
+                                    .state('about', {
+                                        url: '/about',
+                                        templateProvider: [        '$timeout',
+                                            function ($timeout) {
+                                                return $timeout(function () {
+                                                    return "Hello world"
+                                                }, 100);
+                                            }]
+                                    });
+                        }])
+            .directive('tree', function () {
+                return {
+                    restrict: 'A',
+                    transclude: true,
+                    scope: {},
+                    controller: function ($scope, $element, $attrs) {
+                        var model = $.attrs.tree;
+                        $scope.delete = function (data) {
+                            data.nodes = [];
+                        };
+                        $scope.add = function (data) {
+                            var post = data.nodes.length + 1;
+                            var newName = data.name + '-' + post;
+                            data.nodes.push({name: newName, nodes: []});
+                        };
+                        $scope.tree = [
+                            {name: "Node", nodes: []}
+                        ];
+                    },
+                    template: '{{data.name}}' +
+                            '<button ng-click="add(data)">Add node</button>' +
+                            '<button ng-click="delete(data)" ng-show="data.nodes.length > 0">Delete nodes</button>' +
+                            '<ul>' +
+                            '<li ng-repeat="data in data.nodes"></li>' +
+                            '</ul>',
+                    replace: true
+                };
+            })
+            .run(['$rootScope', '$state', '$stateParams',
+                function ($rootScope, $state, $stateParams) {
+                    $rootScope.$state = $state;
+                    $rootScope.$stateParams = $stateParams;
+                }]);
+</script>
+</body>
+</html>
