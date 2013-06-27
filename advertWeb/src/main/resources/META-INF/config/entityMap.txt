@@ -5,12 +5,12 @@ NAME	    VARCHAR(50)     String      name
 TITLE	    VARCHAR(200)     String      title
 LEAF	    TINYINT         Boolean     leaf
 TREE_ID	    VARCHAR(100)    String      treeId
-DESCR	    VARCHAR(500)    String      descr
 URL         VARCHAR(250)    String      url
 ICON        VARCHAR(250)    String      icon
 TYPE	    VARCHAR(20)     String      type
 VALID   	TINYINT         Boolean     vaild
-PARENT	    LONG            Long        parent
+DESCR	    VARCHAR(500)    String      descr
+PARENT_ID	    LONG            Long        parent
 CREATE_DATE DATETIME        DateTime    createDate
 MODIFY_DATE DATETIME        DateTime    modifyDate
 

@@ -1,0 +1,14 @@
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul ng-tree="menus" style="list-style: none;">
+            <li class="dropdown">
+                <i class="{{item.clazz}}" ng-click="toggle()"></i>
+                &nbsp;<a ng-href="{{item.url}}">{{item.name}}</a>
+                <i class="icon-plus" ng-click="add()"></i>
+                <i class="icon-edit"></i>
+                <i class="icon-remove"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="span9" ui-view ng-animate="{enter:'fade-enter'}"></div>

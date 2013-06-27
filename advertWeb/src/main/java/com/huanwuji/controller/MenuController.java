@@ -39,7 +39,25 @@ public class MenuController extends BaseController {
     private MenuRepository menuRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> list() {
+    public ResponseEntity<String> list() {
+        List<Menu> list = menuService.getMenus();
+        String json = FlexJsonUtils
+                .getJSONSerializer(new SimpleObjectTransformer()
+                        .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
+        return new ResponseEntity<String>(json, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")
+    public ResponseEntity<String> tree() {
+        List<Menu> list = menuService.getMenus();
+        String json = FlexJsonUtils
+                .getJSONSerializer(new SimpleObjectTransformer()
+                        .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
+        return new ResponseEntity<String>(json, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")
+    public ResponseEntity<String> getChildren() {
         List<Menu> list = menuService.getMenus();
         String json = FlexJsonUtils
                 .getJSONSerializer(new SimpleObjectTransformer()
@@ -56,8 +74,12 @@ public class MenuController extends BaseController {
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Status> create(Menu menu) {
+    @RequestMapping(value = "/{parentId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Status> create(@RequestBody Menu menu, @PathVariable("parentId") Long parentId) {
+        if (parentId != null) {
+            Menu parent = menuRepository.findOne(parentId);
+            menu.setParent(parent);
+        }
         menuRepository.save(menu);
         return new ResponseEntity<Status>(new Status(true, String.valueOf(menu.getId())), HttpStatus.OK);
     }

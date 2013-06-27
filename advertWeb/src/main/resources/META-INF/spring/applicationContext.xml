@@ -32,7 +32,7 @@
     </bean>
 
     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="databasePlatform" value="org.hibernate.dialect.MySQLMyISAMDialect"/>
+        <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
     </bean>
 
     <!-- Jpa Entity Manager 配置 -->
