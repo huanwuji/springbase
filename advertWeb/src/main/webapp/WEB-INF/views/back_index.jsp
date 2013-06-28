@@ -64,17 +64,15 @@
                                 $stateProvider
                                         .state('menu', {
                                             url: '/menu',
-                                            abstract: true,
                                             templateUrl: '/tmpl/menu/main.html',
                                             controller: ['$scope', '$state', '$Bean',
                                                 function ($scope, $state, $Bean) {
-                                                    var root = [
+                                                    $scope.menus = [
                                                         {id: "", parentId: "", name: 'root',
                                                             clazz: 'icon-folder-open', open: true,
                                                             url: "#/menu",
                                                             children: $Bean.Menu.query({resultType: 'tree'})}
                                                     ];
-                                                    $scope.menus = root;
                                                     $scope.toggle = function () {
                                                         var _item = this.item;
                                                         _item.open = !_item.open;
