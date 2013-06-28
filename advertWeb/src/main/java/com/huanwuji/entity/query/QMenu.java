@@ -2,7 +2,12 @@ package com.huanwuji.entity.query;
 
 import com.huanwuji.entity.bean.Menu;
 import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.*;
+import com.mysema.query.types.path.BeanPath;
+import com.mysema.query.types.path.BooleanPath;
+import com.mysema.query.types.path.EntityPathBase;
+import com.mysema.query.types.path.NumberPath;
+import com.mysema.query.types.path.PathInits;
+import com.mysema.query.types.path.StringPath;
 
 import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
@@ -27,7 +32,7 @@ public class QMenu extends EntityPathBase<Menu> {
     public static final String TYPE = "type";
     public static final String VALID = "valid";
     public static final String PARENT = "parent";
-    public static final String SUBMENU = "submenu";
+    public static final String SUBMENU = "subMenu";
 
     public static final QMenu MENU = new QMenu(ROOT);
     public final NumberPath<Long> id = createNumber(ID, Long.class);
@@ -41,7 +46,6 @@ public class QMenu extends EntityPathBase<Menu> {
     public final NumberPath<Integer> type = createNumber(TYPE, Integer.class);
     public final BooleanPath vaild = createBoolean(VALID);
     public final QMenu parent;
-    public final ListPath<Menu, QMenu> submenu = createList("submenu", Menu.class, QMenu.class, PathInits.DEFAULT);
 
     public QMenu(String variable) {
         this(Menu.class, forVariable(variable), INITS);

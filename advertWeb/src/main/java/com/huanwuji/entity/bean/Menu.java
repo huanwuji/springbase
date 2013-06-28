@@ -58,7 +58,7 @@ public class Menu extends BasicMethod implements Treeable<Menu, Long> {
     private Menu parent;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent")
-    private List<Menu> submenu;
+    private List<Menu> subMenu;
 
     public Menu() {
     }
@@ -167,11 +167,11 @@ public class Menu extends BasicMethod implements Treeable<Menu, Long> {
         this.parent = parent;
     }
 
-    public List<Menu> getSubmenu() {
-        return submenu;
+    public List<Menu> getSubMenu() {
+        return subMenu;
     }
 
-    public void setSubmenu(List<Menu> submenu) {
-        this.submenu = submenu;
+    public void setSubMenu(List<Menu> subMenu) {
+        this.subMenu = subMenu;
     }
 }
