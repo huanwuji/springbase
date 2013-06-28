@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")
-    public ResponseEntity<String> getChildren() {
+    public ResponseEntity<String> getChildren(@PathVariable("id") Long id) {
         List<Menu> list = menuService.getMenus();
         String json = FlexJsonUtils
                 .getJSONSerializer(new SimpleObjectTransformer()
@@ -74,9 +73,13 @@ public class MenuController extends BaseController {
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{parentId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Status> create(@RequestBody Menu menu, @PathVariable("parentId") Long parentId) {
-        if (parentId != null) {
+    @RequestMapping(value = "/{id}/{parentId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Status> save(@RequestBody Menu menu, @PathVariable("id") Long id, @PathVariable("parentId") Long parentId) {
+        if (id != -1) {
+            Menu dbMenu = menuRepository.findOne(menu.getId());
+            BeanUtils.copyProperties(menu, dbMenu, new String[]{QMenu.ID, QMenu.LEAF, QMenu.PARENT, QMenu.LEAF});
+        }
+        if (parentId != -1) {
             Menu parent = menuRepository.findOne(parentId);
             menu.setParent(parent);
         }
@@ -84,16 +87,8 @@ public class MenuController extends BaseController {
         return new ResponseEntity<Status>(new Status(true, String.valueOf(menu.getId())), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Status> update(@RequestBody Menu menu) {
-        Menu dbMenu = menuRepository.findOne(menu.getId());
-        BeanUtils.copyProperties(menu, dbMenu, new String[]{QMenu.ID, QMenu.LEAF, QMenu.PARENT, QMenu.LEAF});
-        menuRepository.save(menu);
-        return new ResponseEntity<Status>(new Status(true, String.valueOf(menu.getId())), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Status> remove(@PathVariable("id") Long id, HttpServletResponse response) {
+    public ResponseEntity<Status> delete(@PathVariable("id") Long id) {
         menuRepository.delete(id);
         return new ResponseEntity<Status>(new Status(true, String.valueOf(id)), HttpStatus.OK);
     }

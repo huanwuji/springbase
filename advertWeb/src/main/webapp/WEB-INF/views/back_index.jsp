@@ -45,9 +45,6 @@
                         })()
                     };
                 });
-        var domain = {
-
-        };
         angular.module('huanwuji', ['ui.compat', 'Domain', 'angularTree', 'ui.bootstrap'])
                 .config(
                         ['$stateProvider', '$routeProvider', '$urlRouterProvider',
@@ -71,12 +68,13 @@
                                             templateUrl: '/tmpl/menu/main.html',
                                             controller: ['$scope', '$state', '$Bean',
                                                 function ($scope, $state, $Bean) {
-                                                    $scope.menus = [
+                                                    var root = [
                                                         {id: "", parentId: "", name: 'root',
                                                             clazz: 'icon-folder-open', open: true,
                                                             url: "#/menu",
                                                             children: $Bean.Menu.query({resultType: 'tree'})}
                                                     ];
+                                                    $scope.menus = root;
                                                     $scope.toggle = function () {
                                                         var _item = this.item;
                                                         _item.open = !_item.open;
@@ -89,7 +87,15 @@
                                                         }
                                                     };
                                                     $scope.add = function () {
-                                                        $state.transitionTo('menu.detail', { id: this.id, parentId: this.parentId});
+                                                        $state.transitionTo('menu.detail', { id: this.item.id, parentId: this.item.parentId});
+                                                    };
+                                                    $scope.edit = function () {
+                                                        $state.transitionTo('menu.detail', {id: this.item.id, parentId: this.item.parentId});
+                                                    };
+                                                    $scope.delete = function () {
+                                                        $Bean.Menu.delete({id: this.item.id}, function () {
+                                                            $scope.menus = root;
+                                                        });
                                                     }
                                                 }]
                                         })
@@ -110,20 +116,25 @@
                                                         $scope.menu = $Bean.Menu.get({id: $stateParams.id});
                                                     } else {
                                                         $scope.menu = {
-                                                            parentId: parentId,
                                                             valid: true
                                                         }
                                                     }
                                                     $scope.save = function () {
-                                                        $Bean.Menu.save({parentId: 1}, $scope.menu, function (menu) {
-                                                            $state.transitionTo('menu.list', { id: this.id, parentId: this.parentId });
+                                                        if (!parentId) {
+                                                            parentId = -1;
+                                                        }
+                                                        if (!id) {
+                                                            id = -1;
+                                                        }
+                                                        $Bean.Menu.save({parentId: parentId}, $scope.menu, function (menu) {
+                                                            $state.transitionTo('menu');
                                                         });
                                                     }
                                                 }]
                                         })
                                         .state('about', {
                                             url: '/about',
-                                            templateProvider: [        '$timeout',
+                                            templateProvider: ['$timeout',
                                                 function ($timeout) {
                                                     return $timeout(function () {
                                                         return "Hello world"
