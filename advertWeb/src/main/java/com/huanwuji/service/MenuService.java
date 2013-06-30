@@ -39,4 +39,10 @@ public class MenuService {
         QMenu menu = QMenu.MENU;
         return query.from(menu).where(menu.parent.isNull()).list(menu);
     }
+
+    public List<Menu> getChildren(Long id) {
+        JPAQuery query = new JPAQuery(em);
+        QMenu menu = QMenu.MENU;
+        return query.from(menu).where(menu.parent.id.eq(id)).list(menu);
+    }
 }

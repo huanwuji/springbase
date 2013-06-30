@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,18 +43,14 @@ public class MenuController extends BaseController {
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")
-    public ResponseEntity<String> tree() {
-        List<Menu> list = menuService.getMenus();
-        String json = FlexJsonUtils
-                .getJSONSerializer(new SimpleObjectTransformer()
-                        .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
-        return new ResponseEntity<String>(json, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")
     public ResponseEntity<String> getChildren(@PathVariable("id") Long id) {
-        List<Menu> list = menuService.getMenus();
+        List<Menu> list;
+        if (id == 0) {
+            list = menuService.getRoot();
+        } else {
+            list = menuService.getChildren(id);
+        }
         String json = FlexJsonUtils
                 .getJSONSerializer(new SimpleObjectTransformer()
                         .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
@@ -74,22 +67,22 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping(value = "/{id}/{parentId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Status> save(@RequestBody Menu menu, @PathVariable("id") Long id, @PathVariable("parentId") Long parentId) {
-        if (id != -1) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void save(@RequestBody Menu menu, @PathVariable("id") Long id, @PathVariable("parentId") Long parentId) {
+        if (id > 0) {
             Menu dbMenu = menuRepository.findOne(menu.getId());
             BeanUtils.copyProperties(menu, dbMenu, new String[]{QMenu.ID, QMenu.LEAF, QMenu.PARENT, QMenu.LEAF});
         }
-        if (parentId != -1) {
+        if (parentId > 0) {
             Menu parent = menuRepository.findOne(parentId);
             menu.setParent(parent);
         }
         menuRepository.save(menu);
-        return new ResponseEntity<Status>(new Status(true, String.valueOf(menu.getId())), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Status> delete(@PathVariable("id") Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Long id) {
         menuRepository.delete(id);
-        return new ResponseEntity<Status>(new Status(true, String.valueOf(id)), HttpStatus.OK);
     }
 }
