@@ -72,8 +72,8 @@
                                                     $scope.menuTreeCache = {};
                                                     $scope.menus = [
                                                         {id: 0, parentId: 0, name: 'root',
-                                                            clazz: h.c.treeIcon.open, open: true,
-                                                            url: "#/menu",
+                                                            clazz: h.c.treeIcon.open, open: true, leaf: false,
+                                                            url: "#/menu", root: true,
                                                             children: Service.Menu.query({id: 0, resultType: 'tree'}, function (children) {
                                                                 angular.forEach(children, function (menu) {
                                                                     if (!menu.leaf) {
@@ -117,13 +117,18 @@
                                                         var delId = this.item.id;
                                                         Service.Menu.delete({id: delId}, function () {
                                                             var currMenu = $scope.menuTreeCache[delId];
-                                                            var children = currMenu.parent.children;
+                                                            var parent = currMenu.parent;
+                                                            var children = parent.children;
                                                             for (var i in children) {
                                                                 var menu = children[i];
                                                                 if (menu.id == delId) {
                                                                     children.splice(i, 1);
                                                                     break;
                                                                 }
+                                                            }
+                                                            if (children.length == 0) {
+                                                                parent.leaf = true;
+                                                                parent.clazz = '';
                                                             }
                                                         });
                                                     }
@@ -156,6 +161,7 @@
                                                             } else {
                                                                 var parent = $scope.menuTreeCache[parentId].curr;
                                                                 parent.clazz = h.c.treeIcon.open;
+                                                                parent.leaf = false;
                                                                 parent.children = $scope.getChildren(parentId, parent);
                                                             }
                                                             $state.transitionTo('menu.list');

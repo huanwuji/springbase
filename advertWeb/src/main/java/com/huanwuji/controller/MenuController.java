@@ -2,10 +2,10 @@ package com.huanwuji.controller;
 
 import com.huanwuji.entity.bean.Menu;
 import com.huanwuji.entity.query.QMenu;
+import com.huanwuji.json.flexjson.FlexJsonTools;
+import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.MenuRepository;
 import com.huanwuji.service.MenuService;
-import com.huanwuji.utils.flexJson.FlexJsonUtils;
-import com.huanwuji.utils.flexJson.impl.SimpleObjectTransformer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,7 @@ public class MenuController extends BaseController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> list() {
         List<Menu> list = menuService.getMenus();
-        String json = FlexJsonUtils
+        String json = FlexJsonTools
                 .getJSONSerializer(new SimpleObjectTransformer()
                         .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
         return new ResponseEntity<String>(json, HttpStatus.OK);
@@ -51,7 +51,7 @@ public class MenuController extends BaseController {
         } else {
             list = menuService.getChildren(id);
         }
-        String json = FlexJsonUtils
+        String json = FlexJsonTools
                 .getJSONSerializer(new SimpleObjectTransformer()
                         .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
         return new ResponseEntity<String>(json, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class MenuController extends BaseController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> get(@PathVariable("id") Long id) {
         Menu menu = menuRepository.findOne(id);
-        String json = FlexJsonUtils.getJSONSerializer(
+        String json = FlexJsonTools.getJSONSerializer(
                 new SimpleObjectTransformer().addPropertyFilter("*", true)
                         .addPropertyFilter("parent", "parent.id")).exclude("*.class").serialize(menu);
         return new ResponseEntity<String>(json, HttpStatus.OK);
@@ -72,6 +72,7 @@ public class MenuController extends BaseController {
         if (id > 0) {
             Menu dbMenu = menuRepository.findOne(menu.getId());
             BeanUtils.copyProperties(menu, dbMenu, new String[]{QMenu.ID, QMenu.LEAF, QMenu.PARENT, QMenu.LEAF});
+            menu = dbMenu;
         }
         if (parentId > 0) {
             Menu parent = menuRepository.findOne(parentId);

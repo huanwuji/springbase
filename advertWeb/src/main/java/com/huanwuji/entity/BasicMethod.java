@@ -1,8 +1,8 @@
 package com.huanwuji.entity;
 
-import com.huanwuji.utils.flexJson.FlexJsonUtils;
-import com.huanwuji.utils.flexJson.PropertyProcesser;
-import com.huanwuji.utils.flexJson.impl.SimpleObjectTransformer;
+import com.huanwuji.json.flexjson.FlexJsonTools;
+import com.huanwuji.json.flexjson.PropertyProcesser;
+import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import flexjson.BeanProperty;
 import flexjson.JSONContext;
 import flexjson.Path;
@@ -51,6 +51,6 @@ public class BasicMethod extends IdEntity {
                         return ((IdEntity) value).getId();
                     }
                 });
-        return FlexJsonUtils.getJSONSerializer(simpleObjectTransformer).serialize(this);
+        return FlexJsonTools.getJSONSerializer(simpleObjectTransformer).serialize(this);
     }
 }

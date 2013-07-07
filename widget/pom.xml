@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.huanwuji</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>tools</artifactId>
             <version>${parent.version}</version>
         </dependency>
     </dependencies>

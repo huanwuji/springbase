@@ -1,4 +1,4 @@
-package com.huanwuji.utils;
+package com.huanwuji.lang;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -15,7 +15,7 @@ import java.util.Set;
  * Time: 下午2:08
  * To change this template use File | Settings | File Templates.
  */
-public class CollectionUtils {
+public class CollectionTools {
 
     public static <T> Set<T> listToSet(List list, String properName, Class<T> clazz) {
         Set<T> set = new HashSet<T>();

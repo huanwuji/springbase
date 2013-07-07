@@ -17,11 +17,14 @@ MODIFY_DATE DATETIME        DateTime    modifyDate
 entry
 ID          LONG            Long        id
 CODE	    VARCHAR(30)     String      code
-ICON        VARCHAR(255)    String      ICON
 NAME	    VARCHAR(50)     String      name
 TITLE	    VARCHAR(50)     String      title
+URL			VARCHAR(255)	String		url
+ICON        VARCHAR(255)    String      icon
 TYPE	    VARCHAR(20)     String      type
 CONTENT     MEDIUMINT       String      content
+VALID       BIT             Boolean     valid
+FK          LONG            Long        fk
 CREATE_DATE DATETIME        DateTime    createDate
 MODIFY_DATE DATETIME        DateTime    modifyDate
 

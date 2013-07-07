@@ -1,6 +1,6 @@
-package com.huanwuji.utils.flexJson.impl;
+package com.huanwuji.json.flexjson.impl;
 
-import com.huanwuji.utils.flexJson.PropertyFilter;
+import com.huanwuji.json.flexjson.PropertyFilter;
 import flexjson.BeanProperty;
 import flexjson.JSONContext;
 import flexjson.Path;

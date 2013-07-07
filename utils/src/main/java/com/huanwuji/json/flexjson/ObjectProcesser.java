@@ -1,4 +1,4 @@
-package com.huanwuji.utils.flexJson;
+package com.huanwuji.json.flexjson;
 
 import flexjson.JSONContext;
 import flexjson.Path;

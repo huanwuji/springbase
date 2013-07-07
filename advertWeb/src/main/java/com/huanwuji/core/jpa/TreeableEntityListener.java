@@ -24,10 +24,6 @@ public class TreeableEntityListener<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TreeableEntityListener.class);
 
-    private static final int TREE_ID_INC_STEP = 10;
-
-    private static String SEPARATOR = ".";
-
     /**
      * Sets modification and creation date and auditor on the target object in case it implements {@link org.springframework.data.domain.Auditable} on
      * persist events.

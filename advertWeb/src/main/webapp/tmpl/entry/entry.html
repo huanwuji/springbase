@@ -1,6 +1,6 @@
 <form class="form-horizontal" style="max-height: 700px;">
     <fieldset>
-        <legend>菜单编辑</legend>
+        <legend>条目编辑</legend>
         <input type="hidden" ng-model="id"/>
 
         <div class="control-group">
@@ -52,6 +52,13 @@
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label">描述</label>
+
+            <div class="controls">
+                <textarea rows="3" cols="5" ng-model="menu.content"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
             <label class="control-label">是否有效</label>
 
             <div class="controls">
@@ -61,13 +68,6 @@
                 <label class="radio inline">
                     <input type="radio" ng-model="menu.valid" value="false"/>否
                 </label>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">描述</label>
-
-            <div class="controls">
-                <textarea rows="3" cols="5" ng-model="menu.descr"></textarea>
             </div>
         </div>
         <div class="control-group">

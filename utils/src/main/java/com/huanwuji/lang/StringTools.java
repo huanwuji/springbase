@@ -29,4 +29,32 @@ public class StringTools {
         }
         return matchs;
     }
+
+    public static String toJavaName(String str, boolean isFistLetterUp) {
+        StringBuilder sb = new StringBuilder();
+        String ucStr = str.toLowerCase();
+        if (ucStr != null && ucStr.length() != 0) {
+            if (isFistLetterUp) {
+                sb.append(Character.toUpperCase(ucStr.charAt(0)));
+            } else {
+                sb.append(ucStr.charAt(0));
+            }
+            for (int i = 1; i < ucStr.length(); i++) {
+                char c = ucStr.charAt(i);
+                if (c == '_') {
+                    if ((++i) < ucStr.length()) {
+                        sb.append(Character.toUpperCase(ucStr.charAt(i)));
+                    }
+                } else {
+                    sb.append(ucStr.charAt(i));
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String toJsonP(String callback, String json) {
+        StringBuilder sb = new StringBuilder();
+        return sb.append(callback).append("(").append(json).append(")").toString();
+    }
 }
