@@ -1,3 +1,7 @@
 .tree_style li {
     list-style-type: none;
 }
+
+.pagination {
+    margin: 0;
+}

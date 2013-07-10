@@ -31,17 +31,13 @@ public class EntryController extends BaseController {
     private EntryRepository entryRepository;
 
     @RequestMapping(value = "/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> list(@PathVariable("key") String key,
-                                       @PathVariable("fkId") Long fkId, PageRequest pageRequest) {
-        Page<Entry> list = entryService.findAll(KeyTools.getFk(key, fkId), pageRequest);
-        String json = FlexJsonTools
-                .getJSONSerializer(new SimpleObjectTransformer()
-                        .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
-        return new ResponseEntity<String>(json, HttpStatus.OK);
-
+    @ResponseBody
+    public Page<Entry> list(@PathVariable("key") String key,
+                            @PathVariable("fkId") Long fkId, int page, int size) {
+        return entryService.findAll(KeyTools.getFk(key, fkId), new PageRequest(page - 1, size));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{key}/{fkId}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> get(@PathVariable("id") Long id) {
         Entry entry = entryRepository.findOne(id);
         String json = FlexJsonTools.getJSONSerializer(
@@ -63,7 +59,7 @@ public class EntryController extends BaseController {
         entryRepository.save(entry);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{key}/{fkId}/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
         entryRepository.delete(id);

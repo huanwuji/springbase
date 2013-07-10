@@ -4,8 +4,8 @@
 <head>
     <title></title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/style/me/huanwuji.css">
     <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/style/me/huanwuji.css">
     <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/js/bootstrap.js">--%>
     <script src="/style/me/huanwuji.js"></script>
     <script src="/style/jquery/jquery-2.0.2.js"></script>
@@ -22,7 +22,7 @@
             <div class="container">
                 <ul class="nav">
                     <li><a href="#/menu">菜单管理</a></li>
-                    <li><a href="#">条目管理</a></li>
+                    <li><a href="#/entry">条目管理</a></li>
                     <li><a href="#">系统代码</a></li>
                     <li><a href="#">礼品管理</a></li>
                     <li><a href="#/about">关于</a></li>
@@ -43,9 +43,8 @@
         angular.module('ServiceModules', ['ngResource']).
                 factory('Service', function ($resource) {
                     return {
-                        Menu: (function () {
-                            return $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'});
-                        })()
+                        Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
+                        Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'})
                     };
                 });
         angular.module('huanwuji', ['ui.compat', 'ServiceModules', 'angularTree', 'ui.bootstrap'])
@@ -131,7 +130,7 @@
                                                                 parent.clazz = '';
                                                             }
                                                         });
-                                                    }
+                                                    };
                                                 }]
                                         })
                                         .state('menu.list', {
@@ -166,6 +165,49 @@
                                                             }
                                                             $state.transitionTo('menu.list');
                                                         });
+                                                    }
+                                                }]
+                                        })
+                                        .state('menu.entry', {
+                                            parent: "menu",
+                                            url: '/entry/{key}/{fkId}',
+                                            templateUrl: '/tmpl/entry/list.html',
+                                            controller: ['$scope', '$state', '$stateParams', 'Service',
+                                                function ($scope, $state, $stateParams, Service) {
+                                                    var key = $stateParams.key;
+                                                    var fkId = $stateParams.fkId;
+                                                    $scope.fkId = fkId;
+                                                    $scope.maxSize = 10;
+                                                    $scope.setPage = function (number) {
+                                                        Service.Entry.get({key: key, fkId: fkId, page: number, size: 20}, function (result) {
+                                                            $scope.entries = result.content;
+                                                            $scope.totalPages = result.totalPages;
+                                                            $scope.number = result.number + 1;
+                                                        });
+                                                    };
+                                                    $scope.setPage(1);
+                                                }]
+                                        }).state('menu.entry.detail', {
+                                            parent: "menu",
+                                            url: '/entry/{key}/{fkId}/{id}',
+                                            templateUrl: '/tmpl/entry/detail.html',
+                                            controller: ['$scope', '$state', '$stateParams', 'Service',
+                                                function ($scope, $state, $stateParams, Service) {
+                                                    var key = $stateParams.key;
+                                                    var fkId = $stateParams.fkId;
+                                                    var id = $stateParams.id;
+                                                    if (id > 0) {
+                                                        $scope.entry = Service.Entry.get({key: key, fkId: fkId, id: id});
+                                                    } else {
+                                                        $scope.entry = {
+                                                            valid: true
+                                                        }
+                                                    }
+                                                    $scope.save = function () {
+                                                        Service.Entry.save({key: key, fkId: fkId, id: id},
+                                                                $scope.entry, function () {
+                                                                    $state.transitionTo('menu.entry', {key: key, fkId: fkId});
+                                                                });
                                                     }
                                                 }]
                                         })

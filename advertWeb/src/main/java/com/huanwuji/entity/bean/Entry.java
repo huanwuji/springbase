@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 //菜单
 @Entity
-@Table(name = "MENU")
+@Table(name = "ENTRY")
 public class Entry extends BasicMethod {
 
     @Column(name = "CODE", nullable = true, length = 30)

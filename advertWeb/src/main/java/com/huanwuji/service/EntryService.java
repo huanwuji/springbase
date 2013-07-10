@@ -38,7 +38,7 @@ public class EntryService {
     private EntryRepository entryRepository;
 
     public Page<Entry> findAll(Long fk, Pageable pageable) {
-        return findAll(fk, true, pageable);
+        return findAll(fk, null, pageable);
     }
 
     public Page<Entry> findAll(final Long fk, final Boolean vaild, Pageable pageable) {
@@ -50,7 +50,7 @@ public class EntryService {
                 if (vaild != null) {
                     predicates.add(criteriaBuilder.equal(entryRoot.get(QEntry.VALID), vaild));
                 }
-                return criteriaBuilder.and(new Predicate[predicates.size()]);
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         }, pageable);
     }
