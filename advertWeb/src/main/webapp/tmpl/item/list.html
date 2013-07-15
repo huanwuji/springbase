@@ -1,0 +1,27 @@
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+        <th>名称</th>
+        <th>编码</th>
+        <th>标题</th>
+        <th style="width: 10%;">操作<a class="icon-plus" href="#/sysCode/item/{{fkId}}/-1"></a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in items">
+        <td>{{item.name}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.title}}</td>
+        <td><a href="#/sysCode/item/{{cid}}/{{item.id}}" class="icon-edit"></a></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <pagination boundary-links="true" num-pages="totalPages" current-page="number" max-size="5"
+                        class="pagination-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                        last-text="&raquo;" on-select-page="setPage(page);"></pagination>
+        </td>
+    </tr>
+    </tfoot>
+</table>

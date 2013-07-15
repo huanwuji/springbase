@@ -21,11 +21,9 @@
         <div class="navbar-inner">
             <div class="container">
                 <ul class="nav">
-                    <li><a href="#/menu">菜单管理</a></li>
-                    <li><a href="#/entry">条目管理</a></li>
-                    <li><a href="#/systemCode">系统代码</a></li>
-                    <li><a href="#">礼品管理</a></li>
-                    <li><a href="#/about">关于</a></li>
+                    <li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>
+                    <li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">系统代码</a></li>
+                    <li ng-class="{ active: $state.includes('about') }"><a href="#/about">关于</a></li>
                 </ul>
             </div>
         </div>
@@ -45,7 +43,8 @@
                 return {
                     Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
-                    Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'})
+                    Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'}),
+                    Item: $resource('/item/:cid/:id', { fkId: '@cid', id: '@id'})
                 };
             });
     angular.module('huanwuji', ['ui.compat', 'ServiceModules', 'angularTree', 'ui.bootstrap'])
@@ -224,35 +223,51 @@
                             }
                             $stateProvider.state.apply($stateProvider, stateConfig.entry.detail('menu', 'entry'));
                             $stateProvider
-//                                    .state('menu.entry', {
-//                                        parent: "menu",
-//                                        url: '/entry/{key}/{fkId}',
-//                                        templateUrl: '/tmpl/entry/list.html',
-//                                        controller: ['$scope', '$state', '$stateParams', 'Service',
-//                                            function ($scope, $state, $stateParams, Service) {
-//                                                var key = $stateParams.key;
-//                                                var fkId = $stateParams.fkId;
-//                                                $scope.fkId = fkId;
-//                                                $scope.maxSize = 10;
-//                                                $scope.setPage = function (number) {
-//                                                    Service.Entry.get({key: key, fkId: fkId, page: number, size: 20}, function (result) {
-//                                                        $scope.entries = result.content;
-//                                                        $scope.totalPages = result.totalPages;
-//                                                        $scope.number = result.number + 1;
-//                                                    });
-//                                                };
-//                                                $scope.setPage(1);
-//                                            }]
-//                                    })
-                                    .state('about', {
-                                        url: '/about',
-                                        templateProvider: ['$timeout',
-                                            function ($timeout) {
-                                                return $timeout(function () {
-                                                    return "Hello world"
-                                                }, 100);
+                                    .state('systemCode.item', {
+                                        parent: "systemCode",
+                                        url: '/item/cid/{cid}',
+                                        templateUrl: '/tmpl/item/list.html',
+                                        controller: ['$scope', '$state', '$stateParams', 'Service',
+                                            function ($scope, $state, $stateParams, Service) {
+                                                var cid = $stateParams.cid;
+                                                $scope.cid = cid;
+                                                $scope.maxSize = 10;
+                                                $scope.setPage = function (number) {
+                                                    Service.Item.get({cid: cid, page: number, size: 20}, function (result) {
+                                                        $scope.items = result.content;
+                                                        $scope.totalPages = result.totalPages;
+                                                        $scope.number = result.number + 1;
+                                                    });
+                                                };
+                                                $scope.setPage(1);
+                                            }]
+                                    })
+                                    .state('systemCode.item.detail', {
+                                        parent: 'systemCode',
+                                        url: '/item/{cid}/{id}',
+                                        templateUrl: '/tmpl/item/detail.html',
+                                        controller: ['$scope', '$state', '$stateParams', 'Service',
+                                            function ($scope, $state, $stateParams, Service) {
+                                                var cid = $stateParams.cid;
+                                                var id = $stateParams.id;
+                                                $scope.item = Service.Item.get({id: id, cid: cid});
+                                                $scope.save = function () {
+                                                    Service.Item.save({id: id || -1, cid: cid}, $scope.item, function () {
+                                                        $state.transitionTo(parent + '.item.detail', {id: id, cid: cid});
+                                                    });
+                                                };
                                             }]
                                     });
+                            $stateProvider.state.apply($stateProvider, stateConfig.entry.detail('systemCode', 'entry'));
+                            $stateProvider.state('about', {
+                                url: '/about',
+                                templateProvider: ['$timeout',
+                                    function ($timeout) {
+                                        return $timeout(function () {
+                                            return "Hello world"
+                                        }, 100);
+                                    }]
+                            });
                         }])
             .run(['$rootScope', '$state', '$stateParams',
                 function ($rootScope, $state, $stateParams) {

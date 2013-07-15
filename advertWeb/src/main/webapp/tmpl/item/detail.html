@@ -1,0 +1,83 @@
+<form class="form-horizontal" style="max-height: 700px;">
+    <fieldset>
+        <legend>条目编辑</legend>
+        <input type="hidden" ng-model="id"/>
+
+        <div class="control-group">
+            <label class="control-label" for="entry-code">编码</label>
+
+            <div class="controls">
+                <input id="entry-code" type="text" ng-model="entry.code" placeholder="编码"
+                       required/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="entry-name">名称</label>
+
+            <div class="controls">
+                <input type="text" id="entry-name" ng-model="entry.name" placeholder="名称" required>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="entry-title">标题</label>
+
+            <div class="controls">
+                <input type="text" id="entry-title" ng-model="entry.title" placeholder="标题" required>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="entry-url">链接</label>
+
+            <div class="controls">
+                <input type="text" id="entry-url" class="entry-xlarge" ng-model="entry.url"
+                       placeholder="链接">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="entry-icon">图标</label>
+
+            <div class="controls">
+                <input type="text" id="entry-icon" class="entry-xlarge" ng-model="entry.icon"
+                       placeholder="图标">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">类型</label>
+
+            <div class="controls">
+                <select ng-model="entry.type"
+                        ng-options="c.value as c.name for c in [{name:'type1', value:1},{name:'type2',value:2}]"
+                        placeholder="类型">
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">内容</label>
+
+            <div class="controls">
+                <a class="btn btn-primary" href="#" ng-click="editTemplate()"><i class="icon-edit icon-white"></i> 高级编辑</a><br/>
+                <textarea ng-model="entry.content" id="editor" style="height: 300px;width: 500px;"></textarea>
+                <!--<script id="editor" type="text/plain" style="height:300px">-->
+                <!--</script>-->
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">是否有效</label>
+
+            <div class="controls">
+                <label class="radio inline">
+                    <input type="radio" ng-model="entry.valid" value="true"/>是
+                </label>
+                <label class="radio inline">
+                    <input type="radio" ng-model="entry.valid" value="false"/>否
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                <button class="btn btn-primary save" ng-click="save()">保存</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

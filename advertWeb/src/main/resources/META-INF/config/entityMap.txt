@@ -10,7 +10,7 @@ ICON        VARCHAR(250)    String      icon
 TYPE	    VARCHAR(20)     String      type
 VALID   	TINYINT         Boolean     vaild
 DESCR	    VARCHAR(500)    String      descr
-PARENT_ID	    LONG            Long        parent
+PARENT_ID   LONG            Long        parent
 CREATE_DATE DATETIME        DateTime    createDate
 MODIFY_DATE DATETIME        DateTime    modifyDate
 
@@ -53,12 +53,15 @@ PARENT	    LONG            Long        parent
 item
 ID          LONG            Long        id
 NAME        VARCHAR(50)     String      name
+TITLE	    VARCHAR(50)     String      title
 PRICE       FLOAT           float       price
 ICON        VARCHAR(255)    String      ICON
-CATEGORY    LONG            Long        category
+TYPE	    VARCHAR(20)     String      type
+VALID   	TINYINT         Boolean     vaild
 CREATE_DATE DATETIME        DateTime    createDate
 MODIFY_DATE DATETIME        DateTime    modifyDate
-ENTRY_ID    LONG            Long        entryId
+DESCR	    VARCHAR(500)    String      descr
+CATEGORY    LONG            Long        category
 
 
 
