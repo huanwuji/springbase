@@ -23,7 +23,7 @@
                 <ul class="nav">
                     <li><a href="#/menu">菜单管理</a></li>
                     <li><a href="#/entry">条目管理</a></li>
-                    <li><a href="#">系统代码</a></li>
+                    <li><a href="#/systemCode">系统代码</a></li>
                     <li><a href="#">礼品管理</a></li>
                     <li><a href="#/about">关于</a></li>
                 </ul>
@@ -39,50 +39,53 @@
     </div>
 </div>
 <script>
-    (function () {
-        angular.module('ServiceModules', ['ngResource']).
-                factory('Service', function ($resource) {
-                    return {
-                        Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
-                        Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'})
-                    };
-                });
-        angular.module('huanwuji', ['ui.compat', 'ServiceModules', 'angularTree', 'ui.bootstrap'])
-                .config(
-                        ['$stateProvider', '$routeProvider', '$urlRouterProvider',
-                            function ($stateProvider, $routeProvider, $urlRouterProvider) {
+(function () {
+    angular.module('ServiceModules', ['ngResource']).
+            factory('Service', function ($resource) {
+                return {
+                    Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
+                    SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
+                    Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'})
+                };
+            });
+    angular.module('huanwuji', ['ui.compat', 'ServiceModules', 'angularTree', 'ui.bootstrap'])
+            .config(
+                    ['$stateProvider', '$routeProvider', '$urlRouterProvider',
+                        function ($stateProvider, $routeProvider, $urlRouterProvider) {
 //                                $urlRouterProvider
 //                                        .when('/c?id', '/contacts/:id')
 //                                        .otherwise('/');
-                                $routeProvider
+                            $routeProvider
 //                                    .when('/user/:id', {
 //                                        redirectTo: '/contacts/:id'
 //                                    })
-                                        .when('/', {
-                                            redirectTo: "/menu"
-                                        });
-                                $stateProvider
-                                        .state('menu', {
-                                            url: '/menu',
-                                            templateUrl: '/tmpl/menu/main.html',
+                                    .when('/', {
+                                        redirectTo: "/menu"
+                                    });
+                            var stateConfig = {
+                                tree: {
+                                    main: function (name, serviceName) {
+                                        return [name, {
+                                            url: '/' + name,
+                                            templateUrl: '/tmpl/' + name + '/main.html',
                                             controller: ['$scope', '$state', 'Service', '$window',
                                                 function ($scope, $state, Service, $window) {
                                                     $scope.hc = $window.h.c;
-                                                    $scope.menuTreeCache = {};
-                                                    $scope.menus = [
+                                                    $scope.treeCache = {};
+                                                    $scope.items = [
                                                         {id: 0, parentId: 0, name: 'root',
                                                             clazz: h.c.treeIcon.open, open: true, leaf: false,
-                                                            url: "#/menu", root: true,
-                                                            children: Service.Menu.query({id: 0, resultType: 'tree'}, function (children) {
-                                                                angular.forEach(children, function (menu) {
-                                                                    if (!menu.leaf) {
-                                                                        menu.clazz = h.c.treeIcon.close;
+                                                            url: "#/" + name, root: true,
+                                                            children: Service[serviceName].query({id: 0, resultType: 'tree'}, function (children) {
+                                                                angular.forEach(children, function (item) {
+                                                                    if (!item.leaf) {
+                                                                        item.clazz = h.c.treeIcon.close;
                                                                     }
-                                                                    $scope.menuTreeCache[menu.id] = {curr: menu, parent: $scope.menus[0]};
+                                                                    $scope.treeCache[item.id] = {curr: item, parent: $scope.items[0]};
                                                                 })
                                                             })}
                                                     ];
-                                                    $scope.menuTreeCache[0] = {curr: $scope.menus[0], parent: null};
+                                                    $scope.treeCache[0] = {curr: $scope.items[0], parent: null};
                                                     $scope.toggle = function () {
                                                         var _item = this.item;
                                                         _item.open = !_item.open;
@@ -91,36 +94,36 @@
                                                             _item.children = $scope.getChildren(_item.id, _item);
                                                         } else {
                                                             _item.clazz = 'icon-folder-close';
-                                                            $scope.menuTreeCache[_item.id] = null;
+                                                            $scope.treeCache[_item.id] = null;
                                                             _item.children = [];
                                                         }
                                                     };
                                                     $scope.getChildren = function (id, parent) {
-                                                        return Service.Menu.query({id: id, resultType: 'tree'}, function (children) {
-                                                            angular.forEach(children, function (menu) {
-                                                                if (!menu.leaf) {
-                                                                    menu.clazz = h.c.treeIcon.close;
+                                                        return Service[serviceName].query({id: id, resultType: 'tree'}, function (children) {
+                                                            angular.forEach(children, function (item) {
+                                                                if (!item.leaf) {
+                                                                    item.clazz = h.c.treeIcon.close;
                                                                 }
-                                                                $scope.menuTreeCache[menu.id] = {curr: menu, parent: parent};
+                                                                $scope.treeCache[item.id] = {curr: item, parent: parent};
                                                             })
                                                         });
                                                     };
                                                     $scope.add = function () {
-                                                        $state.transitionTo('menu.detail', { id: -1, parentId: this.item.id});
+                                                        $state.transitionTo(name + '.detail', { id: -1, parentId: this.item.id});
                                                     };
                                                     $scope.edit = function () {
-                                                        $state.transitionTo('menu.detail', {id: this.item.id,
-                                                            parentId: $scope.menuTreeCache[this.item.id].parent.id});
+                                                        $state.transitionTo(name + '.detail', {id: this.item.id,
+                                                            parentId: $scope.treeCache[this.item.id].parent.id});
                                                     };
                                                     $scope.delete = function () {
                                                         var delId = this.item.id;
-                                                        Service.Menu.delete({id: delId}, function () {
-                                                            var currMenu = $scope.menuTreeCache[delId];
-                                                            var parent = currMenu.parent;
+                                                        Service[serviceName].delete({id: delId}, function () {
+                                                            var currItem = $scope.treeCache[delId];
+                                                            var parent = currItem.parent;
                                                             var children = parent.children;
                                                             for (var i in children) {
-                                                                var menu = children[i];
-                                                                if (menu.id == delId) {
+                                                                var item = children[i];
+                                                                if (item.id == delId) {
                                                                     children.splice(i, 1);
                                                                     break;
                                                                 }
@@ -132,101 +135,133 @@
                                                         });
                                                     };
                                                 }]
-                                        })
-                                        .state('menu.list', {
-                                            parent: 'menu',
+                                        }]
+                                    },
+                                    list: function (name, serviceName) {
+                                        return [name + '.list', {
+                                            parent: name,
                                             url: '',
-                                            templateUrl: '/tmpl/menu/list.html'
-                                        })
-                                        .state('menu.detail', {
-                                            parent: 'menu',
+                                            templateUrl: '/tmpl/' + name + '/list.html'
+                                        }]
+                                    },
+                                    detail: function (name, serviceName) {
+                                        return [name + '.detail', {
+                                            parent: name,
                                             url: '/{id}/{parentId}',
-                                            templateUrl: '/tmpl/menu/detail.html',
+                                            templateUrl: '/tmpl/' + name + '/detail.html',
                                             controller: ['$scope', '$state', '$stateParams', 'Service',
                                                 function ($scope, $state, $stateParams, Service) {
                                                     var id = $stateParams.id;
                                                     var parentId = $stateParams.parentId;
                                                     if (id > 0) {
-                                                        $scope.menu = Service.Menu.get({id: $stateParams.id});
+                                                        $scope[name] = Service[serviceName].get({id: $stateParams.id});
                                                     } else {
-                                                        $scope.menu = {
+                                                        $scope[name] = {
                                                             valid: true
                                                         }
                                                     }
                                                     $scope.save = function () {
-                                                        Service.Menu.save({parentId: parentId, id: id}, $scope.menu, function (menu) {
+                                                        Service[serviceName].save({parentId: parentId, id: id}, $scope[name], function (bean) {
                                                             if (id > 0) {
-                                                                $scope.menuTreeCache[id].curr.name = $scope.menu.name;
+                                                                $scope.treeCache[id].curr.name = $scope[name].name;
                                                             } else {
-                                                                var parent = $scope.menuTreeCache[parentId].curr;
+                                                                var parent = $scope.treeCache[parentId].curr;
                                                                 parent.clazz = h.c.treeIcon.open;
                                                                 parent.leaf = false;
                                                                 parent.children = $scope.getChildren(parentId, parent);
                                                             }
-                                                            $state.transitionTo('menu.list');
+                                                            $state.transitionTo(name + '.list');
                                                         });
                                                     }
                                                 }]
-                                        })
-                                        .state('menu.entry', {
-                                            parent: "menu",
+                                        }];
+                                    }
+                                },
+                                entry: {
+                                    detail: function (parent, name) {
+                                        return [parent + '.entry.detail', {
+                                            parent: parent,
                                             url: '/entry/{key}/{fkId}',
-                                            templateUrl: '/tmpl/entry/list.html',
-                                            controller: ['$scope', '$state', '$stateParams', 'Service',
-                                                function ($scope, $state, $stateParams, Service) {
-                                                    var key = $stateParams.key;
-                                                    var fkId = $stateParams.fkId;
-                                                    $scope.fkId = fkId;
-                                                    $scope.maxSize = 10;
-                                                    $scope.setPage = function (number) {
-                                                        Service.Entry.get({key: key, fkId: fkId, page: number, size: 20}, function (result) {
-                                                            $scope.entries = result.content;
-                                                            $scope.totalPages = result.totalPages;
-                                                            $scope.number = result.number + 1;
-                                                        });
-                                                    };
-                                                    $scope.setPage(1);
-                                                }]
-                                        }).state('menu.entry.detail', {
-                                            parent: "menu",
-                                            url: '/entry/{key}/{fkId}/{id}',
                                             templateUrl: '/tmpl/entry/detail.html',
                                             controller: ['$scope', '$state', '$stateParams', 'Service',
                                                 function ($scope, $state, $stateParams, Service) {
                                                     var key = $stateParams.key;
                                                     var fkId = $stateParams.fkId;
-                                                    var id = $stateParams.id;
-                                                    if (id > 0) {
-                                                        $scope.entry = Service.Entry.get({key: key, fkId: fkId, id: id});
-                                                    } else {
-                                                        $scope.entry = {
-                                                            valid: true
-                                                        }
-                                                    }
+                                                    $scope.entry = Service.Entry.get({key: key, fkId: fkId});
+                                                    var ue;
                                                     $scope.save = function () {
-                                                        Service.Entry.save({key: key, fkId: fkId, id: id},
-                                                                $scope.entry, function () {
-                                                                    $state.transitionTo('menu.entry', {key: key, fkId: fkId});
-                                                                });
-                                                    }
+                                                        if (ue) {
+                                                            $scope.entry.content = ue.getContent();
+                                                        }
+                                                        Service.Entry.save({key: key, fkId: fkId, id: $scope.id || -1}, $scope.entry, function () {
+                                                            $state.transitionTo(parent + '.entry.detail', {key: key, fkId: fkId});
+                                                        });
+                                                    };
+                                                    var init = false;
+                                                    $scope.editTemplate = function () {
+                                                        try {
+                                                            UE.getEditor('editor').destroy();
+                                                        } catch (e) {
+                                                        }
+                                                        if (!init) {
+                                                            init = true;
+                                                            ue = UE.getEditor('editor');
+                                                            var params = '/' + key + '/' + fkId;
+                                                            ue.options.imageManagerUrl = window.UEDITOR_CONFIG.imageManagerUrl + params;
+                                                            ue.options.imageUrl = window.UEDITOR_CONFIG.imageUrl + params;
+                                                            ue.options.fileUrl = window.UEDITOR_CONFIG.fileUrl + params;
+                                                        }
+                                                    };
                                                 }]
-                                        })
-                                        .state('about', {
-                                            url: '/about',
-                                            templateProvider: ['$timeout',
-                                                function ($timeout) {
-                                                    return $timeout(function () {
-                                                        return "Hello world"
-                                                    }, 100);
-                                                }]
-                                        });
-                            }])
-                .run(['$rootScope', '$state', '$stateParams',
-                    function ($rootScope, $state, $stateParams) {
-                        $rootScope.$state = $state;
-                        $rootScope.$stateParams = $stateParams;
-                    }]);
-    })();
+                                        }];
+                                    }
+                                }
+                            };
+                            for (var key in stateConfig.tree) {
+                                var state = stateConfig.tree[key];
+                                $stateProvider.state.apply($stateProvider, state('menu', 'Menu'));
+                                $stateProvider.state.apply($stateProvider, state('systemCode', 'SystemCode'));
+                            }
+                            $stateProvider.state.apply($stateProvider, stateConfig.entry.detail('menu', 'entry'));
+                            $stateProvider
+//                                    .state('menu.entry', {
+//                                        parent: "menu",
+//                                        url: '/entry/{key}/{fkId}',
+//                                        templateUrl: '/tmpl/entry/list.html',
+//                                        controller: ['$scope', '$state', '$stateParams', 'Service',
+//                                            function ($scope, $state, $stateParams, Service) {
+//                                                var key = $stateParams.key;
+//                                                var fkId = $stateParams.fkId;
+//                                                $scope.fkId = fkId;
+//                                                $scope.maxSize = 10;
+//                                                $scope.setPage = function (number) {
+//                                                    Service.Entry.get({key: key, fkId: fkId, page: number, size: 20}, function (result) {
+//                                                        $scope.entries = result.content;
+//                                                        $scope.totalPages = result.totalPages;
+//                                                        $scope.number = result.number + 1;
+//                                                    });
+//                                                };
+//                                                $scope.setPage(1);
+//                                            }]
+//                                    })
+                                    .state('about', {
+                                        url: '/about',
+                                        templateProvider: ['$timeout',
+                                            function ($timeout) {
+                                                return $timeout(function () {
+                                                    return "Hello world"
+                                                }, 100);
+                                            }]
+                                    });
+                        }])
+            .run(['$rootScope', '$state', '$stateParams',
+                function ($rootScope, $state, $stateParams) {
+                    $rootScope.$state = $state;
+                    $rootScope.$stateParams = $stateParams;
+                }]);
+})();
 </script>
 </body>
 </html>
+<script src="/style/ueditor/ueditor.config.js"></script>
+<script src="/style/ueditor/ueditor.all.js"></script>

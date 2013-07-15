@@ -9,8 +9,6 @@ import com.huanwuji.repository.EntryRepository;
 import com.huanwuji.service.EntryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,16 +28,19 @@ public class EntryController extends BaseController {
     @Autowired
     private EntryRepository entryRepository;
 
-    @RequestMapping(value = "/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Page<Entry> list(@PathVariable("key") String key,
-                            @PathVariable("fkId") Long fkId, int page, int size) {
-        return entryService.findAll(KeyTools.getFk(key, fkId), new PageRequest(page - 1, size));
-    }
+//    @RequestMapping(value = "/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public Page<Entry> list(@PathVariable("key") String key,
+//                            @PathVariable("fkId") Long fkId, int page, int size) {
+//        return entryService.findAll(KeyTools.getFk(key, fkId), new PageRequest(page - 1, size));
+//    }
 
-    @RequestMapping(value = "/{key}/{fkId}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> get(@PathVariable("id") Long id) {
-        Entry entry = entryRepository.findOne(id);
+    @RequestMapping(value = "/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> get(@PathVariable("key") String key, @PathVariable("fkId") Long id) {
+        Entry entry = entryService.findByFk(KeyTools.getFk(key, id));
+        if (entry == null) {
+            entry = new Entry();
+        }
         String json = FlexJsonTools.getJSONSerializer(
                 new SimpleObjectTransformer().addPropertyFilter("*", true)).exclude("*.class").serialize(entry);
         return new ResponseEntity<String>(json, HttpStatus.OK);
@@ -49,12 +50,12 @@ public class EntryController extends BaseController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void save(@RequestBody Entry entry, @PathVariable("key") String key,
                      @PathVariable("fkId") Long fkId, @PathVariable("id") Long id) {
-        if (id > 0) {
-            Entry dbEntry = entryRepository.findOne(entry.getId());
+        Entry dbEntry = entryService.findByFk(KeyTools.getFk(key, fkId));
+        if (dbEntry == null) {
+            entry.setFk(KeyTools.getFk(key, fkId));
+        } else {
             BeanUtils.copyProperties(entry, dbEntry, new String[]{QEntry.ID});
             entry = dbEntry;
-        } else {
-            entry.setFk(KeyTools.getFk(key, fkId));
         }
         entryRepository.save(entry);
     }

@@ -3,6 +3,7 @@ package com.huanwuji.service;
 import com.huanwuji.entity.bean.Entry;
 import com.huanwuji.entity.query.QEntry;
 import com.huanwuji.repository.EntryRepository;
+import com.mysema.query.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +40,12 @@ public class EntryService {
 
     public Page<Entry> findAll(Long fk, Pageable pageable) {
         return findAll(fk, null, pageable);
+    }
+
+    public Entry findByFk(Long fk) {
+        JPAQuery query = new JPAQuery(em);
+        QEntry qEntry = QEntry.ENTRY;
+        return query.from(qEntry).where(qEntry.fk.eq(fk)).singleResult(qEntry);
     }
 
     public Page<Entry> findAll(final Long fk, final Boolean vaild, Pageable pageable) {

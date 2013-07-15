@@ -16,7 +16,7 @@
     </context:component-scan>
 
     <context:property-placeholder ignore-unresolvable="true"
-                                  location="classpath*:META-INF/spring/database.properties"/>
+                                  location="classpath:META-INF/spring/database.properties,classpath:META-INF/spring/system.properties"/>
     <!-- BoneCP configuration -->
     <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
         <property name="driverClass" value="${database.driverClassName}"/>
@@ -64,4 +64,19 @@
 
     <!-- JSR303 Validator定义 -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <bean id="imageUploader" class="com.huanwuji.utils.Uploader" scope="prototype">
+        <property name="savePath" value="${rootPath}"/>
+        <property name="relativeFolder" value="${imageSavePath}"/>
+        <property name="allowFiles" value="gif,png,jpg,jpeg,bmp"/>
+    </bean>
+    <bean id="fileUploader" class="com.huanwuji.utils.Uploader" scope="prototype">
+        <property name="savePath" value="${rootPath}"/>
+        <property name="relativeFolder" value="${fileSavePath}"/>
+        <property name="allowFiles" value="rar,doc,docx,zip,pdf,txt,swf,wmv"/>
+    </bean>
+    <bean class="com.huanwuji.service.UploadService">
+        <property name="remoteImageSavePath" value="${rootPath}"/>
+        <property name="relativeFolder" value="${remoteImageSavePath}"/>
+    </bean>
 </beans>

@@ -5,3 +5,9 @@
 .pagination {
     margin: 0;
 }
+
+.editor_model {
+    width: 1024px;
+    height: 500px;
+    margin-left: -512px;
+}

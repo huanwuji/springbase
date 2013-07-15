@@ -34,7 +34,7 @@ public class Entry extends BasicMethod {
     private String icon;
     @Column(name = "TYPE", nullable = true, length = 20)
     private String type;
-    @Column(name = "CONTENT", nullable = true, length = 500, columnDefinition = "MEDIUMINT")
+    @Column(name = "CONTENT", nullable = true, length = 500, columnDefinition = "MEDIUMTEXT")
     private String content;
     @Column(name = "VALID", nullable = true, length = 2)
     private Boolean valid;

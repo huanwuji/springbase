@@ -52,10 +52,13 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">描述</label>
+            <label class="control-label">内容</label>
 
             <div class="controls">
-                <textarea rows="3" cols="5" ng-model="entry.content"></textarea>
+                <a class="btn btn-primary" href="#" ng-click="editTemplate()"><i class="icon-edit icon-white"></i> 高级编辑</a><br/>
+                <textarea ng-model="entry.content" id="editor" style="height: 300px;width: 500px;"></textarea>
+                <!--<script id="editor" type="text/plain" style="height:300px">-->
+                <!--</script>-->
             </div>
         </div>
         <div class="control-group">
