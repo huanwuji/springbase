@@ -38,6 +38,6 @@ public class BasicPropertyFilter implements PropertyFilter {
         if (reg != null) {
             return StringUtils.join(path.getPath(), ".").matches(reg);
         }
-        return !filterNotBasicObj || !prop.getPropertyType().getName().startsWith("java");
+        return filterNotBasicObj && !prop.getPropertyType().getName().startsWith("java");
     }
 }
