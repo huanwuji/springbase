@@ -1,6 +1,6 @@
 package com.huanwuji.repository;
 
-import com.huanwuji.entity.bean.Item;
+import com.huanwuji.entity.bean.Gift;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * Time: 下午2:36
  * To change this template use File | Settings | File Templates.
  */
-public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
+public interface GiftRepository extends JpaRepository<Gift, Long>, JpaSpecificationExecutor<Gift> {
 
 }

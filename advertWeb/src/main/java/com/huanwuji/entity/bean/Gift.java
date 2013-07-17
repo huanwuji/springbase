@@ -1,5 +1,6 @@
 package com.huanwuji.entity.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huanwuji.core.jpa.TreeableEntityListener;
 import com.huanwuji.entity.BasicMethod;
 
@@ -15,8 +16,8 @@ import javax.persistence.*;
  */
 @Entity
 @EntityListeners(value = TreeableEntityListener.class)
-@Table(name = "ITEM")
-public class Item extends BasicMethod {
+@Table(name = "GIFT")
+public class Gift extends BasicMethod {
     @Column(name = "NAME", nullable = true, length = 50)
     private String name;
     @Column(name = "TITLE", nullable = true, length = 50)
@@ -31,11 +32,12 @@ public class Item extends BasicMethod {
     private Boolean valid;
     @Column(name = "DESCR", nullable = true, length = 500, columnDefinition = "TEXT")
     private String descr;
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "category", nullable = true, updatable = false)
     private SystemCode category;
 
-    public Item() {
+    public Gift() {
     }
 
     public String getName() {

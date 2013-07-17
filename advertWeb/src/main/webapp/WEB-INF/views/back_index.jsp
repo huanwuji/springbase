@@ -44,7 +44,7 @@
                     Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'}),
-                    Item: $resource('/item/:cid/:id', { fkId: '@cid', id: '@id'})
+                    Gift: $resource('/gift/:cid/:id', { cid: '@cid', id: '@id'})
                 };
             });
     angular.module('huanwuji', ['ui.compat', 'ServiceModules', 'angularTree', 'ui.bootstrap'])
@@ -223,37 +223,45 @@
                             }
                             $stateProvider.state.apply($stateProvider, stateConfig.entry.detail('menu', 'entry'));
                             $stateProvider
-                                    .state('systemCode.item', {
+                                    .state('systemCode.gift', {
                                         parent: "systemCode",
-                                        url: '/item/cid/{cid}',
-                                        templateUrl: '/tmpl/item/list.html',
+                                        url: '/gift/cid/{cid}',
+                                        templateUrl: '/tmpl/gift/list.html',
                                         controller: ['$scope', '$state', '$stateParams', 'Service',
                                             function ($scope, $state, $stateParams, Service) {
                                                 var cid = $stateParams.cid;
                                                 $scope.cid = cid;
                                                 $scope.maxSize = 10;
                                                 $scope.setPage = function (number) {
-                                                    Service.Item.get({cid: cid, page: number, size: 20}, function (result) {
-                                                        $scope.items = result.content;
+                                                    Service.Gift.get({cid: cid, page: number, size: 20}, function (result) {
+                                                        $scope.gifts = result.content;
                                                         $scope.totalPages = result.totalPages;
                                                         $scope.number = result.number + 1;
                                                     });
                                                 };
                                                 $scope.setPage(1);
+                                                $scope.giftDelete = function (id) {
+                                                    Service.Gift.delete({id: id, cid: cid});
+                                                    $state.transitionTo('systemCode.gift', {cid: cid});
+                                                }
                                             }]
                                     })
-                                    .state('systemCode.item.detail', {
+                                    .state('systemCode.gift.detail', {
                                         parent: 'systemCode',
-                                        url: '/item/{cid}/{id}',
-                                        templateUrl: '/tmpl/item/detail.html',
+                                        url: '/gift/cid/{cid}/{id}',
+                                        templateUrl: '/tmpl/gift/detail.html',
                                         controller: ['$scope', '$state', '$stateParams', 'Service',
                                             function ($scope, $state, $stateParams, Service) {
                                                 var cid = $stateParams.cid;
                                                 var id = $stateParams.id;
-                                                $scope.item = Service.Item.get({id: id, cid: cid});
+                                                if (id < 1) {
+                                                    $scope.gift = {valid: true};
+                                                } else {
+                                                    $scope.gift = Service.Gift.get({id: id, cid: cid});
+                                                }
                                                 $scope.save = function () {
-                                                    Service.Item.save({id: id || -1, cid: cid}, $scope.item, function () {
-                                                        $state.transitionTo(parent + '.item.detail', {id: id, cid: cid});
+                                                    Service.Gift.save({id: id || -1, cid: cid}, $scope.gift, function () {
+                                                        $state.transitionTo('systemCode.gift', {cid: cid});
                                                     });
                                                 };
                                             }]
@@ -269,6 +277,11 @@
                                     }]
                             });
                         }])
+            .filter('vaild', function () {
+                return function (input) {
+                    return input ? '是' : '否';
+                };
+            })
             .run(['$rootScope', '$state', '$stateParams',
                 function ($rootScope, $state, $stateParams) {
                     $rootScope.$state = $state;

@@ -1,8 +1,8 @@
 package com.huanwuji.service;
 
-import com.huanwuji.entity.bean.Item;
-import com.huanwuji.entity.query.QItem;
-import com.huanwuji.repository.ItemRepository;
+import com.huanwuji.entity.bean.Gift;
+import com.huanwuji.entity.query.QGift;
+import com.huanwuji.repository.GiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,26 +29,26 @@ import java.util.List;
  */
 @Repository
 @Transactional(readOnly = true)
-public class ItemService {
+public class GiftService {
 
     @PersistenceContext
     protected EntityManager em;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private GiftRepository giftRepository;
 
-    public Page<Item> findAll(Long cid, Pageable pageable) {
+    public Page<Gift> findAll(Long cid, Pageable pageable) {
         return findAll(cid, null, pageable);
     }
 
-    public Page<Item> findAll(final Long cid, final Boolean vaild, Pageable pageable) {
-        return itemRepository.findAll(new Specification<Item>() {
+    public Page<Gift> findAll(final Long cid, final Boolean vaild, Pageable pageable) {
+        return giftRepository.findAll(new Specification<Gift>() {
             @Override
-            public Predicate toPredicate(Root<Item> itemRoot, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<Gift> giftRoot, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<Predicate>(2);
-                predicates.add(criteriaBuilder.equal(itemRoot.get(QItem.CATEGORY), cid));
+                predicates.add(criteriaBuilder.equal(giftRoot.get(QGift.CATEGORY), cid));
                 if (vaild != null) {
-                    predicates.add(criteriaBuilder.equal(itemRoot.get(QItem.VALID), vaild));
+                    predicates.add(criteriaBuilder.equal(giftRoot.get(QGift.VALID), vaild));
                 }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
