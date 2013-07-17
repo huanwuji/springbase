@@ -62,7 +62,7 @@ public class SimpleObjectTransformer extends AbstractTransformer {
         return this;
     }
 
-    //根据当前的属性全路径，自定义过滤匹配方式，
+    //根据当前的属性全路径，自定义获取方式
     public SimpleObjectTransformer addPropertyProcesser(String path, String propPath) {
         propertyProcesserMap.put(path, new BasicPropertyProcesser(propPath));
         return this;
