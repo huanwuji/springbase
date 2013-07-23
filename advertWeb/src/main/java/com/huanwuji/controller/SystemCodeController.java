@@ -26,7 +26,7 @@ import java.util.List;
  */
 @RequestMapping("/systemCode")
 @Controller
-public class SystemCodeController extends BaseController {
+public class SystemCodeController {
 
     @Autowired
     private SystemCodeService systemCodeService;

@@ -10,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * create: 13-7-7 下午1:30
  */
 public interface EntryRepository extends JpaRepository<Entry, Long>, JpaSpecificationExecutor<Entry> {
+
+    public Entry findEntryByCode(String code);
 }

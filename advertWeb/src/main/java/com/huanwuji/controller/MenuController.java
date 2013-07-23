@@ -26,7 +26,7 @@ import java.util.List;
  */
 @RequestMapping("/menu")
 @Controller
-public class MenuController extends BaseController {
+public class MenuController {
 
     @Autowired
     private MenuService menuService;

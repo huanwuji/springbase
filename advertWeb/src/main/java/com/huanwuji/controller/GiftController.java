@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/gift")
 @Controller
-public class GiftController extends BaseController {
+public class GiftController {
 
     @Autowired
     private GiftService giftService;

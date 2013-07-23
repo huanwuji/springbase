@@ -38,28 +38,23 @@
 </div>
 <script>
 (function () {
-    angular.module('ServiceModules', ['ngResource']).
-            factory('Service', function ($resource) {
+    angular.module('huanwuji', ['ui.compat', 'angularTree', 'ui.bootstrap', 'ngResource'])
+            .factory('Service', function ($resource) {
                 return {
                     Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'}),
                     Gift: $resource('/gift/:cid/:id', { cid: '@cid', id: '@id'})
                 };
-            });
-    angular.module('huanwuji', ['ui.compat', 'ServiceModules', 'angularTree', 'ui.bootstrap'])
+            })
             .config(
                     ['$stateProvider', '$routeProvider', '$urlRouterProvider',
                         function ($stateProvider, $routeProvider, $urlRouterProvider) {
-//                                $urlRouterProvider
-//                                        .when('/c?id', '/contacts/:id')
-//                                        .otherwise('/');
+                            $urlRouterProvider
+                                    .when('', '/');
                             $routeProvider
-//                                    .when('/user/:id', {
-//                                        redirectTo: '/contacts/:id'
-//                                    })
-                                    .when('/', {
-                                        redirectTo: "/menu"
+                                    .when('', {
+                                        redirectTo: '/menu'
                                     });
                             var stateConfig = {
                                 tree: {
@@ -193,7 +188,7 @@
                                                             $scope.entry.content = ue.getContent();
                                                         }
                                                         Service.Entry.save({key: key, fkId: fkId, id: $scope.id || -1}, $scope.entry, function () {
-                                                            $state.transitionTo(parent + '.entry.detail', {key: key, fkId: fkId});
+                                                            $state.transitionTo(parent + '.list', {key: key, fkId: fkId});
                                                         });
                                                     };
                                                     var init = false;

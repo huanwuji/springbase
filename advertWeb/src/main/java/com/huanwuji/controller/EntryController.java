@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/entry")
 @Controller
-public class EntryController extends BaseController {
+public class EntryController {
 
     @Autowired
     private EntryService entryService;
@@ -44,6 +44,35 @@ public class EntryController extends BaseController {
         String json = FlexJsonTools.getJSONSerializer(
                 new SimpleObjectTransformer().addPropertyFilter("*", true)).exclude("*.class").serialize(entry);
         return new ResponseEntity<String>(json, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{code}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getEntryByCode(@PathVariable("code") String code) {
+        Entry entry = entryRepository.findEntryByCode(code);
+        if (entry == null) {
+            entry = new Entry();
+        }
+        String json = FlexJsonTools.getJSONSerializer(
+                new SimpleObjectTransformer().addPropertyFilter("*", true)).exclude("*.class").serialize(entry);
+        return new ResponseEntity<String>(json, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/temp/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<String> getTemplate(@PathVariable("key") String key, @PathVariable("fkId") Long id) {
+        Entry entry = entryService.findByFk(KeyTools.getFk(key, id));
+        if (entry == null) {
+            entry = new Entry();
+        }
+        return new ResponseEntity<String>(entry.getContent(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/temp/{code}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<String> getTemplateByCode(@PathVariable("code") String code) {
+        Entry entry = entryRepository.findEntryByCode(code);
+        if (entry == null) {
+            entry = new Entry();
+        }
+        return new ResponseEntity<String>(entry.getContent(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{key}/{fkId}/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
