@@ -1,10 +1,14 @@
 package com.huanwuji.entity.bean;
 
+import com.huanwuji.core.jpa.SystemParamsListener;
 import com.huanwuji.entity.BasicMethod;
+import com.huanwuji.entity.SystemParams;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,8 +20,9 @@ import javax.persistence.Table;
  */
 //菜单
 @Entity
+@EntityListeners(value = SystemParamsListener.class)
 @Table(name = "ATTACHMENT")
-public class Attachment extends BasicMethod {
+public class Attachment extends BasicMethod implements SystemParams {
 
     @Column(name = "FK", nullable = true)
     private Long fk;
@@ -32,13 +37,11 @@ public class Attachment extends BasicMethod {
     @Column(name = "URL", nullable = true, length = 250)
     private String url;
 
-//    @CreatedDate
-//    @Column(name = "CREATE_DATE", nullable = true)
-//    private DateTime createDate;
-//
-//    @LastModifiedDate
-//    @Column(name = "MODIFY_DATE", nullable = true)
-//    private DateTime modifyDate;
+    @Column(name = "CREATE_DATE", nullable = true, columnDefinition = "DATETIME")
+    private Date createDate;
+
+    @Column(name = "MODIFY_DATE", nullable = true, columnDefinition = "DATETIME")
+    private Date modifyDate;
 
     public Attachment() {
     }
@@ -89,5 +92,21 @@ public class Attachment extends BasicMethod {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 }

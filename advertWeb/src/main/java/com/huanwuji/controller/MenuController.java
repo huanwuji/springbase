@@ -6,6 +6,7 @@ import com.huanwuji.json.flexjson.FlexJsonTools;
 import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.MenuRepository;
 import com.huanwuji.service.MenuService;
+import flexjson.JSONSerializer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,9 +61,7 @@ public class MenuController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> get(@PathVariable("id") Long id) {
         Menu menu = menuRepository.findOne(id);
-        String json = FlexJsonTools.getJSONSerializer(
-                new SimpleObjectTransformer().addPropertyFilter("*", true)
-                        .addPropertyFilter("parent", "parent.id")).exclude("*.class").serialize(menu);
+        String json = new JSONSerializer().exclude("parent", "*.class").serialize(menu);
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 

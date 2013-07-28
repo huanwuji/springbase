@@ -1,13 +1,14 @@
 package com.huanwuji.entity.bean;
 
+import com.huanwuji.core.jpa.SystemParamsListener;
 import com.huanwuji.entity.BasicMethod;
-import org.joda.time.DateTime;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import com.huanwuji.entity.SystemParams;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,8 +20,9 @@ import javax.persistence.Table;
  */
 //菜单
 @Entity
+@EntityListeners(value = SystemParamsListener.class)
 @Table(name = "ENTRY")
-public class Entry extends BasicMethod {
+public class Entry extends BasicMethod implements SystemParams {
 
     @Column(name = "CODE", nullable = true, length = 30)
     private String code;
@@ -41,13 +43,11 @@ public class Entry extends BasicMethod {
     @Column(name = "FK", nullable = true)
     private Long fk;
 
-    @CreatedDate
-    @Column(name = "CREATE_DATE", nullable = true)
-    private DateTime createDate;
+    @Column(name = "CREATE_DATE", nullable = true, columnDefinition = "DATETIME")
+    private Date createDate;
 
-    @LastModifiedDate
-    @Column(name = "MODIFY_DATE", nullable = true)
-    private DateTime modifyDate;
+    @Column(name = "MODIFY_DATE", nullable = true, columnDefinition = "DATETIME")
+    private Date modifyDate;
 
     public Entry() {
     }
@@ -124,19 +124,19 @@ public class Entry extends BasicMethod {
         this.fk = fk;
     }
 
-    public DateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(DateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public DateTime getModifyDate() {
+    public Date getModifyDate() {
         return modifyDate;
     }
 
-    public void setModifyDate(DateTime modifyDate) {
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 }

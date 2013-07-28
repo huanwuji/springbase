@@ -4,7 +4,7 @@
 <head>
     <title></title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap3.css">
     <link rel="stylesheet" type="text/css" href="/style/me/huanwuji.css">
     <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/js/bootstrap.js">--%>
     <script src="/style/me/huanwuji.js"></script>
@@ -17,19 +17,40 @@
 </head>
 <body>
 <div>
+    <%--<div class="navbar navbar-static">--%>
+    <%--<div class="navbar-inner">--%>
+    <%--<div class="container">--%>
+    <%--<ul class="nav">--%>
+    <%--<li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>--%>
+    <%--<li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">系统代码</a></li>--%>
+    <%--<li ng-class="{ active: $state.includes('about') }"><a href="#/about">关于</a></li>--%>
+    <%--</ul>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
     <div class="navbar">
         <div class="navbar-inner">
-            <div class="container">
-                <ul class="nav">
+            <div class="container" style="width: auto;">
+                <a class="navbar-brand" href="#">后台管理</a>
+                <ul class="nav navbar-nav">
                     <li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>
                     <li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">系统代码</a></li>
                     <li ng-class="{ active: $state.includes('about') }"><a href="#/about">关于</a></li>
+                    <%--<li class="dropdown">--%>
+                    <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>--%>
+                    <%--<ul class="dropdown-menu">--%>
+                    <%--<li class=""><a href="#one">one</a></li>--%>
+                    <%--<li class=""><a href="#two">two</a></li>--%>
+                    <%--<li class="divider"></li>--%>
+                    <%--<li class=""><a href="#three">three</a></li>--%>
+                    <%--</ul>--%>
+                    <%--</li>--%>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row-fluid" ui-view ng-animate="{enter:'fade-enter'}"></div>
+    <div class="container">
+        <div class="row" ui-view ng-animate="{enter:'fade-enter'}"></div>
         <hr>
         <footer>
             <p>&copy; Company 2013</p>
@@ -47,6 +68,11 @@
                     Gift: $resource('/gift/:cid/:id', { cid: '@cid', id: '@id'})
                 };
             })
+            .constant('hwjConfig', {
+                menuTypes: [
+                    {value: 'single', text: '普通单页'  },
+                    {value: 'dropdown', text: '下拉菜单'  }
+                ]})
             .config(
                     ['$stateProvider', '$routeProvider', '$urlRouterProvider',
                         function ($stateProvider, $routeProvider, $urlRouterProvider) {
@@ -181,7 +207,10 @@
                                                 function ($scope, $state, $stateParams, Service) {
                                                     var key = $stateParams.key;
                                                     var fkId = $stateParams.fkId;
-                                                    $scope.entry = Service.Entry.get({key: key, fkId: fkId});
+                                                    Service.Entry.get({key: key, fkId: fkId}, function (entry) {
+                                                        entry.type = entry.type || 'single';
+                                                        $scope.entry = entry;
+                                                    });
                                                     var ue;
                                                     $scope.save = function () {
                                                         if (ue) {
@@ -277,8 +306,9 @@
                     return input ? '是' : '否';
                 };
             })
-            .run(['$rootScope', '$state', '$stateParams',
-                function ($rootScope, $state, $stateParams) {
+            .run(['$rootScope', '$state', '$stateParams', 'hwjConfig',
+                function ($rootScope, $state, $stateParams, hwjConfig) {
+                    $rootScope.hwjConfig = hwjConfig;
                     $rootScope.$state = $state;
                     $rootScope.$stateParams = $stateParams;
                 }]);

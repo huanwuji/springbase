@@ -1,13 +1,15 @@
 package com.huanwuji.entity.bean;
 
+import com.huanwuji.core.jpa.SystemParamsListener;
 import com.huanwuji.core.jpa.TreeableEntityListener;
 import com.huanwuji.entity.BasicMethod;
+import com.huanwuji.entity.SystemParams;
 import com.huanwuji.entity.Treeable;
-import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,9 +22,9 @@ import java.util.List;
  */
 //菜单
 @Entity
-@EntityListeners(value = TreeableEntityListener.class)
+@EntityListeners(value = {TreeableEntityListener.class, SystemParamsListener.class})
 @Table(name = "MENU")
-public class Menu extends BasicMethod implements Treeable<Menu, Long> {
+public class Menu extends BasicMethod implements Treeable<Menu, Long>, SystemParams {
 
     @Column(name = "CODE", nullable = true, length = 30)
     private String code;
@@ -46,12 +48,12 @@ public class Menu extends BasicMethod implements Treeable<Menu, Long> {
     private Boolean valid;
 
     @CreatedDate
-    @Column(name = "CREATE_DATE", nullable = true)
-    private DateTime createDate;
+    @Column(name = "CREATE_DATE", nullable = true, columnDefinition = "DATETIME")
+    private Date createDate;
 
     @LastModifiedDate
-    @Column(name = "MODIFY_DATE", nullable = true)
-    private DateTime modifyDate;
+    @Column(name = "MODIFY_DATE", nullable = true, columnDefinition = "DATETIME")
+    private Date modifyDate;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID", nullable = true, updatable = false)
@@ -143,19 +145,19 @@ public class Menu extends BasicMethod implements Treeable<Menu, Long> {
         this.valid = valid;
     }
 
-    public DateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(DateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public DateTime getModifyDate() {
+    public Date getModifyDate() {
         return modifyDate;
     }
 
-    public void setModifyDate(DateTime modifyDate) {
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 
