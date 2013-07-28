@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
  * create: 13-6-14 下午10:20
  */
 public class StringTools {
+    public static final String COMMA = ",";
+    public static final String MINUS = "-";
+    public static final String PERIOD = ".";
 
     public static List<String> getMatchs(String str, String reg) {
         return getMatchs(str, reg, -1);

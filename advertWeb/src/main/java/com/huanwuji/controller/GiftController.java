@@ -7,7 +7,7 @@ import com.huanwuji.json.flexjson.FlexJsonTools;
 import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.GiftRepository;
 import com.huanwuji.repository.SystemCodeRepository;
-import com.huanwuji.service.GiftService;
+import com.huanwuji.search.SearchUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,15 +18,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  */
 @RequestMapping("/gift")
 @Controller
 public class GiftController {
-
-    @Autowired
-    private GiftService giftService;
     @Autowired
     private GiftRepository giftRepository;
     @Autowired
@@ -34,8 +35,12 @@ public class GiftController {
 
     @RequestMapping(value = "/{cid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Page<Gift> list(@PathVariable("cid") Long cid, int page, int size) {
-        return giftService.findAll(cid, new PageRequest(page - 1, size));
+    public Page<Gift> list(@PathVariable("cid") Long cid, HttpServletRequest request, int page, int size) {
+        SearchUtils.JpaQueryConditions<Gift> conditions = SearchUtils.searchProcess(request, Gift.class);
+        PageRequest pageRequest = new PageRequest(page - 1, size, conditions.getSorts());
+        Map<String, Object> extraParams = new HashMap<String, Object>();
+        extraParams.put("s-category.id", cid);
+        return giftRepository.findAll(conditions.getSearches(), pageRequest);
     }
 
     @RequestMapping(value = "/{cid}/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

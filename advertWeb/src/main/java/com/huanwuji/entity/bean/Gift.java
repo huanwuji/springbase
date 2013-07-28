@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huanwuji.core.jpa.SystemParamsListener;
 import com.huanwuji.entity.BasicMethod;
 import com.huanwuji.entity.SystemParams;
+import com.huanwuji.search.Search;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(value = SystemParamsListener.class)
 @Table(name = "GIFT")
+@Search(all = true)
 public class Gift extends BasicMethod implements SystemParams {
     @Column(name = "NAME", nullable = true, length = 50)
     private String name;
