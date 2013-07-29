@@ -65,7 +65,7 @@
                     Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'}),
-                    Gift: $resource('/gift/:cid/:id', { cid: '@cid', id: '@id'})
+                    Gift: $resource('/gift/:cid/:id/:page/:size', { cid: '@cid', id: '@id', page: '@page', size: '@size'})
                 };
             })
             .constant('hwjConfig', {
@@ -257,7 +257,7 @@
                                                 $scope.cid = cid;
                                                 $scope.maxSize = 10;
                                                 $scope.setPage = function (number) {
-                                                    Service.Gift.get({cid: cid, page: number, size: 20}, function (result) {
+                                                    Service.Gift.get({cid: cid, id: 'p', page: number, size: 20}, function (result) {
                                                         $scope.gifts = result.content;
                                                         $scope.totalPages = result.totalPages;
                                                         $scope.number = result.number + 1;

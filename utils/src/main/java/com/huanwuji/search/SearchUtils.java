@@ -48,7 +48,10 @@ public class SearchUtils {
                     Sort.Direction.valueOf(desc.getOperator().name()), desc.getName());
             orders.add(order);
         }
-        return new Sort(orders);
+        if (!orders.isEmpty()) {
+            return new Sort(orders);
+        }
+        return null;
     }
 
     /**
@@ -67,15 +70,18 @@ public class SearchUtils {
                 if (paramName.startsWith(SEARCH_PRE)) {
                     SearchFieldDesc desc = parseParamName(paramName);
                     String fieldName = desc.getName();
-                    Field field = ObjectTools.getField(type, paramName);
-                    Search search = field.getAnnotation(Search.class);
-                    if ((searchAll != null && searchAll.all()) || (search != null && search.search())) {
-                        Class javaType = field.getType();
-                        Object value = param.getValue();
-                        Object typeValue = ConvertUtils.convert(value, javaType);
-                        desc.setValue(typeValue);
-                        searchFieldDescs.add(desc);
+                    Field field = ObjectTools.getField(type, fieldName);
+                    if (!searchAll.all()) {
+                        Search search = field.getAnnotation(Search.class);
+                        if ((search != null && search.search())) {
+                            continue;
+                        }
                     }
+                    Class javaType = field.getType();
+                    Object value = param.getValue();
+                    Object typeValue = ConvertUtils.convert(value, javaType);
+                    desc.setValue(typeValue);
+                    searchFieldDescs.add(desc);
                 }
             }
         }
@@ -100,10 +106,13 @@ public class SearchUtils {
             for (String sort : sortArr) {
                 String[] sortDesc = sort.split(StringTools.MINUS);
                 Field field = ObjectTools.getField(type, sortDesc[0]);
-                Search search = field.getAnnotation(Search.class);
-                if ((searchAll != null && searchAll.all()) || (search != null && search.sort())) {
-                    sortFields.add(new SearchFieldDesc(sortArr[0], SqlOperator.valueOf(sortDesc[1])));
+                if (!searchAll.all()) {
+                    Search search = field.getAnnotation(Search.class);
+                    if ((search != null && search.search())) {
+                        continue;
+                    }
                 }
+                sortFields.add(new SearchFieldDesc(sortArr[0], SqlOperator.valueOf(sortDesc[1])));
             }
         }
         return sortFields;

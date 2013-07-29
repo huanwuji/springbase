@@ -33,13 +33,15 @@ public class GiftController {
     @Autowired
     private SystemCodeRepository systemCodeRepository;
 
-    @RequestMapping(value = "/{cid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{cid}/p/{page}/{size}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Page<Gift> list(@PathVariable("cid") Long cid, HttpServletRequest request, int page, int size) {
-        SearchUtils.JpaQueryConditions<Gift> conditions = SearchUtils.searchProcess(request, Gift.class);
-        PageRequest pageRequest = new PageRequest(page - 1, size, conditions.getSorts());
+    public Page<Gift> list(@PathVariable("cid") Long cid, HttpServletRequest request,
+                           @PathVariable("page") int page, @PathVariable("size") int size) {
         Map<String, Object> extraParams = new HashMap<String, Object>();
         extraParams.put("s-category.id", cid);
+        SearchUtils.JpaQueryConditions<Gift> conditions =
+                SearchUtils.searchProcess(request, Gift.class, extraParams);
+        PageRequest pageRequest = new PageRequest(page - 1, size, conditions.getSorts());
         return giftRepository.findAll(conditions.getSearches(), pageRequest);
     }
 
