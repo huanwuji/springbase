@@ -6,6 +6,7 @@ import com.huanwuji.json.flexjson.FlexJsonTools;
 import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.SystemCodeRepository;
 import com.huanwuji.service.SystemCodeService;
+import com.huanwuji.utils.ControllerUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,12 +37,9 @@ public class SystemCodeController {
     private SystemCodeRepository systemCodeRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> list() {
-        List<SystemCode> list = systemCodeService.getSystemCodes();
-        String json = FlexJsonTools
-                .getJSONSerializer(new SimpleObjectTransformer()
-                        .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
-        return new ResponseEntity<String>(json, HttpStatus.OK);
+    @ResponseBody
+    public Object list(HttpServletRequest request) {
+        return ControllerUtils.getResult(request, systemCodeRepository, SystemCode.class);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")

@@ -1,5 +1,6 @@
 package com.huanwuji.entity.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huanwuji.core.jpa.SystemParamsListener;
 import com.huanwuji.core.jpa.TreeableEntityListener;
 import com.huanwuji.entity.BasicMethod;
@@ -55,10 +56,12 @@ public class Menu extends BasicMethod implements Treeable<Menu, Long>, SystemPar
     @Column(name = "MODIFY_DATE", nullable = true, columnDefinition = "DATETIME")
     private Date modifyDate;
 
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID", nullable = true, updatable = false)
     private Menu parent;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent")
     private List<Menu> subMenu;
 

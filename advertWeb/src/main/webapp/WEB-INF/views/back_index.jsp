@@ -65,7 +65,7 @@
                     Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
                     Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'}),
-                    Gift: $resource('/gift/:cid/:id/:page/:size', { cid: '@cid', id: '@id', page: '@page', size: '@size'})
+                    Gift: $resource('/gift/:cid/:id', { cid: '@cid', id: '@id'})
                 };
             })
             .constant('hwjConfig', {
@@ -136,6 +136,9 @@
                                                             parentId: $scope.treeCache[this.item.id].parent.id});
                                                     };
                                                     $scope.delete = function () {
+                                                        if (!$window.confirm("是否删除!")) {
+                                                            return;
+                                                        }
                                                         var delId = this.item.id;
                                                         Service[serviceName].delete({id: delId}, function () {
                                                             var currItem = $scope.treeCache[delId];
@@ -251,13 +254,13 @@
                                         parent: "systemCode",
                                         url: '/gift/cid/{cid}',
                                         templateUrl: '/tmpl/gift/list.html',
-                                        controller: ['$scope', '$state', '$stateParams', 'Service',
-                                            function ($scope, $state, $stateParams, Service) {
+                                        controller: ['$scope', '$state', '$stateParams', 'Service', '$window',
+                                            function ($scope, $state, $stateParams, Service, $window) {
                                                 var cid = $stateParams.cid;
                                                 $scope.cid = cid;
                                                 $scope.maxSize = 10;
                                                 $scope.setPage = function (number) {
-                                                    Service.Gift.get({cid: cid, id: 'p', page: number, size: 20}, function (result) {
+                                                    Service.Gift.get({cid: cid, page: number, size: 20}, function (result) {
                                                         $scope.gifts = result.content;
                                                         $scope.totalPages = result.totalPages;
                                                         $scope.number = result.number + 1;
@@ -265,6 +268,9 @@
                                                 };
                                                 $scope.setPage(1);
                                                 $scope.giftDelete = function (id) {
+                                                    if (!$window.confirm("是否删除!")) {
+                                                        return;
+                                                    }
                                                     Service.Gift.delete({id: id, cid: cid});
                                                     $state.transitionTo('systemCode.gift', {cid: cid});
                                                 }

@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="row-fluid" ui-view ng-animate="{enter:'fade-enter'}"></div>
+        <div class="row" ui-view ng-animate="{enter:'fade-enter'}"></div>
         <hr>
         <footer>
             <p>&copy; Company 2013</p>
@@ -55,14 +55,9 @@
 <script>
     (function () {
         var commonTemplProvide = ['$http', '$stateParams', function ($http, $stateParams) {
-            var codeOrFkId = $stateParams.codeOrFkId;
-            var url;
-            if (/^\w+?-\d+$/.test(codeOrFkId)) {
-                var arr = codeOrFkId.split('-');
-                url = '/entry/' + arr[0] + '/' + arr[1];
-            } else {
-                url = '/entry/' + codeOrFkId;
-            }
+            var type = $stateParams.type;
+            var id = $stateParams.id;
+            var url = '/entry/' + type + '/' + id;
             return $http.get(url)
                     .then(function (response) {
                         var entry = response.data;
@@ -78,10 +73,10 @@
         angular.module('huanwuji', ['ngResource', 'ui.compat', 'angularTree', 'ui.bootstrap'])
                 .factory('RestService', function ($resource) {
                     return {
-                        Menu: $resource('/menu/:id/:parentId', {id: '@id', parentId: '@parentId'}),
-                        SystemCode: $resource('/systemCode/:id/:parentId', {id: '@id', parentId: '@parentId'}),
-                        Entry: $resource('/entry/:key/:fkId/:id', {key: '@key', fkId: '@fkId', id: '@id'}),
-                        Gift: $resource('/gift/:cid/:id', { cid: '@cid', id: '@id'})
+                        Menu: $resource('/menu'),
+                        SystemCode: $resource('/systemCode'),
+                        Entry: $resource('/entry'),
+                        Gift: $resource('/gift')
                     }
                 })
                 .config(
@@ -89,11 +84,18 @@
                             function ($stateProvider, $routeProvider, $urlRouterProvider) {
                                 $stateProvider
                                         .state('single', {
-                                            url: '/single/{codeOrFkId}',
+                                            url: '/single/type/id',
                                             templateProvider: commonTemplProvide,
                                             controller: ['$scope', '$stateParams', 'RestService',
                                                 function ($scope, $stateParams, RestService) {
-                                                    var type = $stateParams.type;
+                                                }]
+                                        })
+                                        .state('gift_index', {
+                                            url: '/gift_index/type/id',
+                                            templateProvider: commonTemplProvide,
+                                            controller: ['$scope', '$stateParams', 'RestService',
+                                                function ($scope, $stateParams, RestService) {
+                                                    $scope.giftTypes = RestService.get()
                                                 }]
                                         })
                             }

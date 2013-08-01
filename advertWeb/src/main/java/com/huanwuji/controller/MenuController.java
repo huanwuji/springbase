@@ -5,13 +5,11 @@ import com.huanwuji.entity.query.QMenu;
 import com.huanwuji.json.flexjson.FlexJsonTools;
 import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.MenuRepository;
-import com.huanwuji.search.SearchUtils;
 import com.huanwuji.service.MenuService;
+import com.huanwuji.utils.ControllerUtils;
 import flexjson.JSONSerializer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,12 +37,9 @@ public class MenuController {
     private MenuRepository menuRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> list() {
-        List<Menu> list = menuService.getMenus();
-        String json = FlexJsonTools
-                .getJSONSerializer(new SimpleObjectTransformer()
-                        .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
-        return new ResponseEntity<String>(json, HttpStatus.OK);
+    @ResponseBody
+    public Object list(HttpServletRequest request) {
+        return ControllerUtils.getResult(request, menuRepository, Menu.class);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, params = "resultType=tree")
@@ -61,18 +54,6 @@ public class MenuController {
                 .getJSONSerializer(new SimpleObjectTransformer()
                         .addPropertyFilter("*", true)).exclude("*.class").serialize(list);
         return new ResponseEntity<String>(json, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}/p/{page}/{size}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Page<Menu> getChildrenByPage(@PathVariable("id") Long id, HttpServletRequest request,
-                                        @PathVariable("page") int page, @PathVariable("size") int size) {
-        Map<String, Object> extraParams = new HashMap<String, Object>();
-        extraParams.put("s-parent.id", id);
-        SearchUtils.JpaQueryConditions<Menu> conditions =
-                SearchUtils.searchProcess(request, Menu.class, extraParams);
-        PageRequest pageRequest = new PageRequest(page - 1, size, conditions.getSorts());
-        return menuRepository.findAll(conditions.getSearches(), pageRequest);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

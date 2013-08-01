@@ -1,5 +1,6 @@
 package com.huanwuji.entity.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huanwuji.core.jpa.TreeableEntityListener;
 import com.huanwuji.entity.BasicMethod;
 import com.huanwuji.entity.Treeable;
@@ -37,10 +38,13 @@ public class SystemCode extends BasicMethod implements Treeable<SystemCode, Long
     private String type;
     @Column(name = "VALID", nullable = true, length = 2)
     private Boolean valid;
+
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID", nullable = true, updatable = false)
     private SystemCode parent;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent")
     private List<SystemCode> subCode;
 

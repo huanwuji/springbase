@@ -151,6 +151,12 @@ public class SearchUtils {
                             case LTE:
                                 predicates.add(cb.lessThanOrEqualTo(expression, (Comparable) desc.value));
                                 break;
+                            case NULL:
+                                predicates.add(cb.isNull(expression));
+                                break;
+                            case NOT_NULL:
+                                predicates.add(cb.isNotNull(expression));
+                                break;
                         }
                     }
                     if (CollectionUtils.isNotEmpty(predicates)) {
@@ -167,7 +173,7 @@ public class SearchUtils {
         String name = arr[1];
         SqlOperator operator;
         if (arr.length > 2) {
-            operator = SqlOperator.valueOf(arr[2]);
+            operator = SqlOperator.valueOf(arr[2].toLowerCase());
         } else {
             operator = SqlOperator.EQ;
         }

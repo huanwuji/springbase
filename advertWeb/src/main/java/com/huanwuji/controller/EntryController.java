@@ -7,6 +7,7 @@ import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.lang.KeyTools;
 import com.huanwuji.repository.EntryRepository;
 import com.huanwuji.service.EntryService;
+import com.huanwuji.utils.ControllerUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -28,12 +31,11 @@ public class EntryController {
     @Autowired
     private EntryRepository entryRepository;
 
-//    @RequestMapping(value = "/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseBody
-//    public Page<Entry> list(@PathVariable("key") String key,
-//                            @PathVariable("fkId") Long fkId, int page, int size) {
-//        return entryService.findAll(KeyTools.getFk(key, fkId), new PageRequest(page - 1, size));
-//    }
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Object list(HttpServletRequest request) {
+        return ControllerUtils.getResult(request, entryRepository, Entry.class);
+    }
 
     @RequestMapping(value = "/{key}/{fkId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> get(@PathVariable("key") String key, @PathVariable("fkId") Long id) {
