@@ -95,17 +95,17 @@
                                             templateProvider: commonTemplProvide,
                                             controller: ['$scope', '$stateParams', 'RestService',
                                                 function ($scope, $stateParams, RestService) {
-                                                    $scope.giftTypes = RestService.get()
+                                                    $scope.giftTypes = RestService.query({'s-code': 'giftType'});
                                                 }]
                                         })
                             }
                         ])
                 .controller('menuCtrl', ['$scope', '$window', 'RestService', function ($scope, $window, RestService) {
-                    RestService.Menu.query({id: 0, resultType: 'tree'}, function (menus) {
+                    RestService.Menu.query({'s-parent.id-null': 0}, function (menus) {
                         $scope.menus = menus;
                         angular.forEach($scope.menus, function (menu) {
                             if (!menu.leaf) {
-                                RestService.Menu.query({id: menu.id, resultType: 'tree'}, function (subMenus) {
+                                RestService.Menu.query({'s-id': menu.id}, function (subMenus) {
                                     if (menu.type === 'dropdown') {
                                         menu.children = subMenus;
                                     }

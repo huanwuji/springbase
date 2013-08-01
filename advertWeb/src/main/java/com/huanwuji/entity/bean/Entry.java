@@ -3,6 +3,7 @@ package com.huanwuji.entity.bean;
 import com.huanwuji.core.jpa.SystemParamsListener;
 import com.huanwuji.entity.BasicMethod;
 import com.huanwuji.entity.SystemParams;
+import com.huanwuji.search.Search;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(value = SystemParamsListener.class)
 @Table(name = "ENTRY")
+@Search(all = true)
 public class Entry extends BasicMethod implements SystemParams {
 
     @Column(name = "CODE", nullable = true, length = 30)

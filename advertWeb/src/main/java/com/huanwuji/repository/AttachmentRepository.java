@@ -2,6 +2,7 @@ package com.huanwuji.repository;
 
 import com.huanwuji.entity.bean.Attachment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ import java.util.List;
  * Time: 下午2:36
  * To change this template use File | Settings | File Templates.
  */
-public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
+public interface AttachmentRepository extends JpaRepository<Attachment, Long>, JpaSpecificationExecutor<Attachment> {
     public List<Attachment> findByFk(Long fk);
 }

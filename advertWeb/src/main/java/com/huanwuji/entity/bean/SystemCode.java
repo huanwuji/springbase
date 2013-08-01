@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huanwuji.core.jpa.TreeableEntityListener;
 import com.huanwuji.entity.BasicMethod;
 import com.huanwuji.entity.Treeable;
+import com.huanwuji.search.Search;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 @Entity
 @EntityListeners(value = TreeableEntityListener.class)
 @Table(name = "SYSTEM_CODE")
+@Search(all = true)
 public class SystemCode extends BasicMethod implements Treeable<SystemCode, Long> {
 
     @Column(name = "CODE", nullable = true, length = 30)

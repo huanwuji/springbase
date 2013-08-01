@@ -6,6 +6,7 @@ import com.huanwuji.core.jpa.TreeableEntityListener;
 import com.huanwuji.entity.BasicMethod;
 import com.huanwuji.entity.SystemParams;
 import com.huanwuji.entity.Treeable;
+import com.huanwuji.search.Search;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -25,6 +26,7 @@ import java.util.List;
 @Entity
 @EntityListeners(value = {TreeableEntityListener.class, SystemParamsListener.class})
 @Table(name = "MENU")
+@Search(all = true)
 public class Menu extends BasicMethod implements Treeable<Menu, Long>, SystemParams {
 
     @Column(name = "CODE", nullable = true, length = 30)
