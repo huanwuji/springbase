@@ -17,34 +17,14 @@
 </head>
 <body>
 <div>
-    <%--<div class="navbar navbar-static">--%>
-    <%--<div class="navbar-inner">--%>
-    <%--<div class="container">--%>
-    <%--<ul class="nav">--%>
-    <%--<li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>--%>
-    <%--<li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">系统代码</a></li>--%>
-    <%--<li ng-class="{ active: $state.includes('about') }"><a href="#/about">关于</a></li>--%>
-    <%--</ul>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container" style="width: auto;">
-                <a class="navbar-brand" href="#">后台管理</a>
+                <a class="navbar-brand" href="#/menu">后台管理</a>
                 <ul class="nav navbar-nav">
                     <li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>
-                    <li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">系统代码</a></li>
+                    <li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">礼品类目</a></li>
                     <li ng-class="{ active: $state.includes('about') }"><a href="#/about">关于</a></li>
-                    <%--<li class="dropdown">--%>
-                    <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>--%>
-                    <%--<ul class="dropdown-menu">--%>
-                    <%--<li class=""><a href="#one">one</a></li>--%>
-                    <%--<li class=""><a href="#two">two</a></li>--%>
-                    <%--<li class="divider"></li>--%>
-                    <%--<li class=""><a href="#three">three</a></li>--%>
-                    <%--</ul>--%>
-                    <%--</li>--%>
                 </ul>
             </div>
         </div>
@@ -71,7 +51,8 @@
             .constant('hwjConfig', {
                 menuTypes: [
                     {value: 'single', text: '普通单页'  },
-                    {value: 'dropdown', text: '下拉菜单'  }
+                    {value: 'dropdown', text: '下拉菜单'  },
+                    {value: 'gift_index', text: '礼品首页'  }
                 ]})
             .config(
                     ['$stateProvider', '$routeProvider', '$urlRouterProvider',

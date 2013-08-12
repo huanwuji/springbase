@@ -98,6 +98,11 @@ public class SearchUtils {
         return params;
     }
 
+    /**
+     * @param sortsExpression sorts = "fieldName-order,..."
+     * @param type            .
+     * @return .
+     */
     public static List<SearchFieldDesc> parseSort(String sortsExpression, Class type) {
         List<SearchFieldDesc> sortFields = new ArrayList<SearchFieldDesc>();
         if (StringUtils.isNotEmpty(sortsExpression)) {
@@ -112,7 +117,7 @@ public class SearchUtils {
                         continue;
                     }
                 }
-                sortFields.add(new SearchFieldDesc(sortArr[0], SqlOperator.valueOf(sortDesc[1])));
+                sortFields.add(new SearchFieldDesc(sortDesc[0], SqlOperator.valueOf(sortDesc[1].toUpperCase())));
             }
         }
         return sortFields;
@@ -173,7 +178,7 @@ public class SearchUtils {
         String name = arr[1];
         SqlOperator operator;
         if (arr.length > 2) {
-            operator = SqlOperator.valueOf(arr[2].toLowerCase());
+            operator = SqlOperator.valueOf(arr[2].toUpperCase());
         } else {
             operator = SqlOperator.EQ;
         }

@@ -1,0 +1,18 @@
+<div class="row" style="margin-bottom: 25px;">
+    <div class="col-lg-3">
+        <img class="img-thumbnail" src="{{gift.icon}}" style="width: 210px; height: 140px;">
+    </div>
+    <div class="col-lg-9">
+        <div class="caption">
+            <h3>{{gift.name}}</h3>
+        </div>
+        <h4>{{gift.title}}</h4>
+
+        <p>{{gift.descr}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div ng-bind-html-unsafe="tmpl"></div>
+    </div>
+</div>

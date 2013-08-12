@@ -25,17 +25,17 @@
                 <div class="dropdown">
                     <ul class="nav navbar-nav">
                         <li ng-class="{dropdown:menu.leaf}" ng-repeat="menu in menus" ng-switch="menu.type">
-                            <a ng-switch-default href="#/{{menu.type}}/menu-{{menu.id}}"
+                            <a ng-switch-default href="#/{{menu.type}}/menu/{{menu.id}}"
                                title="{{menu.title}}">{{menu.name}}
                             </a>
-                            <a ng-switch-when="dropdown" href="#/{{menu.type}}/menu-{{menu.id}}" class="dropdown-toggle"
+                            <a ng-switch-when="dropdown" href="#/{{menu.type}}/menu/{{menu.id}}" class="dropdown-toggle"
                                title="{{menu.title}}">{{menu.name}}
                                 <b class="caret" ng-show="!menu.leaf"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a ng-repeat="subMenu in menu.children"
-                                       href="#/{{subMenu.type}}/menu-{{subMenu.id}}">{{subMenu.name}}</a>
+                                       href="#/{{subMenu.type}}/menu/{{subMenu.id}}">{{subMenu.name}}</a>
                                 </li>
                             </ul>
                         </li>
@@ -57,8 +57,12 @@
         var commonTemplProvide = ['$http', '$stateParams', function ($http, $stateParams) {
             var type = $stateParams.type;
             var id = $stateParams.id;
+            return  getTmpl($http, type, id);
+        }];
+
+        function getTmpl($http, type, id) {
             var url = '/entry/' + type + '/' + id;
-            return $http.get(url)
+            return  $http.get(url)
                     .then(function (response) {
                         var entry = response.data;
                         if (entry.url) {
@@ -69,7 +73,8 @@
                             return entry.content;
                         }
                     });
-        }];
+        }
+
         angular.module('huanwuji', ['ngResource', 'ui.compat', 'angularTree', 'ui.bootstrap'])
                 .factory('RestService', function ($resource) {
                     return {
@@ -79,23 +84,109 @@
                         Gift: $resource('/gift')
                     }
                 })
+                .factory('Utils', function () {
+                    return {
+                        splitArr: function (arr, limit) {
+                            var _arrs = [];
+                            for (var i = 0; i < arr.length; i += limit) {
+                                _arrs.push(arr.slice(i, i + limit));
+                            }
+                            return _arrs;
+                        }
+                    };
+                })
                 .config(
                         ['$stateProvider', '$routeProvider', '$urlRouterProvider',
                             function ($stateProvider, $routeProvider, $urlRouterProvider) {
+                                $urlRouterProvider
+                                        .when('/gift_index/:type/:id', '/gifts');
+                                $routeProvider
+                                        .when('/gift_index/:type/:id', {
+                                            redirectTo: '/gifts'
+                                        });
                                 $stateProvider
                                         .state('single', {
-                                            url: '/single/type/id',
+                                            url: '/single/{type}/{id}',
                                             templateProvider: commonTemplProvide,
                                             controller: ['$scope', '$stateParams', 'RestService',
                                                 function ($scope, $stateParams, RestService) {
                                                 }]
                                         })
                                         .state('gift_index', {
-                                            url: '/gift_index/type/id',
-                                            templateProvider: commonTemplProvide,
+                                            abstract: true,
+                                            url: '/gifts',
+                                            templateUrl: '/tmpl/common/gift_index.html',
                                             controller: ['$scope', '$stateParams', 'RestService',
                                                 function ($scope, $stateParams, RestService) {
-                                                    $scope.giftTypes = RestService.query({'s-code': 'giftType'});
+                                                    RestService.SystemCode.query({
+                                                        's-parent-null': null
+                                                    }, function (parentTypes) {
+                                                        $scope.giftParentTypes = parentTypes;
+                                                        for (var i = 0; i < parentTypes.length; i++) {
+                                                            var parentType = parentTypes[i];
+                                                            RestService.SystemCode.query({
+                                                                's-parent.id': parentType.id
+                                                            }, function (subTypes) {
+                                                                parentType.subTypes = subTypes;
+                                                                var subTypeHtml = '<ul class="nav nav-pills nav-stacked" style="width:100px;">';
+                                                                for (var i = 0; i < subTypes.length; i++) {
+                                                                    var subType = subTypes[i];
+                                                                    subTypeHtml += '<li><a href="#/gifts/' + subType.id + '">' + subType.title + '</a></li>';
+                                                                }
+                                                                subTypeHtml += '</ul>';
+                                                                parentType.subTypeHtml = subTypeHtml;
+                                                            });
+                                                        }
+                                                    });
+                                                }]
+                                        })
+                                        .state('gift_index.main', {
+                                            parent: 'gift_index',
+                                            url: '',
+                                            templateUrl: '/tmpl/common/gift/main.html',
+                                            controller: ['$scope', '$stateParams', 'RestService', 'Utils',
+                                                function ($scope, $stateParams, RestService, Utils) {
+                                                    RestService.Gift.get({
+                                                        page: 1,
+                                                        size: 20,
+                                                        sorts: 'modifyDate-desc'
+                                                    }, function (data) {
+                                                        $scope.gifts = Utils.splitArr(data.content, 4);
+                                                    });
+                                                }]
+                                        }).state('gift_index.list', {
+                                            parent: 'gift_index',
+                                            url: '/{cid}',
+                                            templateUrl: '/tmpl/common/gift/list.html',
+                                            controller: ['$scope', '$stateParams', 'RestService', 'Utils',
+                                                function ($scope, $stateParams, RestService, Utils) {
+                                                    var cid = $stateParams.cid;
+                                                    $scope.maxSize = 10;
+                                                    $scope.setPage = function (number) {
+                                                        RestService.Gift.get({
+                                                                    's-category.id-eq': cid, page: number, size: 16,
+                                                                    sorts: 'modifyDate-desc'},
+                                                                function (data) {
+                                                                    $scope.totalPages = data.totalPages;
+                                                                    $scope.number = data.number + 1;
+                                                                    $scope.gifts = Utils.splitArr(data.content, 4);
+                                                                });
+                                                    };
+                                                    $scope.setPage(1);
+                                                }]
+                                        }).state('gift_index.detail', {
+                                            parent: 'gift_index',
+                                            url: '/id/{id}',
+                                            templateUrl: '/tmpl/common/gift/detail.html',
+                                            controller: ['$scope', '$stateParams', 'RestService', '$http',
+                                                function ($scope, $stateParams, RestService, $http) {
+                                                    var id = $stateParams.id;
+                                                    RestService.Gift.query({
+                                                        's-id-eq': id
+                                                    }, function (data) {
+                                                        $scope.gift = data[0];
+                                                    });
+                                                    $scope.tmpl = getTmpl($http, 'gift', id);
                                                 }]
                                         })
                             }

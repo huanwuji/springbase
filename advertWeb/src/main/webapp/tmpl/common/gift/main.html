@@ -1,0 +1,13 @@
+<div class="row" ng-repeat="partGifts in gifts" style="margin-bottom: 15px;">
+    <div class="col-lg-3" ng-repeat="gift in partGifts">
+        <div class="thumbnail">
+            <a href="#/gifts/id/{{gift.id}}">
+                <img class="img-thumbnail" src="{{gift.icon}}" style="width: 210px; height: 140px;">
+
+                <div class="caption">
+                    <h3>{{gift.title}}</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

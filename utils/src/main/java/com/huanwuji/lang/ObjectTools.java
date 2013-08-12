@@ -24,7 +24,7 @@ public class ObjectTools {
             }
             return getDeepField(swapClass, fieldNames[fieldNames.length - 1]);
         } else {
-            return FieldUtils.getDeclaredField(type, fieldName, true);
+            return getDeepField(type, fieldName);
         }
     }
 

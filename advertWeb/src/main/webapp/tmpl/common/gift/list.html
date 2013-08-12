@@ -1,0 +1,21 @@
+<div class="row" ng-repeat="partGifts in gifts" style="margin-bottom: 15px;">
+    <div class="col-lg-3" ng-repeat="gift in partGifts">
+        <div class="thumbnail">
+            <a href="#/gifts/id/{{gift.id}}">
+                <img class="img-thumbnail" style="width: 210px; height: 140px;">
+
+                <div class="caption">
+                    <h3>{{gift.title}}</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8"></div>
+    <div class="col-lg-4">
+        <pagination boundary-links="true" num-pages="totalPages" current-page="number" max-size="5"
+                    class="pagination-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                    last-text="&raquo;" on-select-page="setPage(page);"></pagination>
+    </div>
+</div>
