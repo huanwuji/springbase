@@ -95,6 +95,9 @@
                         }
                     };
                 })
+                .constant('hwjConfig', {
+                    giftTypes: hwjGiftTypes
+                })
                 .config(
                         ['$stateProvider', '$routeProvider', '$urlRouterProvider',
                             function ($stateProvider, $routeProvider, $urlRouterProvider) {
@@ -144,15 +147,31 @@
                                             parent: 'gift_index',
                                             url: '',
                                             templateUrl: '/tmpl/common/gift/main.html',
-                                            controller: ['$scope', '$stateParams', 'RestService', 'Utils',
-                                                function ($scope, $stateParams, RestService, Utils) {
+                                            controller: ['$scope', '$stateParams', 'RestService', 'Utils', 'hwjConfig',
+                                                function ($scope, $stateParams, RestService, Utils, hwjConfig) {
+                                                    $scope.giftTypes = angular.copy(hwjConfig.giftTypes);
+                                                    $scope.giftTypes.unshift({name: '最新上架', value: 'modify'});
+                                                    $scope.gifts = {};
                                                     RestService.Gift.get({
                                                         page: 1,
-                                                        size: 20,
+                                                        size: 8,
                                                         sorts: 'modifyDate-desc'
                                                     }, function (data) {
-                                                        $scope.gifts = Utils.splitArr(data.content, 4);
+                                                        $scope.gifts.modify = Utils.splitArr(data.content, 4);
                                                     });
+                                                    for (var i = 0; i < hwjConfig.giftTypes.length; i++) {
+                                                        var giftType = hwjConfig.giftTypes[i];
+                                                        RestService.Gift.get({
+                                                            page: 1,
+                                                            size: 8,
+                                                            's-type-eq': giftType.value
+                                                        }, (function () {
+                                                            var _giftType = angular.copy(giftType);
+                                                            return    function (data) {
+                                                                $scope.gifts[_giftType.value] = Utils.splitArr(data.content, 4);
+                                                            }
+                                                        })());
+                                                    }
                                                 }]
                                         }).state('gift_index.list', {
                                             parent: 'gift_index',

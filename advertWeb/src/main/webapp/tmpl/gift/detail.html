@@ -38,7 +38,7 @@
 
             <div class="col-lg-10">
                 <select ng-model="gift.type" class="form-control"
-                        ng-options="c.value as c.name for c in [{name:'type1', value:1},{name:'type2',value:2}]"
+                        ng-options="c.value as c.name for c in giftTypes"
                         placeholder="类型">
                 </select>
             </div>
@@ -54,12 +54,7 @@
             <label class="control-label col-lg-2">是否有效</label>
 
             <div class="col-lg-10">
-                <label class="radio-inline">
-                    <input type="radio" ng-model="gift.valid" value="true"/>是
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" ng-model="gift.valid" value="false"/>否
-                </label>
+                <input type="checkbox" ng-model="gift.valid"/>
             </div>
         </div>
         <div class="form-group">

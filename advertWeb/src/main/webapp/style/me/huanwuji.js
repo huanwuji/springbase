@@ -1,7 +1,4 @@
-var h = huanwuji = {};
-h.c = huanwuji.config = {
-    treeIcon: {
-        open: 'icon-folder-open',
-        close: 'icon-folder-close'
-    }
-};
+var hwjGiftTypes = [
+    {name: '精品推荐', value: 'recommend'},
+    {name: '优惠促销', value: 'promotion'}
+];

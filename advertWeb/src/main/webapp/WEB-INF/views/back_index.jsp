@@ -53,7 +53,13 @@
                     {value: 'single', text: '普通单页'  },
                     {value: 'dropdown', text: '下拉菜单'  },
                     {value: 'gift_index', text: '礼品首页'  }
-                ]})
+                ],
+                treeIcon: {
+                    open: 'icon-folder-open',
+                    close: 'icon-folder-close'
+                },
+                giftTypes: hwjGiftTypes
+            })
             .config(
                     ['$stateProvider', '$routeProvider', '$urlRouterProvider',
                         function ($stateProvider, $routeProvider, $urlRouterProvider) {
@@ -69,18 +75,17 @@
                                         return [name, {
                                             url: '/' + name,
                                             templateUrl: '/tmpl/' + name + '/main.html',
-                                            controller: ['$scope', '$state', 'Service', '$window',
-                                                function ($scope, $state, Service, $window) {
-                                                    $scope.hc = $window.h.c;
+                                            controller: ['$scope', '$state', 'Service', '$window', 'hwjConfig',
+                                                function ($scope, $state, Service, $window, hwjConfig) {
                                                     $scope.treeCache = {};
                                                     $scope.items = [
                                                         {id: 0, parentId: 0, name: 'root',
-                                                            clazz: h.c.treeIcon.open, open: true, leaf: false,
+                                                            clazz: hwjConfig.treeIcon.open, open: true, leaf: false,
                                                             url: "#/" + name, root: true,
                                                             children: Service[serviceName].query({id: 0, resultType: 'tree'}, function (children) {
                                                                 angular.forEach(children, function (item) {
                                                                     if (!item.leaf) {
-                                                                        item.clazz = h.c.treeIcon.close;
+                                                                        item.clazz = hwjConfig.treeIcon.close;
                                                                     }
                                                                     $scope.treeCache[item.id] = {curr: item, parent: $scope.items[0]};
                                                                 })
@@ -103,7 +108,7 @@
                                                         return Service[serviceName].query({id: id, resultType: 'tree'}, function (children) {
                                                             angular.forEach(children, function (item) {
                                                                 if (!item.leaf) {
-                                                                    item.clazz = h.c.treeIcon.close;
+                                                                    item.clazz = hwjConfig.treeIcon.close;
                                                                 }
                                                                 $scope.treeCache[item.id] = {curr: item, parent: parent};
                                                             })
@@ -153,8 +158,8 @@
                                             parent: name,
                                             url: '/{id}/{parentId}',
                                             templateUrl: '/tmpl/' + name + '/detail.html',
-                                            controller: ['$scope', '$state', '$stateParams', 'Service',
-                                                function ($scope, $state, $stateParams, Service) {
+                                            controller: ['$scope', '$state', '$stateParams', 'Service', 'hwjConfig',
+                                                function ($scope, $state, $stateParams, Service, hwjConfig) {
                                                     var id = $stateParams.id;
                                                     var parentId = $stateParams.parentId;
                                                     if (id > 0) {
@@ -170,7 +175,7 @@
                                                                 $scope.treeCache[id].curr.name = $scope[name].name;
                                                             } else {
                                                                 var parent = $scope.treeCache[parentId].curr;
-                                                                parent.clazz = h.c.treeIcon.open;
+                                                                parent.clazz = hwjConfig.treeIcon.open;
                                                                 parent.leaf = false;
                                                                 parent.children = $scope.getChildren(parentId, parent);
                                                             }
@@ -253,7 +258,7 @@
                                                         return;
                                                     }
                                                     Service.Gift.delete({id: id, cid: cid});
-                                                    $state.transitionTo('systemCode.gift', {cid: cid});
+                                                    $scope.setPage(1);
                                                 }
                                             }]
                                     })
@@ -261,12 +266,14 @@
                                         parent: 'systemCode',
                                         url: '/gift/cid/{cid}/{id}',
                                         templateUrl: '/tmpl/gift/detail.html',
-                                        controller: ['$scope', '$state', '$stateParams', 'Service',
-                                            function ($scope, $state, $stateParams, Service) {
+                                        controller: ['$scope', '$state', '$stateParams', 'Service', 'hwjConfig',
+                                            function ($scope, $state, $stateParams, Service, hwjConfig) {
                                                 var cid = $stateParams.cid;
                                                 var id = $stateParams.id;
+                                                $scope.giftTypes = hwjConfig.giftTypes;
                                                 if (id < 1) {
                                                     $scope.gift = {valid: true};
+
                                                 } else {
                                                     $scope.gift = Service.Gift.get({id: id, cid: cid});
                                                 }
