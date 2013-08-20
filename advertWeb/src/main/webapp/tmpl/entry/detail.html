@@ -4,48 +4,48 @@
         <input type="hidden" ng-model="id"/>
 
         <div class="form-group">
-            <label class="control-label col-lg-2" for="entry-code">编码</label>
+            <label class="control-label col-md-2" for="entry-code">编码</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input id="entry-code" type="text" class="form-control" ng-model="entry.code" placeholder="编码"
                        required/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="entry-name">名称</label>
+            <label class="control-label col-md-2" for="entry-name">名称</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="entry-name" class="form-control" ng-model="entry.name" placeholder="名称" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="entry-title">标题</label>
+            <label class="control-label col-md-2" for="entry-title">标题</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="entry-title" class="form-control" ng-model="entry.title" placeholder="标题"
                        required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="entry-url">链接</label>
+            <label class="control-label col-md-2" for="entry-url">链接</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="entry-url" class="form-control" ng-model="entry.url"
                        placeholder="链接">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="entry-icon">图标</label>
+            <label class="control-label col-md-2" for="entry-icon">图标</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="entry-icon" class="form-control" ng-model="entry.icon"
                        placeholder="图标">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">类型</label>
+            <label class="control-label col-md-2">类型</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <select ng-model="entry.type" class="form-control"
                         ng-options="c.value as c.name for c in [{name:'type1', value:1},{name:'type2',value:2}]"
                         placeholder="类型">
@@ -53,11 +53,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">内容</label>
+            <label class="control-label col-md-2">内容</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <a class="btn btn-primary" href="#" ng-click="editTemplate();disable=true;" ng-disabled="disable">
-                    <i class="icon-edit icon-white"></i> 高级编辑</a><br/>
+                    <i class="glyphicon glyphicon-edit"></i> 高级编辑</a><br/>
                 <textarea ng-model="entry.content" id="editor"
                           style="height: 300px;width: 500px;"></textarea>
                 <!--<script id="editor" type="text/plain" style="height:300px">-->
@@ -65,9 +65,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">是否有效</label>
+            <label class="control-label col-md-2">是否有效</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <label class="radio-inline">
                     <input type="radio" ng-model="entry.valid" value="true"/>是
                 </label>
@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-offset-2">
+            <div class="col-md-10 col-offset-2">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
                 <button class="btn btn-primary save" ng-click="save()">保存</button>
             </div>

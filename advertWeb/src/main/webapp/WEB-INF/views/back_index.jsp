@@ -4,7 +4,8 @@
 <head>
     <title></title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap3.css">
+    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap-theme.css">
     <link rel="stylesheet" type="text/css" href="/style/me/huanwuji.css">
     <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/js/bootstrap.js">--%>
     <script src="/style/me/huanwuji.js"></script>
@@ -16,27 +17,33 @@
     <script src="/style/angular/angular.tree.js"></script>
 </head>
 <body>
-<div>
-    <div class="navbar">
-        <div class="navbar-inner">
-            <div class="container" style="width: auto;">
-                <a class="navbar-brand" href="#/menu">后台管理</a>
-                <ul class="nav navbar-nav">
-                    <li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>
-                    <li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">礼品类目</a></li>
-                    <li ng-class="{ active: $state.includes('about') }"><a href="#/about">关于</a></li>
-                </ul>
-            </div>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/menu">后台管理</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li ng-class="{ active: $state.includes('menu') }"><a href="#/menu">菜单管理</a></li>
+                <li ng-class="{ active: $state.includes('systemCode') }"><a href="#/systemCode">礼品类目</a></li>
+            </ul>
         </div>
     </div>
-    <div class="container">
-        <div class="row" ui-view ng-animate="{enter:'fade-enter'}"></div>
-        <hr>
-        <footer>
-            <p>&copy; Company 2013</p>
-        </footer>
-    </div>
 </div>
+<div class="container">
+    <div class="row" ui-view ng-animate="{enter:'fade-enter'}"></div>
+    <hr>
+    <footer>
+        <p>&copy; Company 2013</p>
+    </footer>
+</div>
+</body>
+</html>
 <script>
 (function () {
     angular.module('huanwuji', ['ui.compat', 'angularTree', 'ui.bootstrap', 'ngResource'])
@@ -50,13 +57,16 @@
             })
             .constant('hwjConfig', {
                 menuTypes: [
-                    {value: 'single', text: '普通单页'  },
-                    {value: 'dropdown', text: '下拉菜单'  },
-                    {value: 'gift_index', text: '礼品首页'  }
+                    {value: 'single', text: '普通单页'},
+                    {value: 'dropdown', text: '下拉菜单'},
+                    {value: 'gift_index', text: '礼品首页'},
+                    {value: 'photo_news', text: '图片新闻'},
+                    {value: 'list_news', text: '新闻列表'},
+                    {value: 'left_list_news', text: '左侧栏新闻'}
                 ],
                 treeIcon: {
-                    open: 'icon-folder-open',
-                    close: 'icon-folder-close'
+                    open: 'glyphicon glyphicon-folder-open',
+                    close: 'glyphicon glyphicon-folder-close'
                 },
                 giftTypes: hwjGiftTypes
             })
@@ -96,10 +106,10 @@
                                                         var _item = this.item;
                                                         _item.open = !_item.open;
                                                         if (_item.open) {
-                                                            _item.clazz = 'icon-folder-open';
+                                                            _item.clazz = 'glyphicon glyphicon-folder-open';
                                                             _item.children = $scope.getChildren(_item.id, _item);
                                                         } else {
-                                                            _item.clazz = 'icon-folder-close';
+                                                            _item.clazz = 'glyphicon glyphicon-folder-close';
                                                             $scope.treeCache[_item.id] = null;
                                                             _item.children = [];
                                                         }
@@ -285,15 +295,6 @@
                                             }]
                                     });
                             $stateProvider.state.apply($stateProvider, stateConfig.entry.detail('systemCode', 'entry'));
-                            $stateProvider.state('about', {
-                                url: '/about',
-                                templateProvider: ['$timeout',
-                                    function ($timeout) {
-                                        return $timeout(function () {
-                                            return "Hello world"
-                                        }, 100);
-                                    }]
-                            });
                         }])
             .filter('vaild', function () {
                 return function (input) {
@@ -308,7 +309,5 @@
                 }]);
 })();
 </script>
-</body>
-</html>
 <script src="/style/ueditor/ueditor.config.js"></script>
 <script src="/style/ueditor/ueditor.all.js"></script>

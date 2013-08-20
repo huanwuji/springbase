@@ -4,47 +4,47 @@
         <input type="hidden" ng-model="id"/>
 
         <div class="form-group">
-            <label class="control-label col-lg-2" for="menu-code">编码</label>
+            <label class="control-label col-md-2" for="menu-code">编码</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input id="menu-code" class="form-control" type="text" ng-model="menu.code" placeholder="编码"
                        required/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="menu-name">名称</label>
+            <label class="control-label col-md-2" for="menu-name">名称</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="menu-name" class="form-control" ng-model="menu.name" placeholder="名称" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="menu-title">标题</label>
+            <label class="control-label col-md-2" for="menu-title">标题</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="menu-title" class="form-control" ng-model="menu.title" placeholder="标题" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="menu-url">链接</label>
+            <label class="control-label col-md-2" for="menu-url">链接</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="menu-url" class="form-control" ng-model="menu.url"
                        placeholder="链接">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="menu-icon">图标</label>
+            <label class="control-label col-md-2" for="menu-icon">图标</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="menu-icon" class="form-control" ng-model="menu.icon"
                        placeholder="图标">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">类型</label>
+            <label class="control-label col-md-2">类型</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <select ng-model="menu.type" class="form-control"
                         ng-options="opt.value as opt.text for opt in hwjConfig.menuTypes"
                         placeholder="类型">
@@ -52,21 +52,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">是否有效</label>
+            <label class="control-label col-md-2">是否有效</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="checkbox" ng-model="menu.valid"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">描述</label>
+            <label class="control-label col-md-2">描述</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <textarea rows="3" class="form-control" ng-model="menu.descr"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-offset-2">
+            <div class="col-md-10 col-offset-2">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
                 <button class="btn btn-primary save" ng-click="save()">保存</button>
             </div>

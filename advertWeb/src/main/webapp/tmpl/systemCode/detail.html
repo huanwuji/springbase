@@ -4,33 +4,33 @@
         <input type="hidden" ng-model="id"/>
 
         <div class="form-group">
-            <label class="control-label col-lg-2" for="systemCode-code">编码</label>
+            <label class="control-label col-md-2" for="systemCode-code">编码</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input id="systemCode-code" type="text" class="form-control" ng-model="systemCode.code" placeholder="编码"
                        required/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="systemCode-name">名称</label>
+            <label class="control-label col-md-2" for="systemCode-name">名称</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="systemCode-name" class="form-control" ng-model="systemCode.name" placeholder="名称"
                        required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2" for="systemCode-title">标题</label>
+            <label class="control-label col-md-2" for="systemCode-title">标题</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="text" id="systemCode-title" class="form-control" ng-model="systemCode.title"
                        placeholder="标题" required>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">类型</label>
+            <label class="control-label col-md-2">类型</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <select ng-model="systemCode.type" class="form-control"
                         ng-options="c.value as c.name for c in [{name:'type1', value:1},{name:'type2',value:2}]"
                         placeholder="类型">
@@ -38,21 +38,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">是否有效</label>
+            <label class="control-label col-md-2">是否有效</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <input type="checkbox" ng-model="systemCode.valid"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-lg-2">描述</label>
+            <label class="control-label col-md-2">描述</label>
 
-            <div class="col-lg-10">
+            <div class="col-md-10">
                 <textarea rows="3" cols="5" class="form-control" ng-model="systemCode.descr"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-offset-2">
+            <div class="col-md-10 col-offset-2">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
                 <button class="btn btn-primary save" ng-click="save()">保存</button>
             </div>

@@ -1,15 +1,15 @@
-<div class="col-lg-4">
-    <div class="well sidebar-nav">
+<div class="col-md-3">
+    <div class="navbar navbar-default sidebar-nav">
         <ul ng-tree="items" class="tree_style">
             <li class="dropdown">
                 <i ng-class="item.clazz" ng-click="toggle()"></i>
                 &nbsp;<a ng-href="{{item.url}}">{{item.name}}</a>
-                <i class="icon-plus" ng-click="add()"></i>
-                <i class="icon-edit" ng-click="edit()" ng-hide="item.root"></i>
-                <i class="icon-remove" ng-click="delete()" ng-show="item.leaf"></i>
-                <a class="icon-list" ng-href="#/systemCode/gift/cid/{{item.id}}" ng-hide="item.root"></a>
+                <i class="glyphicon glyphicon-plus" ng-click="add()"></i>
+                <i class="glyphicon glyphicon-edit" ng-click="edit()" ng-hide="item.root"></i>
+                <i class="glyphicon glyphicon-remove" ng-click="delete()" ng-show="item.leaf"></i>
+                <a class="glyphicon glyphicon-file" ng-href="#/systemCode/gift/cid/{{item.id}}" ng-hide="item.root"></a>
             </li>
         </ul>
     </div>
 </div>
-<div class="col-lg-8" ui-view ng-animate="{enter:'fade-enter'}"></div>
+<div class="col-md-9" ui-view ng-animate="{enter:'fade-enter'}"></div>
