@@ -1,0 +1,8 @@
+<div class="col-md-2 well">
+    <ul class="nav nav-pills nav-stacked dropright">
+        <li class="dropdown animate-repeat" ng-repeat="new in news">
+            <a href="#">{{new.title}}</a>
+        </li>
+    </ul>
+</div>
+<div class="col-md-10" ui-view ng-animate="{enter:'fade-enter'}"></div>

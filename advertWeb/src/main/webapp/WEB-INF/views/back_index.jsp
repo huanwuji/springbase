@@ -5,7 +5,7 @@
     <title></title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap-theme.css">
+    <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap-theme.css">--%>
     <link rel="stylesheet" type="text/css" href="/style/me/huanwuji.css">
     <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/js/bootstrap.js">--%>
     <script src="/style/me/huanwuji.js"></script>
@@ -62,7 +62,7 @@
                     {value: 'gift_index', text: '礼品首页'},
                     {value: 'photo_news', text: '图片新闻'},
                     {value: 'list_news', text: '新闻列表'},
-                    {value: 'left_list_news', text: '左侧栏新闻'}
+                    {value: 'left_nav_news', text: '左侧导航栏新闻'}
                 ],
                 treeIcon: {
                     open: 'glyphicon glyphicon-folder-open',

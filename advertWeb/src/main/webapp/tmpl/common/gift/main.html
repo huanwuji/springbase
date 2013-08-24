@@ -3,7 +3,7 @@
         <h3 class="panel-title">{{giftType.name}}</h3>
     </div>
     <div class="panel-body">
-        <div class="row" ng-repeat="partGifts in gifts[giftType.value]" style="margin-bottom: 15px;">
+        <div class="row animate-repeat" ng-repeat="partGifts in gifts[giftType.value]" style="margin-bottom: 15px;">
             <div class="col-md-3" ng-repeat="gift in partGifts">
                 <div class="thumbnail">
                     <a href="#/gifts/id/{{gift.id}}">

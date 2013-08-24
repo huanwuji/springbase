@@ -1,8 +1,8 @@
-<div class="col-md-2 navbar navbar-default">
+<div class="col-md-2 well">
     <ul class="nav nav-pills nav-stacked dropright">
-        <li class="dropdown" ng-repeat="parentType in giftParentTypes">
+        <li class="dropdown animate-repeat" ng-repeat="parentType in giftParentTypes">
             <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">{{parentType.title}}</a>
-            <ul class="dropdown-menu" role="menu">
+            <ul class="dropdown-menu" role="menu" ng-if="parentType.subTypes">
                 <li role="presentation" ng-repeat="subType in parentType.subTypes">
                     <a role="menuitem" tabindex="-1" href="#/gifts/{{subType.id}}">{{subType.title}}</a>
                 </li>
@@ -10,4 +10,4 @@
         </li>
     </ul>
 </div>
-<div class="col-md-10" ui-view ng-animate="{enter:'fade-enter'}"></div>
+<div class="col-md-10" ui-view></div>

@@ -1,13 +1,21 @@
 <div class="col-md-3">
-    <div class="navbar navbar-default sidebar-nav">
+    <div class="well well-sm">
         <ul ng-tree="items" class="tree_style">
             <li class="dropdown">
                 <i ng-class="item.clazz" ng-click="toggle()"></i>
                 &nbsp;<a ng-href="{{item.url}}">{{item.name}}</a>
-                <i class="glyphicon glyphicon-plus" ng-click="add()"></i>
-                <i class="glyphicon glyphicon-edit" ng-click="edit()" ng-hide="item.root"></i>
-                <i class="glyphicon glyphicon-remove" ng-click="delete()" ng-show="item.leaf"></i>
-                <a class="glyphicon glyphicon-file" ng-href="#/menu/entry/menu/{{item.id}}" ng-hide="item.root"></a>
+                &nbsp;&nbsp;
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="add()">添加</a></li>
+                        <li><a ng-click="edit()" ng-hide="item.root">修改</a></li>
+                        <li><a ng-click="delete()" ng-show="item.leaf">删除</a></li>
+                        <li><a ng-href="#/menu/entry/menu/{{item.id}}" ng-hide="item.root">页面</a></li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

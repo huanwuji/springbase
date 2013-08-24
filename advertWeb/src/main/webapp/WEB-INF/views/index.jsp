@@ -5,7 +5,8 @@
     <title></title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap-theme.css">
+    <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/css/bootstrap-theme.css">--%>
+    <link rel="stylesheet" type="text/css" href="/style/angular/angular-animate.css">
     <link rel="stylesheet" type="text/css" href="/style/me/huanwuji.css">
     <%--<link rel="stylesheet" type="text/css" href="/style/bootstrap/js/bootstrap.js">--%>
     <script src="/style/me/huanwuji.js"></script>
@@ -15,6 +16,7 @@
     <script src="/style/angular/angular-resource.js"></script>
     <script src="/style/angular/ui-router/angular-ui-router.js"></script>
     <script src="/style/angular/angular.tree.js"></script>
+    <script src="/style/angular/angular-animate.js"></script>
 </head>
 <body>
 <div class="navbar navbar-default navbar-fixed-top">
@@ -50,7 +52,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="row" ui-view ng-animate="{enter:'fade-enter'}"></div>
+    <div class="row" ui-view></div>
     <hr>
     <footer>
         <p>&copy; Company 2013</p>
@@ -62,12 +64,12 @@
 (function () {
     var commonTemplProvide = ['$http', '$stateParams', function ($http, $stateParams) {
         var type = $stateParams.type;
-        var id = $stateParams.id;
-        return  getTmpl($http, type, id);
+        var fkId = $stateParams.fkId;
+        return  getTmpl($http, type, fkId);
     }];
 
-    function getTmpl($http, type, id) {
-        var url = '/entry/' + type + '/' + id;
+    function getTmpl($http, type, fkId) {
+        var url = '/entry/' + type + '/' + fkId;
         return  $http.get(url)
                 .then(function (response) {
                     var entry = response.data;
@@ -81,7 +83,7 @@
                 });
     }
 
-    angular.module('huanwuji', ['ngResource', 'ui.compat', 'angularTree', 'ui.bootstrap'])
+    angular.module('huanwuji', ['ngResource', 'ui.compat', 'angularTree', 'ui.bootstrap', 'ngAnimate'])
             .factory('RestService', function ($resource) {
                 return {
                     Menu: $resource('/menu'),
@@ -110,7 +112,8 @@
                             $urlRouterProvider
                                     .when('/gift_index/:type/:id', '/gifts')
                                     .when('/photo_news/:type/:id', '/photo_news/:id')
-                                    .when('/list_news/:type/:id', '/list_news/:id');
+                                    .when('/list_news/:type/:id', '/list_news/:id')
+                                    .when('/left_nav_news/:type/:id', '/left_nav_news/:id');
                             $routeProvider
                                     .when('/gift_index/:type/:id', {
                                         redirectTo: '/gifts'
@@ -118,14 +121,13 @@
                                         redirectTo: '/photo_news/:id'
                                     }).when('/list_news/:type/:id', {
                                         redirectTo: '/list_news/:id'
+                                    }).when('/left_nav_news/:type/:id', {
+                                        redirectTo: '/left_nav_news/:id'
                                     });
                             $stateProvider
                                     .state('single', {
-                                        url: '/single/{type}/{id}',
-                                        templateProvider: commonTemplProvide,
-                                        controller: ['$scope', '$stateParams', 'RestService',
-                                            function ($scope, $stateParams, RestService) {
-                                            }]
+                                        url: '/single',
+                                        templateProvider: commonTemplProvide
                                     })
                                     .state('gift_index', {
                                         abstract: true,
@@ -252,6 +254,38 @@
                                                 };
                                                 $scope.setPage(1);
                                             }]
+                                    }).state('left_nav_news', {
+                                        abstract: true,
+                                        url: '/left_nav_news/{id}',
+                                        templateUrl: '/tmpl/common/entry/left_nav_news.html',
+                                        controller: ['$scope', '$state', '$stateParams', 'RestService',
+                                            function ($scope, $state, $stateParams, RestService) {
+                                                var id = $stateParams.id;
+                                                RestService.Menu.query({
+                                                            's-parent.id-eq': id,
+                                                            sorts: 'modifyDate-desc'},
+                                                        function (data) {
+                                                            $scope.news = data;
+                                                            if (data && data.length > 0) {
+                                                                var fkId = data[0].id;
+                                                                $state.transitionTo('left_nav_news.detail', {
+                                                                    type: 'menu',
+                                                                    fkId: fkId,
+                                                                    id: id
+                                                                })
+                                                            }
+                                                        });
+                                            }]
+                                    })
+                                    .state('left_nav_news.list', {
+                                        url: '',
+                                        parent: 'left_nav_news',
+                                        template: ''
+                                    })
+                                    .state('left_nav_news.detail', {
+                                        url: '/page/{type}/{fkId}',
+                                        parent: 'left_nav_news',
+                                        templateProvider: commonTemplProvide
                                     })
                         }
                     ])
@@ -260,13 +294,13 @@
                     $scope.menus = menus;
                     angular.forEach($scope.menus, function (menu) {
                         if (!menu.leaf) {
-                            RestService.Menu.query({'s-parent.id-eq': menu.id}, (function (menu) {
-                                return function (subMenus) {
-                                    if (menu.type === 'dropdown') {
+                            if (menu.type === 'dropdown') {
+                                RestService.Menu.query({'s-parent.id-eq': menu.id}, (function (menu) {
+                                    return function (subMenus) {
                                         menu.children = subMenus;
                                     }
-                                }
-                            })(menu));
+                                })(menu));
+                            }
                         }
                     });
                 });
