@@ -1,7 +1,10 @@
 package com.huanwuji.service;
 
 
+import com.google.common.collect.Lists;
 import com.huanwuji.entity.Treeable;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,29 +33,27 @@ public class TreeableService<T extends Treeable> {
 
     private static final int TREE_ID_INC_STEP = 10;
 
-    private static String SEPARATOR = ".";
+    private static final String COMMA = ",";
 
     @Transactional
     public <S extends T> void prePersist(S s) {
-        if (s instanceof Treeable) {
-            Treeable treeS = (Treeable) s;
-            String treeId = getParentTreeId(treeS) + getIdPattern(treeS);
-            treeS.setTreeId(treeId);
-            treeS.setLeaf(true);
+        if (s != null) {
+            String treeId = getParentIds(s) + COMMA + getOrderNum(s);
+            s.setTreeId(treeId);
+            s.setLeaf(true);
         }
     }
 
     @Transactional
     public void preRemove(T t) {
-        if (t instanceof Treeable) {
-            Treeable obj = (Treeable) t;
-            final Treeable parent = (Treeable) obj.getParent();
+        if (t != null) {
+            final Treeable parent = (Treeable) t.getParent();
             if (parent != null) {
                 CriteriaBuilder builder = em.getCriteriaBuilder();
                 CriteriaQuery criteriaQuery = builder.createQuery(t.getClass());
                 Root root = criteriaQuery.from(t.getClass());
                 criteriaQuery.where(builder.equal(root.get("parent"), parent));
-                List<T> list = em.createQuery(criteriaQuery).getResultList();
+                List list = em.createQuery(criteriaQuery).getResultList();
                 boolean isLeaf = list.size() == 0;
                 if (list.size() == 1) {
                     if (list.iterator().next().equals(t)) {
@@ -67,13 +68,21 @@ public class TreeableService<T extends Treeable> {
         }
     }
 
+    @Transactional
+    public void swap(Treeable entity1, Treeable entity2) {
+        String swapTreeId = entity1.getTreeId();
+        entity1.setTreeId(entity2.getTreeId());
+        entity2.setTreeId(swapTreeId);
+        em.merge(entity1);
+        em.merge(entity2);
+    }
 
-    private String getIdPattern(Treeable entity) {
+
+    private String getOrderNum(Treeable entity) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<String> criteriaQuery = builder.createQuery(String.class);
         Root root = criteriaQuery.from(entity.getClass());
         criteriaQuery.select(builder.max(root.get("treeId")));
-
         Predicate predicate;
         Treeable parent = (Treeable) entity.getParent();
         if (parent == null) {
@@ -86,29 +95,29 @@ public class TreeableService<T extends Treeable> {
             predicate = builder.equal(root.get("parent"), parent);
         }
         criteriaQuery.where(predicate);
-        int nextId = TREE_ID_INC_STEP;
+        int orderNum = TREE_ID_INC_STEP;
         List<String> list = em.createQuery(criteriaQuery).getResultList();
-        if (list != null && list.size() == 1) {
-            String s = list.iterator().next();
-            if (s != null) {
-                s = s.substring(s.lastIndexOf(".") + 1);
-                nextId = Integer.valueOf(s) + TREE_ID_INC_STEP;
+        if (CollectionUtils.isNotEmpty(list)) {
+            String maxTreeId = list.get(0);
+            if (StringUtils.isNotEmpty(maxTreeId)) {
+                int maxOrderNum;
+                if (maxTreeId.contains(COMMA)) {
+                    maxOrderNum = Integer.parseInt(StringUtils.substringAfterLast(maxTreeId, COMMA));
+                } else {
+                    maxOrderNum = Integer.parseInt(maxTreeId);
+                }
+                orderNum = maxOrderNum + orderNum;
             }
         }
-        return String.valueOf(nextId);
+        return StringUtils.leftPad(String.valueOf(orderNum), 5, '0');
     }
 
-    private String getParentTreeId(Treeable entity) {
-        Treeable parent = (Treeable) entity.getParent();
-        String treeId = "";
-        if (parent != null) {
-            String preTreeId = parent.getTreeId();
-            if (preTreeId.contains(SEPARATOR)) {
-                preTreeId.substring(0, preTreeId.lastIndexOf(SEPARATOR));
-            }
-            treeId = preTreeId + SEPARATOR + parent.getId();
+    private String getParentIds(Treeable entity) {
+        Treeable parent = entity;
+        List<String> parentIds = Lists.newArrayList();
+        while ((parent = (Treeable) parent.getParent()) != null) {
+            parentIds.add(String.valueOf(parent.getId()));
         }
-        return treeId;
+        return StringUtils.join(parentIds, COMMA);
     }
-
 }

@@ -126,7 +126,7 @@
                                     });
                             $stateProvider
                                     .state('single', {
-                                        url: '/single',
+                                        url: '/single/{type}/{fkId}',
                                         templateProvider: commonTemplProvide
                                     })
                                     .state('gift_index', {
@@ -238,8 +238,8 @@
                                     }).state('list_news', {
                                         url: '/list_news/{id}',
                                         templateUrl: '/tmpl/common/entry/list_news.html',
-                                        controller: ['$scope', '$stateParams', 'RestService', '$http', 'Utils',
-                                            function ($scope, $stateParams, RestService, $http, Utils) {
+                                        controller: ['$scope', '$stateParams', 'RestService',
+                                            function ($scope, $stateParams, RestService) {
                                                 var id = $stateParams.id;
                                                 $scope.maxSize = 10;
                                                 $scope.setPage = function (number) {
@@ -254,33 +254,60 @@
                                                 };
                                                 $scope.setPage(1);
                                             }]
-                                    }).state('left_nav_news', {
+                                    })
+                                    .state('left_nav_news', {
                                         abstract: true,
                                         url: '/left_nav_news/{id}',
                                         templateUrl: '/tmpl/common/entry/left_nav_news.html',
                                         controller: ['$scope', '$state', '$stateParams', 'RestService',
                                             function ($scope, $state, $stateParams, RestService) {
-                                                var id = $stateParams.id;
+                                                var id = $scope.id = $stateParams.id;
                                                 RestService.Menu.query({
                                                             's-parent.id-eq': id,
-                                                            sorts: 'modifyDate-desc'},
+                                                            sorts: 'treeId-asc'},
                                                         function (data) {
                                                             $scope.news = data;
                                                             if (data && data.length > 0) {
-                                                                var fkId = data[0].id;
-                                                                $state.transitionTo('left_nav_news.detail', {
-                                                                    type: 'menu',
-                                                                    fkId: fkId,
-                                                                    id: id
-                                                                })
+                                                                var new0 = data[0];
+                                                                var fkId = new0.id;
+                                                                if (new0.leaf) {
+                                                                    $state.transitionTo('left_nav_news.detail', {
+                                                                        type: 'menu', fkId: fkId, id: id
+                                                                    });
+                                                                } else {
+                                                                    $state.transitionTo('left_nav_news.list', {
+                                                                        menu_id: fkId, id: id
+                                                                    });
+                                                                }
                                                             }
                                                         });
                                             }]
                                     })
-                                    .state('left_nav_news.list', {
+                                    .state('left_nav_news.main', {
                                         url: '',
                                         parent: 'left_nav_news',
                                         template: ''
+                                    })
+                                    .state('left_nav_news.list', {
+                                        url: '/list/{menu_id}',
+                                        parent: 'left_nav_news',
+                                        templateUrl: '/tmpl/common/entry/sub_list_news.html',
+                                        controller: ['$scope', '$stateParams', 'RestService',
+                                            function ($scope, $stateParams, RestService) {
+                                                var id = $stateParams.menu_id;
+                                                $scope.maxSize = 10;
+                                                $scope.setPage = function (number) {
+                                                    RestService.Menu.get({
+                                                                's-parent.id-eq': id, page: number, size: 16,
+                                                                sorts: 'modifyDate-desc'},
+                                                            function (data) {
+                                                                $scope.totalPages = data.totalPages;
+                                                                $scope.number = data.number + 1;
+                                                                $scope.news = data.content;
+                                                            });
+                                                };
+                                                $scope.setPage(1);
+                                            }]
                                     })
                                     .state('left_nav_news.detail', {
                                         url: '/page/{type}/{fkId}',

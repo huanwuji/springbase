@@ -4,6 +4,8 @@ import com.huanwuji.entity.bean.Menu;
 import com.huanwuji.entity.query.QMenu;
 import com.huanwuji.repository.MenuRepository;
 import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Order;
+import com.mysema.query.types.OrderSpecifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,12 +39,14 @@ public class MenuService {
     public List<Menu> getRoot() {
         JPAQuery query = new JPAQuery(em);
         QMenu menu = QMenu.MENU;
-        return query.from(menu).where(menu.parent.isNull()).list(menu);
+        return query.from(menu).where(menu.parent.isNull())
+                .orderBy(new OrderSpecifier<String>(Order.ASC, menu.treeId)).list(menu);
     }
 
     public List<Menu> getChildren(Long id) {
         JPAQuery query = new JPAQuery(em);
         QMenu menu = QMenu.MENU;
-        return query.from(menu).where(menu.parent.id.eq(id)).list(menu);
+        return query.from(menu).where(menu.parent.id.eq(id))
+                .orderBy(new OrderSpecifier<String>(Order.ASC, menu.treeId)).list(menu);
     }
 }

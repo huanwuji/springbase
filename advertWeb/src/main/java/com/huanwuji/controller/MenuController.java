@@ -6,6 +6,7 @@ import com.huanwuji.json.flexjson.FlexJsonTools;
 import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.MenuRepository;
 import com.huanwuji.service.MenuService;
+import com.huanwuji.service.TreeableService;
 import com.huanwuji.utils.ControllerUtils;
 import flexjson.JSONSerializer;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,8 @@ public class MenuController {
     private MenuService menuService;
     @Autowired
     private MenuRepository menuRepository;
+    @Autowired
+    private TreeableService treeableService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -82,5 +85,13 @@ public class MenuController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
         menuRepository.delete(id);
+    }
+
+    @RequestMapping(value = "/swap", method = RequestMethod.GET)
+    @ResponseStatus((HttpStatus.NO_CONTENT))
+    public void swap(Long id1, Long id2) {
+        Menu menu1 = menuRepository.findOne(id1);
+        Menu menu2 = menuRepository.findOne(id2);
+        treeableService.swap(menu1, menu2);
     }
 }

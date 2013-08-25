@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="list-group">
+        <a href="#/left_nav_news/{{id}}/page/menu/{{new.id}}" class="list-group-item animate-repeat"
+           ng-repeat="new in news">
+            <h4 class="list-group-item-heading">{{new.title}}</h4>
+
+            <p class="list-group-item-text text-muted">{{new.descr}}</p>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
+        <pagination boundary-links="true" num-pages="totalPages" current-page="number" max-size="5"
+                    class="pagination-right" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                    last-text="&raquo;" on-select-page="setPage(page);"></pagination>
+    </div>
+</div>

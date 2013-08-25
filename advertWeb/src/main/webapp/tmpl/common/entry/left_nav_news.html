@@ -1,7 +1,8 @@
 <div class="col-md-2 well">
     <ul class="nav nav-pills nav-stacked dropright">
         <li class="dropdown animate-repeat" ng-repeat="new in news">
-            <a href="#">{{new.title}}</a>
+            <a ng-if="new.leaf" href="#/left_nav_news/{{id}}/page/menu/{{new.id}}">{{new.name}}</a>
+            <a ng-if="!new.leaf" href="#/left_nav_news/{{id}}/list/{{new.id}}">{{new.name}}</a>
         </li>
     </ul>
 </div>

@@ -1,6 +1,7 @@
 package com.huanwuji.entity.query;
 
 import com.huanwuji.entity.bean.Menu;
+import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.BeanPath;
 import com.mysema.query.types.path.BooleanPath;

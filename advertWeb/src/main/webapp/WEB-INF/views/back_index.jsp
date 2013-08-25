@@ -153,6 +153,36 @@
                                                             }
                                                         });
                                                     };
+                                                    $scope.swap = function (direction) {
+                                                        var id = this.item.id;
+                                                        var currItem = $scope.treeCache[id];
+                                                        var parent = currItem.parent;
+                                                        var children = parent.children;
+                                                        for (var i = 0; i < children.length; i++) {
+                                                            if (children[i] == currItem.curr) {
+                                                                var index1, index2;
+                                                                if (direction == 'up') {
+                                                                    if (i != 0) {
+                                                                        index1 = i;
+                                                                        index2 = i - 1;
+                                                                    }
+                                                                } else if (direction == 'down') {
+                                                                    if (i != (children.length - 1)) {
+                                                                        index1 = i;
+                                                                        index2 = i + 1;
+                                                                    }
+                                                                }
+                                                                if (index2 !== undefined) {
+                                                                    Service[serviceName].get({id: 'swap', id1: children[index1].id,
+                                                                        id2: children[index2].id}, function () {
+                                                                        var swap = children[index1];
+                                                                        children[index1] = children[index2];
+                                                                        children[index2] = swap;
+                                                                    });
+                                                                }
+                                                            }
+                                                        }
+                                                    };
                                                 }]
                                         }]
                                     },

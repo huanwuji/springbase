@@ -6,6 +6,7 @@ import com.huanwuji.json.flexjson.FlexJsonTools;
 import com.huanwuji.json.flexjson.impl.SimpleObjectTransformer;
 import com.huanwuji.repository.SystemCodeRepository;
 import com.huanwuji.service.SystemCodeService;
+import com.huanwuji.service.TreeableService;
 import com.huanwuji.utils.ControllerUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,10 @@ public class SystemCodeController {
 
     @Autowired
     private SystemCodeService systemCodeService;
-
     @Autowired
     private SystemCodeRepository systemCodeRepository;
+    @Autowired
+    private TreeableService treeableService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -84,5 +86,13 @@ public class SystemCodeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
         systemCodeRepository.delete(id);
+    }
+
+    @RequestMapping(value = "/swap", method = RequestMethod.GET)
+    @ResponseStatus((HttpStatus.NO_CONTENT))
+    public void swap(Long id1, Long id2) {
+        SystemCode systemCode1 = systemCodeRepository.findOne(id1);
+        SystemCode systemCode2 = systemCodeRepository.findOne(id2);
+        treeableService.swap(systemCode1, systemCode2);
     }
 }

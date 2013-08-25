@@ -4,6 +4,8 @@ import com.huanwuji.entity.bean.SystemCode;
 import com.huanwuji.entity.query.QSystemCode;
 import com.huanwuji.repository.SystemCodeRepository;
 import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Order;
+import com.mysema.query.types.OrderSpecifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,12 +39,14 @@ public class SystemCodeService {
     public List<SystemCode> getRoot() {
         JPAQuery query = new JPAQuery(em);
         QSystemCode qSystemCode = QSystemCode.SYSTEM_CODE;
-        return query.from(qSystemCode).where(qSystemCode.parent.isNull()).list(qSystemCode);
+        return query.from(qSystemCode).where(qSystemCode.parent.isNull())
+                .orderBy(new OrderSpecifier<String>(Order.ASC, qSystemCode.treeId)).list(qSystemCode);
     }
 
     public List<SystemCode> getChildren(Long id) {
         JPAQuery query = new JPAQuery(em);
         QSystemCode systemCode = QSystemCode.SYSTEM_CODE;
-        return query.from(systemCode).where(systemCode.parent.id.eq(id)).list(systemCode);
+        return query.from(systemCode).where(systemCode.parent.id.eq(id))
+                .orderBy(new OrderSpecifier<String>(Order.ASC, systemCode.treeId)).list(systemCode);
     }
 }

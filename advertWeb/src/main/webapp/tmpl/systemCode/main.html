@@ -11,7 +11,9 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a ng-click="add()">添加</a></li>
-                        <li><a ng-click="edit()" ng-hide="item.root">修改</a></li>
+                        <li><a ng-click="edit()" ng-if="!item.root">修改</a></li>
+                        <li><a ng-click="swap('up')" ng-if="!item.root">上移</a></li>
+                        <li><a ng-click="swap('down')" ng-if="!item.root">下移</a></li>
                         <li><a ng-click="delete()" ng-show="item.leaf">删除</a></li>
                         <li><a ng-href="#/systemCode/gift/cid/{{item.id}}" ng-hide="item.root">页面</a></li>
                     </ul>
