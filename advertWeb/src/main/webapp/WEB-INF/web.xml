@@ -7,13 +7,9 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:META-INF/spring/applicationContext.xml,
-            <!--classpath*:/applicationContext-shiro.xml-->
+            classpath*:META-INF/spring/applicationContext.xml
+            classpath*:META-INF/spring/applicationContext-security.xml
         </param-value>
-    </context-param>
-    <context-param>
-        <param-name>spring.profiles.default</param-name>
-        <param-value>production</param-value>
     </context-param>
 
     <listener>
@@ -46,27 +42,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--<filter>-->
-    <!--<filter-name>shiroFilter</filter-name>-->
-    <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-    <!--<init-param>-->
-    <!--<param-name>targetFilterLifecycle</param-name>-->
-    <!--<param-value>true</param-value>-->
-    <!--</init-param>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--<filter-name>shiroFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
-
-    <!--<filter>-->
-    <!--<filter-name>sitemeshFilter</filter-name>-->
-    <!--<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--<filter-name>sitemeshFilter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>springServlet</servlet-name>
@@ -98,4 +81,7 @@
     <!--<error-code>404</error-code>-->
     <!--<location>/WEB-INF/views/error/404.jsp</location>-->
     <!--</error-page>-->
+    <welcome-file-list>
+        <welcome-file>/index</welcome-file>
+    </welcome-file-list>
 </web-app>

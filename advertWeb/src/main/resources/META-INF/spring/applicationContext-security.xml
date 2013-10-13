@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <global-method-security pre-post-annotations="enabled"/>
+
+    <http use-expressions="true">
+        <intercept-url pattern="/back_index/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/**" method="PUT" access="isAuthenticated()"/>
+        <intercept-url pattern="/**" method="POST" access="isAuthenticated()"/>
+        <intercept-url pattern="/**" method="DELETE" access="isAuthenticated()"/>
+        <intercept-url pattern="/tmpl/back/**" access="isAuthenticated()"/>
+        <form-login login-processing-url="/login" login-page="/sign/index.html"
+                    username-parameter="username" password-parameter="password"/>
+        <logout logout-success-url="/index" logout-url="/logout" delete-cookies="JSESSIONID"/>
+    </http>
+
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <authentication-manager>
+        <authentication-provider>
+            <password-encoder ref="encoder"/>
+            <user-service>
+                <user name="admin" password="$2a$10$k.mD2fLbDm/g812L3IL0Au.z.dsWHZYXnZhDCvm9dpF7ZNUtjPQr6"
+                      authorities="admin"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

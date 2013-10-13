@@ -2,6 +2,7 @@ package com.huanwuji.service;
 
 import com.huanwuji.entity.query.QMenu;
 import com.mysema.query.jpa.impl.JPAQuery;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 /**
@@ -17,5 +18,11 @@ public class TreeableServiceTest {
         QMenu qMenu = QMenu.MENU;
         jpaQuery.from(qMenu).where(qMenu.parent.id.eq(33L)).groupBy(qMenu.id);
         System.out.println(jpaQuery.toString());
+    }
+
+    @Test
+    public void testName() throws Exception {
+        String str = StringUtils.substringAfterLast("33", ",");
+        System.out.println("str = " + str);
     }
 }
